@@ -13,26 +13,28 @@ import styles from './styles';
 class Welcome extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Button
-          raised
-          borderRadius={4}
-          title={'Login to experience AR'}
-          containerViewStyle={[styles.containerView]}
-          buttonStyle={[styles.button]}
-          textStyle={styles.buttonText}
-          onPress={Actions.Login}
-        />
+      <View style={styles.outerContainer}>
+        <View style={styles.container}>
+          <Button
+            raised
+            borderRadius={4}
+            title={'Login to experience AR'}
+            containerViewStyle={[styles.containerView]}
+            buttonStyle={[styles.button]}
+            textStyle={styles.buttonText}
+            onPress={Actions.Login}
+          />
 
-        <Button
-          raised
-          borderRadius={4}
-          title={'Register'}
-          containerViewStyle={[styles.containerView]}
-          buttonStyle={[styles.button]}
-          textStyle={styles.buttonText}
-          onPress={Actions.Register}
-        />
+          <Button
+            raised
+            borderRadius={4}
+            title={'Register'}
+            containerViewStyle={[styles.containerView]}
+            buttonStyle={[styles.button]}
+            textStyle={styles.buttonText}
+            onPress={Actions.Register}
+          />
+        </View>
       </View>
     );
   }

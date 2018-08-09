@@ -21,6 +21,7 @@ import Register from './components/scenes/Register/Register';
 import CompleteProfile from './components/scenes/CompleteProfile/CompleteProfile';
 import ARHome from './components/ARComponents/ARHome';
 import ForgotPassword from './components/scenes/ForgotPassword/ForgotPassword';
+import Profile from './components/scenes/Profile/Profile';
 
 import { color, navTitleStyle } from './styles/theme';
 
@@ -59,12 +60,7 @@ export default class extends React.Component {
               initial={true}
               hideNavBar
             />
-            <Scene
-              key="Login"
-              component={Login}
-              title=""
-              initial={false}
-            />
+            <Scene key="Login" component={Login} title="" initial={false} />
             <Scene
               key="Register"
               component={Register}
@@ -87,6 +83,13 @@ export default class extends React.Component {
             <Scene
               key="ARHome"
               component={ARHome}
+              title=""
+              initial={false}
+              hideNavBar
+            />
+            <Scene
+              key="Profile"
+              component={Profile}
               title=""
               initial={true}
               hideNavBar
