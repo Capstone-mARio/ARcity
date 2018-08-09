@@ -17,6 +17,8 @@ import store from './redux/store';
 // Import components
 import Welcome from './components/scenes/Welcome/Welcome';
 import Login from './components/scenes/Login/Login';
+import Register from './components/scenes/Register/Register';
+import CompleteProfile from './components/scenes/CompleteProfile/CompleteProfile';
 import ARHome from './components/ARComponents/ARHome';
 import ForgotPassword from './components/scenes/ForgotPassword/ForgotPassword';
 
@@ -62,7 +64,18 @@ export default class extends React.Component {
               component={Login}
               title=""
               initial={false}
-              hideNavBar
+            />
+            <Scene
+              key="Register"
+              component={Register}
+              title=""
+              initial={false}
+            />
+            <Scene
+              key="CompleteProfile"
+              component={CompleteProfile}
+              title=""
+              initial={false}
             />
             <Scene
               key="ForgotPassword"

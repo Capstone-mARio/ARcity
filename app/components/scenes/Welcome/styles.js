@@ -24,6 +24,13 @@ const styles = StyleSheet.create({
         fontFamily: fontFamily.bold,
     },
 
+    outer : {
+        flex : 1,
+        flexDirection: 'column',
+        alignItems:'center',
+        backgroundColor: "black",
+    },
+
 });
 
 export default styles;
