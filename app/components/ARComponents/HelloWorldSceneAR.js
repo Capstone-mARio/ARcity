@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 
 import {StyleSheet} from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import {
   ViroARScene,
@@ -28,6 +29,11 @@ export default class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
+
+        <ViroText
+            text="BACK" width={2} height={2} position={[0, -3, -4]} style={styles.helloWorldTextStyle}
+            onClick={() => Actions.pop()}
+        />
       </ViroARScene>
     );
   }
@@ -49,7 +55,7 @@ var styles = StyleSheet.create({
     fontSize: 30,
     color: '#ffffff',
     textAlignVertical: 'center',
-    textAlign: 'center',  
+    textAlign: 'center',
   },
 });
 

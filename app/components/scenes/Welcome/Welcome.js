@@ -17,11 +17,21 @@ class Welcome extends React.Component {
         <Button
           raised
           borderRadius={4}
-          title={'Enter an Augmented Experience'}
+          title={'Login to experience AR'}
           containerViewStyle={[styles.containerView]}
           buttonStyle={[styles.button]}
           textStyle={styles.buttonText}
           onPress={Actions.Login}
+        />
+
+        <Button
+          raised
+          borderRadius={4}
+          title={'Register'}
+          containerViewStyle={[styles.containerView]}
+          buttonStyle={[styles.button]}
+          textStyle={styles.buttonText}
+          onPress={Actions.Register}
         />
       </View>
     );

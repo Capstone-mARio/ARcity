@@ -11,6 +11,10 @@ import { auth } from "../../firebase/firebase";
 export function register(data, successCB, errorCB) {
     return (dispatch) => {
         api.register(data, function (success, data, error) {
+          if (success) {
+                dispatch({type: LOGGED_IN, data});
+                successCB(data);
+          }else if (error) errorCB(error)
         });
     };
 }

@@ -58,7 +58,7 @@ class Login extends React.Component {
 
   onSuccess({ exists, user }) {
     if (exists) Actions.Main();
-    // else Actions.CompleteProfile({ user });
+    else Actions.CompleteProfile({ user });
   }
 
   onError(error) {
