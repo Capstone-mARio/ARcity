@@ -29,7 +29,7 @@ var sharedProps = {
 }
 
 // Sets the default scene you want for AR and VR
-var InitialARScene = require('./HelloWorldSceneAR');
+var InitialARScene = require('./CubeLandingGame');
 
 var UNSET = "UNSET";
 var AR_NAVIGATOR_TYPE = "AR";
