@@ -27,15 +27,17 @@ var sharedProps = {
   apiKey: process.env.viroKey,
 };
 
-// Sets the default scene you want for AR and VR
-var InitialARScene = require('./CubeLandingGame');
+// Sets scenes you want for AR
+var InitialARScene = require('./HelloWorldSceneAR');
+var CubeLandingGame = require('./CubeLandingGame');
 
 var UNSET = 'UNSET';
 var AR_NAVIGATOR_TYPE = 'AR';
+var CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
 
 // This determines which type of experience to launch in, or UNSET, if the user should
-// be presented with a choice of AR or VR. By default, we offer the user a choice.
-var defaultNavigatorType = AR_NAVIGATOR_TYPE;
+// be presented with a choice of AR scenes. By default, we offer the user a choice.
+var defaultNavigatorType = UNSET;
 
 export default class ARHome extends Component {
   constructor() {
@@ -60,6 +62,8 @@ export default class ARHome extends Component {
       return this._getExperienceSelector();
     } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
       return this._getARNavigator();
+    } else if (this.state.navigatorType == CUBE_LANDING_GAME) {
+      return this._getCubeGameNavigator();
     }
   }
 
@@ -79,6 +83,14 @@ export default class ARHome extends Component {
           >
             <Text style={localStyles.buttonText}>AR</Text>
           </TouchableHighlight>
+
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(CUBE_LANDING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
+            <Text style={localStyles.buttonText}>CUBE GAME</Text>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -90,6 +102,15 @@ export default class ARHome extends Component {
       <ViroARSceneNavigator
         {...this.state.sharedProps}
         initialScene={{ scene: InitialARScene }}
+      />
+    );
+  }
+
+  _getCubeGameNavigator() {
+    return (
+      <ViroARSceneNavigator
+        {...this.state.sharedProps}
+        initialScene={{ scene: CubeLandingGame }}
       />
     );
   }

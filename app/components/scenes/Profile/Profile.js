@@ -29,6 +29,13 @@ class Profile extends React.Component {
       >
         <Image source={require('./default.png')} />
         <Text>{this.props.user.username}</Text>
+        <Text
+          onPress={() => {
+            Actions.ARHome();
+          }}
+        >
+          AR World
+        </Text>
       </GestureRecognizer>
     );
   }
