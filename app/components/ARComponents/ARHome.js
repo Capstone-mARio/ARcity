@@ -17,38 +17,40 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import {
-  ViroARSceneNavigator
-} from 'react-viro';
+import { ViroARSceneNavigator } from 'react-viro';
 
 /*
  TODO: Insert your API key below
  */
 var sharedProps = {
-  apiKey:"55FD3ECE-B3AE-44BA-BD38-4B208F54F43A",
-}
+  apiKey: 'F6948E24-839E-4FAD-9891-6DBFD4EEBBA8',
+};
 
-// Sets the default scene you want for AR and VR
-var InitialARScene = require('./CubeLandingGame');
+// Sets scenes you want for AR
+var InitialARScene = require('./HelloWorldSceneAR');
+var CubeLandingGame = require('./CubeLandingGame');
 
-var UNSET = "UNSET";
-var AR_NAVIGATOR_TYPE = "AR";
+var UNSET = 'UNSET';
+var AR_NAVIGATOR_TYPE = 'AR';
+var CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
 
 // This determines which type of experience to launch in, or UNSET, if the user should
-// be presented with a choice of AR or VR. By default, we offer the user a choice.
-var defaultNavigatorType = AR_NAVIGATOR_TYPE;
+// be presented with a choice of AR scenes. By default, we offer the user a choice.
+var defaultNavigatorType = UNSET;
 
 export default class ARHome extends Component {
   constructor() {
     super();
 
     this.state = {
-      navigatorType : defaultNavigatorType,
-      sharedProps : sharedProps
-    }
+      navigatorType: defaultNavigatorType,
+      sharedProps: sharedProps,
+    };
     this._getExperienceSelector = this._getExperienceSelector.bind(this);
     this._getARNavigator = this._getARNavigator.bind(this);
-    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
+    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(
+      this
+    );
     this._exitViro = this._exitViro.bind(this);
   }
 
@@ -59,26 +61,35 @@ export default class ARHome extends Component {
       return this._getExperienceSelector();
     } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
       return this._getARNavigator();
+    } else if (this.state.navigatorType == CUBE_LANDING_GAME) {
+      return this._getCubeGameNavigator();
     }
   }
 
   // Presents the user with a choice of an AR or VR experience
   _getExperienceSelector() {
     return (
-      <View style={localStyles.outer} >
-        <View style={localStyles.inner} >
-
+      <View style={localStyles.outer}>
+        <View style={localStyles.inner}>
           <Text style={localStyles.titleText}>
             Choose your desired experience:
           </Text>
 
-          <TouchableHighlight style={localStyles.buttons}
+          <TouchableHighlight
+            style={localStyles.buttons}
             onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
+            underlayColor={'#68a0ff'}
+          >
             <Text style={localStyles.buttonText}>AR</Text>
           </TouchableHighlight>
 
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(CUBE_LANDING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
+            <Text style={localStyles.buttonText}>CUBE GAME</Text>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -89,7 +100,17 @@ export default class ARHome extends Component {
     return (
       <ViroARSceneNavigator
         {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
+        initialScene={{ scene: InitialARScene }}
+      />
+    );
+  }
+
+  _getCubeGameNavigator() {
+    return (
+      <ViroARSceneNavigator
+        {...this.state.sharedProps}
+        initialScene={{ scene: CubeLandingGame }}
+      />
     );
   }
 
@@ -98,73 +119,72 @@ export default class ARHome extends Component {
   _getExperienceButtonOnPress(navigatorType) {
     return () => {
       this.setState({
-        navigatorType : navigatorType
-      })
-    }
+        navigatorType: navigatorType,
+      });
+    };
   }
 
   // This function "exits" Viro by setting the navigatorType to UNSET.
   _exitViro() {
     this.setState({
-      navigatorType : UNSET
-    })
-
+      navigatorType: UNSET,
+    });
   }
 }
 
 var localStyles = StyleSheet.create({
-  viroContainer :{
-    flex : 1,
-    backgroundColor: "black",
+  viroContainer: {
+    flex: 1,
+    backgroundColor: 'black',
   },
-  outer : {
-    flex : 1,
+  outer: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems:'center',
-    backgroundColor: "black",
+    alignItems: 'center',
+    backgroundColor: 'black',
   },
   inner: {
-    flex : 1,
+    flex: 1,
     flexDirection: 'column',
-    alignItems:'center',
-    backgroundColor: "black",
+    alignItems: 'center',
+    backgroundColor: 'black',
   },
   titleText: {
     paddingTop: 30,
     paddingBottom: 20,
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 25
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 25,
   },
   buttonText: {
-    color:'#fff',
-    textAlign:'center',
-    fontSize : 20
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 20,
   },
-  buttons : {
+  buttons: {
     height: 80,
     width: 150,
-    paddingTop:20,
-    paddingBottom:20,
+    paddingTop: 20,
+    paddingBottom: 20,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor:'#68a0cf',
+    backgroundColor: '#68a0cf',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff',
   },
-  exitButton : {
+  exitButton: {
     height: 50,
     width: 100,
-    paddingTop:10,
-    paddingBottom:10,
+    paddingTop: 10,
+    paddingBottom: 10,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor:'#68a0cf',
+    backgroundColor: '#68a0cf',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff',
-  }
+  },
 });
 
 module.exports = ARHome;

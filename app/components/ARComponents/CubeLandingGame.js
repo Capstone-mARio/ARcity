@@ -2,6 +2,10 @@
 
 import React, { Component } from 'react';
 
+import { StyleSheet } from 'react-native';
+
+import { Actions } from 'react-native-router-flux';
+
 import {
   ViroARScene,
   ViroARPlane,
@@ -20,20 +24,26 @@ export default class HelloWorldSceneAR extends Component {
     this.state = {
       collisionPoint: [],
       score: 0,
-      ballphysics: { type: 'Dynamic', mass: 3, useGravity: true, restitution: 0, friction: 0.75},
+      ballphysics: {
+        type: 'Dynamic',
+        mass: 3,
+        useGravity: true,
+        restitution: 0,
+        friction: 0.75,
+      },
     };
-    this.resetCube = this.resetCube.bind(this)
-    this._onFloorCollide1 = this._onFloorCollide1.bind(this)
-    this._onFloorCollide2 = this._onFloorCollide2.bind(this)
+    this.resetCube = this.resetCube.bind(this);
+    this._onFloorCollide1 = this._onFloorCollide1.bind(this);
+    this._onFloorCollide2 = this._onFloorCollide2.bind(this);
   }
 
   resetCube() {
     this.ball.setNativeProps({ physicsBody: null });
     this.ball.setNativeProps({ position: [0, 1, -1] });
-    this.ball.setNativeProps({ materials: ['cube_color'] })
+    this.ball.setNativeProps({ materials: ['cube_color'] });
 
     setTimeout(() => {
-      this.ball.setNativeProps({ physicsBody: this.state.ballphysics});
+      this.ball.setNativeProps({ physicsBody: this.state.ballphysics });
     }, 500);
   }
 
@@ -56,8 +66,8 @@ export default class HelloWorldSceneAR extends Component {
           position={[0, -1, -6]}
           rotation={[-75, 0, 0]}
           physicsBody={{ type: 'Static', restitution: 0 }}
-          materials='target_floor_1'
-          viroTag='platform1'
+          materials="target_floor_1"
+          viroTag="platform1"
           onCollision={this._onFloorCollide1}
         />
 
@@ -67,35 +77,57 @@ export default class HelloWorldSceneAR extends Component {
           position={[0, 0, -8]}
           rotation={[-45, 0, 0]}
           physicsBody={{ type: 'Static', restitution: 0 }}
-          materials='target_floor_2'
-          viroTag='platform2'
+          materials="target_floor_2"
+          viroTag="platform2"
           onCollision={this._onFloorCollide2}
         />
 
-        <ViroSphere ref={(obj) => { this.ball = obj }}
+        <ViroSphere
+          ref={obj => {
+            this.ball = obj;
+          }}
           heightSegmentCount={5}
           widthSegementCount={5}
-          radius={.1}
+          radius={0.1}
           position={[0, 1, -1]}
           rotation={[0, 0, 0]}
           physicsBody={this.state.ballphysics}
           dragType="FixedToWorld"
           materials="cube_color"
-          onDrag={() => { }}
-          viroTag='gameCube'
+          onDrag={() => {}}
+          viroTag="gameCube"
         />
 
         <ViroNode position={[0, 1.5, -7.75]}>
-          <ViroFlexView width={1} height={0.8} materials="cube_color" position={[1.5, 0, 0]} onClick={this.resetCube}>
-            <ViroText text={'Reset Cube'} />
+          <ViroFlexView
+            width={1}
+            height={0.8}
+            materials="cube_color"
+            position={[1.5, 0, 0]}
+            onClick={this.resetCube}
+          >
+            <ViroText text="Reset Cube" />
           </ViroFlexView>
-          <ViroFlexView width={1} height={0.8} materials="cube_color" position={[-1.5, 0, 0]}>
+          <ViroFlexView
+            width={1}
+            height={0.8}
+            materials="cube_color"
+            position={[-1.5, 0, 0]}
+          >
             <ViroText text={'Score: ' + this.state.score.toString()} />
           </ViroFlexView>
         </ViroNode>
         {/* </ViroARPlaneSelector> */}
+        <ViroText
+          text="BACK"
+          width={2}
+          height={2}
+          position={[0, -3, -4]}
+          style={styles.helloWorldTextStyle}
+          onClick={() => Actions.pop()}
+        />
       </ViroARScene>
-    )
+    );
   }
 
   _onFloorCollide1(collidedTag, collidedPoint, collidedNormal) {
@@ -103,8 +135,8 @@ export default class HelloWorldSceneAR extends Component {
     if (collidedTag === 'gameCube') {
       this.setState({
         score: this.state.score + 100,
-      })
-      this.ball.setNativeProps({ materials: ['cube_hit'] })
+      });
+      this.ball.setNativeProps({ materials: ['cube_hit'] });
       this.ball.setNativeProps({ physicsBody: null });
     }
     // this.setState({
@@ -116,8 +148,8 @@ export default class HelloWorldSceneAR extends Component {
     if (collidedTag === 'gameCube') {
       this.setState({
         score: this.state.score + 200,
-      })
-      this.ball.setNativeProps({ materials: ['cube_hit'] })
+      });
+      this.ball.setNativeProps({ materials: ['cube_hit'] });
       this.ball.setNativeProps({ physicsBody: null });
     }
     // this.setState({
@@ -128,17 +160,27 @@ export default class HelloWorldSceneAR extends Component {
 
 ViroMaterials.createMaterials({
   cube_color: {
-    diffuseColor: "#0021cbE6"
+    diffuseColor: '#0021cbE6',
   },
   cube_hit: {
-    diffuseColor: '#ff6347'
+    diffuseColor: '#ff6347',
   },
   target_floor_1: {
-    diffuseColor: '#ff6347'
+    diffuseColor: '#ff6347',
   },
   target_floor_2: {
-    diffuseColor: '#008000'
-  }
-})
+    diffuseColor: '#008000',
+  },
+});
+
+var styles = StyleSheet.create({
+  helloWorldTextStyle: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
 
 module.exports = HelloWorldSceneAR;
