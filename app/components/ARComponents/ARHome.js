@@ -8,6 +8,7 @@
  */
 
 import React, { Component } from 'react';
+import '../../../secrets';
 import {
   AppRegistry,
   Text,
@@ -25,7 +26,7 @@ import { ViroARSceneNavigator } from 'react-viro';
  TODO: Insert your API key below
  */
 var sharedProps = {
-  apiKey: 'F6948E24-839E-4FAD-9891-6DBFD4EEBBA8',
+  apiKey: process.env.viroKey,
 };
 
 // Sets scenes you want for AR
