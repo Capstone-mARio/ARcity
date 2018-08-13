@@ -18,6 +18,8 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import { Actions } from 'react-native-router-flux';
+
 import { ViroARSceneNavigator } from 'react-viro';
 
 /*
@@ -99,19 +101,43 @@ export default class ARHome extends Component {
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
     return (
-      <ViroARSceneNavigator
-        {...this.state.sharedProps}
-        initialScene={{ scene: InitialARScene }}
-      />
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: InitialARScene }}
+        />
+        <View style={localStyles.listView}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              Actions.pop();
+            }}
+          >
+            Go Back
+          </Text>
+        </View>
+      </View>
     );
   }
 
   _getCubeGameNavigator() {
     return (
-      <ViroARSceneNavigator
-        {...this.state.sharedProps}
-        initialScene={{ scene: CubeLandingGame }}
-      />
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: CubeLandingGame }}
+        />
+        <View style={localStyles.listView}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              Actions.pop();
+            }}
+          >
+            Go Back
+          </Text>
+        </View>
+      </View>
     );
   }
 
@@ -174,17 +200,14 @@ var localStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
   },
-  exitButton: {
-    height: 50,
-    width: 100,
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: '#68a0cf',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff',
+  listView: {
+    flex: 1,
+    height: 100,
+    width: '100%',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+    backgroundColor: '#000000aa',
   },
 });
 
