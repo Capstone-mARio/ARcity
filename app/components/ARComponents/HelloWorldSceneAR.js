@@ -29,15 +29,6 @@ export default class HelloWorldSceneAR extends Component {
           position={[0, 0, -1]}
           style={styles.helloWorldTextStyle}
         />
-
-        <ViroText
-          text="BACK"
-          width={2}
-          height={2}
-          position={[0, -3, -4]}
-          style={styles.helloWorldTextStyle}
-          onClick={() => Actions.pop()}
-        />
       </ViroARScene>
     );
   }
