@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: '20%',
     backgroundColor: color.white,
     flexDirection: 'column',
     alignItems: 'center',
@@ -27,7 +26,6 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#FF553F',
     height: normalize(55),
   },
 
@@ -41,6 +39,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'black',
+  },
+  title: {
+    padding: 30,
+    fontSize: 50,
+  },
+  username: {
+    fontSize: 30,
+    paddingBottom: 30,
   },
 });
 

@@ -29,15 +29,20 @@ class Profile extends React.Component {
       >
         <View style={styles.outerContainer}>
           <View style={styles.container}>
+          <Text style={styles.title}>AR City</Text>
             <Image source={require('./default.png')} />
-            <Text>{this.props.user.username}</Text>
-            <Text
-              onPress={() => {
-                Actions.ARHome();
-              }}
-            >
-              AR World
-            </Text>
+            <Text style={styles.username}>{this.props.user.username}</Text>
+            <Button
+            raised
+            borderRadius={4}
+            title={'Enter the AR World'}
+            containerViewStyle={[styles.containerView]}
+            buttonStyle={[styles.button]}
+            textStyle={styles.buttonText}
+            onPress={() => {
+              Actions.ARHome();
+            }}
+          />
           </View>
         </View>
       </GestureRecognizer>
