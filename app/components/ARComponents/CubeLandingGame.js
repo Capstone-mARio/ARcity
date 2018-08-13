@@ -23,16 +23,31 @@ const styles = StyleSheet.create({
   },
 });
 
+var ball;
+
+const ballphysics = { type: 'Dynamic', mass: 3, useGravity: true, restitution: 0, friction: 0.75 };
+
+const _resetCube = () => {
+  ball.setNativeProps({ physicsBody: null });
+  ball.setNativeProps({ position: [0, .25, -1] });
+  ball.setNativeProps({ materials: ['cube_color'] })
+  setTimeout(() => {
+    ball.setNativeProps({ physicsBody: ballphysics });
+  }, 500);
+}
+
+setInterval(async function () {const respond = await ball.getTransformAsync();
+if (respond.position[1] <= -50){
+  _resetCube();
+}}, 3000)
+
 export default class CubeLandingGame extends Component {
   constructor() {
     super();
     this.state = {
-      tracking: false,
-      ballphysics: { type: 'Dynamic', mass: 3, useGravity: true, restitution: 0, friction: 0.75 },
       platformphysics: { type: 'Static', restitution: 0 },
       score: 0,
     };
-    this._resetCube = this._resetCube.bind(this);
     this._onFloorCollide1 = this._onFloorCollide1.bind(this);
     this._onFloorCollide2 = this._onFloorCollide2.bind(this);
   }
@@ -70,13 +85,13 @@ export default class CubeLandingGame extends Component {
           onCollision={this._onFloorCollide2}
         />
 
-        <ViroSphere ref={(obj) => { this.ball = obj }}
+        <ViroSphere ref={(obj) => { ball = obj }}
           heightSegmentCount={5}
           widthSegementCount={5}
           radius={.1}
           position={[0, .25, -1]}
           rotation={[0, 0, 0]}
-          physicsBody={this.state.ballphysics}
+          physicsBody={ballphysics}
           dragType="FixedToWorld"
           viroTag="gameCube"
           materials="cube_color"
@@ -84,20 +99,11 @@ export default class CubeLandingGame extends Component {
         />
 
         <ViroNode position={[0, 1.5, -6]}>
-          <ViroText text="Reset Cube" position={[1, 0, 0]} onClick={this._resetCube} style={styles.TextStyle} />
+          <ViroText text="Reset Cube" position={[1, 0, 0]} onClick={_resetCube} style={styles.TextStyle} />
           <ViroText text={'Score: ' + this.state.score.toString()} position={[-1, 0, 0]} style={styles.TextStyle} />
         </ViroNode>
       </ViroARScene>
     )
-  }
-
-  _resetCube() {
-    this.ball.setNativeProps({ physicsBody: null });
-    this.ball.setNativeProps({ position: [0, .25, -1] });
-    this.ball.setNativeProps({ materials: ['cube_color'] })
-    setTimeout(() => {
-      this.ball.setNativeProps({ physicsBody: this.state.ballphysics });
-    }, 500);
   }
 
   _onFloorCollide1(collidedTag, collidedPoint, collidedNormal) {
@@ -105,8 +111,8 @@ export default class CubeLandingGame extends Component {
       this.setState({
         score: this.state.score + 100,
       })
-      this.ball.setNativeProps({ materials: ['cube_hit'] })
-      this.ball.setNativeProps({ physicsBody: null });
+      ball.setNativeProps({ materials: ['cube_hit'] })
+      ball.setNativeProps({ physicsBody: null });
     }
   }
   _onFloorCollide2(collidedTag, collidedPoint, collidedNormal) {
@@ -114,8 +120,8 @@ export default class CubeLandingGame extends Component {
       this.setState({
         score: this.state.score + 200,
       })
-      this.ball.setNativeProps({ materials: ['cube_hit'] })
-      this.ball.setNativeProps({ physicsBody: null });
+      ball.setNativeProps({ materials: ['cube_hit'] })
+      ball.setNativeProps({ physicsBody: null });
     }
   }
 }
