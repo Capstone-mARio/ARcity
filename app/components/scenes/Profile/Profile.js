@@ -7,14 +7,14 @@ import { connect } from 'react-redux';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-// import {actions as auth} from "../../index"
-// const {} = auth;
-
 import styles from './styles';
 
 class Profile extends React.Component {
   onSwipeLeft() {
     Actions.ARHome();
+  }
+  onSwipeRight() {
+    Actions.MapView();
   }
   render() {
     const config = {
@@ -25,17 +25,22 @@ class Profile extends React.Component {
       <GestureRecognizer
         style={styles.container}
         onSwipeLeft={() => this.onSwipeLeft()}
+        onSwipeRight={() => this.onSwipeRight()}
         config={config}
       >
-        <Image source={require('./default.png')} />
-        <Text>{this.props.user.username}</Text>
-        <Text
-          onPress={() => {
-            Actions.ARHome();
-          }}
-        >
-          AR World
-        </Text>
+        <View style={styles.outerContainer}>
+          <View style={styles.container}>
+            <Image source={require('./default.png')} />
+            <Text style={styles.username}>{this.props.user.username}</Text>
+            <Text
+              onPress={() => {
+                Actions.ARHome();
+              }}
+            >
+              AR World
+            </Text>
+          </View>
+        </View>
       </GestureRecognizer>
     );
   }
