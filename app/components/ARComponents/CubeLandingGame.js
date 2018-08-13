@@ -11,6 +11,7 @@ import {
   ViroMaterials,
   ViroNode,
   ViroText,
+  ViroConstants,
 } from 'react-viro';
 
 const styles = StyleSheet.create({
@@ -54,10 +55,11 @@ export default class CubeLandingGame extends Component {
     this.state = {
       platformphysics: { type: 'Static', restitution: 0 },
       score: 0,
-      ballsRemaining: 9,
+      ballsRemaining: 10,
     };
     this._onFloorCollide1 = this._onFloorCollide1.bind(this);
     this._onFloorCollide2 = this._onFloorCollide2.bind(this);
+    this._onInitialized = this._onInitialized.bind(this);
   }
 
   componentDidMount() {
@@ -71,7 +73,10 @@ export default class CubeLandingGame extends Component {
 
   render() {
     return (
-      <ViroARScene physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}>
+      <ViroARScene
+        onTrackingUpdated={this._onInitialized}
+        physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}
+      >
         {/*original spawn plane*/}
         <ViroQuad
           scale={[1, 1, 1]}
@@ -135,6 +140,16 @@ export default class CubeLandingGame extends Component {
         </ViroNode>
       </ViroARScene>
     );
+  }
+
+  _onInitialized(state, reason) {
+    if (state == ViroConstants.TRACKING_NORMAL) {
+      this.setState({
+        ballsRemaining: 9,
+      });
+    } else if (state == ViroConstants.TRACKING_NONE) {
+      // Handle loss of tracking
+    }
   }
 
   _onFloorCollide1(collidedTag, collidedPoint, collidedNormal) {
