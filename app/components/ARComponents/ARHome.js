@@ -108,7 +108,7 @@ export default class ARHome extends Component {
         />
         <View style={localStyles.listView}>
           <Text
-            style={{ fontSize: 25 }}
+            style={{ color: 'white' }}
             onPress={() => {
               Actions.pop();
             }}
@@ -122,10 +122,22 @@ export default class ARHome extends Component {
 
   _getCubeGameNavigator() {
     return (
-      <ViroARSceneNavigator
-        {...this.state.sharedProps}
-        initialScene={{ scene: CubeLandingGame }}
-      />
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: CubeLandingGame }}
+        />
+        <View style={localStyles.listView}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              Actions.pop();
+            }}
+          >
+            Go Back
+          </Text>
+        </View>
+      </View>
     );
   }
 
@@ -190,10 +202,9 @@ var localStyles = StyleSheet.create({
   },
   listView: {
     flex: 1,
-    height: 72,
+    height: 100,
     width: '100%',
     position: 'absolute',
-    justifyContent: 'center',
     alignItems: 'center',
     bottom: 0,
     backgroundColor: '#000000aa',

@@ -11,9 +11,15 @@ import {
 const resizeMode = 'contain';
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    backgroundColor: color.white,
+  },
   container: {
+    marginTop: 50,
     flex: 1,
     backgroundColor: color.white,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
   containerView: {
@@ -35,6 +41,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'black',
+  },
+  username: {
+    fontSize: fontSize.regular + 10,
+    fontFamily: fontFamily.bold,
   },
 });
 
