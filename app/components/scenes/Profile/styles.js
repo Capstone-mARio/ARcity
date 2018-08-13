@@ -11,9 +11,15 @@ import {
 const resizeMode = 'contain';
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    backgroundColor: color.white,
+  },
   container: {
     flex: 1,
+    paddingTop: '20%',
     backgroundColor: color.white,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
   containerView: {

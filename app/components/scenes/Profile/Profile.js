@@ -27,15 +27,19 @@ class Profile extends React.Component {
         onSwipeLeft={() => this.onSwipeLeft()}
         config={config}
       >
-        <Image source={require('./default.png')} />
-        <Text>{this.props.user.username}</Text>
-        <Text
-          onPress={() => {
-            Actions.ARHome();
-          }}
-        >
-          AR World
-        </Text>
+        <View style={styles.outerContainer}>
+          <View style={styles.container}>
+            <Image source={require('./default.png')} />
+            <Text>{this.props.user.username}</Text>
+            <Text
+              onPress={() => {
+                Actions.ARHome();
+              }}
+            >
+              AR World
+            </Text>
+          </View>
+        </View>
       </GestureRecognizer>
     );
   }
