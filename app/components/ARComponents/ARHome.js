@@ -41,6 +41,8 @@ var ShootingGame = require('./ShootingGame');
 var UNSET = 'UNSET';
 var AR_NAVIGATOR_TYPE = 'AR';
 var CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
+var SHOOTING_GAME = 'SHOOTING_GAME';
+var LOCATION_SAMPLE = 'LOCATION_SAMPLE';
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR scenes. By default, we offer the user a choice.
@@ -72,6 +74,12 @@ export default class ARHome extends Component {
     } else if (this.state.navigatorType == CUBE_LANDING_GAME) {
       return this._getCubeGameNavigator();
     }
+      else if (this.state.navigatorType === SHOOTING_GAME) {
+        return this._getShootingGameNavigator();
+      }
+      else if (this.state.navigatorType === LOCATION_SAMPLE) {
+        return this._getLocationSampleNavigator();
+      }
   }
 
 
@@ -99,6 +107,23 @@ export default class ARHome extends Component {
           >
             <Text style={localStyles.buttonText}>CUBE GAME</Text>
           </TouchableHighlight>
+
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(SHOOTING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
+            <Text style={localStyles.buttonText}>SHOOTING GAME</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(LOCATION_SAMPLE)}
+            underlayColor={'#68a0ff'}
+          >
+            <Text style={localStyles.buttonText}>LOCATION SAMPLE</Text>
+          </TouchableHighlight>
+
         </View>
       </View>
     );
@@ -123,6 +148,24 @@ export default class ARHome extends Component {
       />
     );
   }
+  _getShootingGameNavigator() {
+    return (
+      <ViroARSceneNavigator
+        {...this.state.sharedProps}
+        initialScene={{ scene: ShootingGame }}
+      />
+    );
+  }
+  _getLocationSampleNavigator() {
+    return (
+      <ViroARSceneNavigator
+        {...this.state.sharedProps}
+        initialScene={{ scene: LocationSample }}
+      />
+    );
+  }
+
+
 
   // This function returns an anonymous/lambda function to be used
   // by the experience selector buttons
