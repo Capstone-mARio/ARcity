@@ -16,6 +16,9 @@ class Profile extends React.Component {
   onSwipeLeft() {
     Actions.ARHome();
   }
+  onSwipeRight() {
+    Actions.GeoView();
+  }
   render() {
     const config = {
       velocityThreshold: 0.3,
@@ -25,6 +28,7 @@ class Profile extends React.Component {
       <GestureRecognizer
         style={styles.container}
         onSwipeLeft={() => this.onSwipeLeft()}
+        onSwipeRight={() => this.onSwipeRight()}
         config={config}
       >
         <View style={styles.outerContainer}>
@@ -41,6 +45,17 @@ class Profile extends React.Component {
             textStyle={styles.buttonText}
             onPress={() => {
               Actions.ARHome();
+            }}
+          />
+                      <Button
+            raised
+            borderRadius={4}
+            title={'Go to Geo View'}
+            containerViewStyle={[styles.containerView]}
+            buttonStyle={[styles.button]}
+            textStyle={styles.buttonText}
+            onPress={() => {
+              Actions.GeoView();
             }}
           />
           </View>
