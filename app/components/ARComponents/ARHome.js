@@ -25,6 +25,8 @@ import {
   ViroARSceneNavigator
 } from 'react-viro';
 
+import { Actions } from 'react-native-router-flux';
+
 /*
  TODO: Insert your API key below
  */
@@ -132,20 +134,44 @@ export default class ARHome extends Component {
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
     return (
-      <ViroARSceneNavigator
-        {...this.state.sharedProps}
-        initialScene={{ scene: InitialARScene }}
-        worldAlignment="GravityAndHeading"
-      />
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          worldAlignment="GravityAndHeading"
+          initialScene={{ scene: InitialARScene }}
+        />
+        <View style={localStyles.listView}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              Actions.pop();
+            }}
+          >
+            Go Back
+          </Text>
+        </View>
+      </View>
     );
   }
 
   _getCubeGameNavigator() {
     return (
-      <ViroARSceneNavigator
-        {...this.state.sharedProps}
-        initialScene={{ scene: CubeLandingGame }}
-      />
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: CubeLandingGame }}
+        />
+        <View style={localStyles.listView}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              Actions.pop();
+            }}
+          >
+            Go Back
+          </Text>
+        </View>
+      </View>
     );
   }
   _getShootingGameNavigator() {
@@ -237,6 +263,15 @@ var localStyles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff',
+  },
+  listView: {
+    flex: 1,
+    height: '15%',
+    width: '100%',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+    backgroundColor: '#000000aa',
   },
 });
 

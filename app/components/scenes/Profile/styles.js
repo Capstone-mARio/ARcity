@@ -11,9 +11,14 @@ import {
 const resizeMode = 'contain';
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    backgroundColor: color.white,
+  },
   container: {
     flex: 1,
     backgroundColor: color.white,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
   containerView: {
@@ -21,7 +26,6 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#FF553F',
     height: normalize(55),
   },
 
@@ -35,6 +39,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'black',
+  },
+  title: {
+    padding: 30,
+    fontSize: 50,
+  },
+  username: {
+    fontSize: 30,
+    paddingBottom: 30,
   },
 });
 
