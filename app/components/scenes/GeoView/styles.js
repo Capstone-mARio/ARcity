@@ -29,10 +29,7 @@ const styles = StyleSheet.create({
   },
 
   listItem: {
-    height: '20%',
-    width: '80%',
-    marginTop: 10,
-    backgroundColor: 'red',
+    fontFamily: 'Verdana',
   },
   containerView: {
     width: windowWidth - 40,
