@@ -109,10 +109,10 @@ export default class ARHome extends Component {
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
     return (
-<<<<<<< HEAD
       <View style={{ flex: 1 }}>
         <ViroARSceneNavigator
           {...this.state.sharedProps}
+          worldAlignment="GravityAndHeading"
           initialScene={{ scene: InitialARScene }}
         />
         <View style={localStyles.listView}>
@@ -126,13 +126,6 @@ export default class ARHome extends Component {
           </Text>
         </View>
       </View>
-=======
-      <ViroARSceneNavigator
-        {...this.state.sharedProps}
-        initialScene={{ scene: InitialARScene }}
-        worldAlignment="GravityAndHeading"
-      />
->>>>>>> b102d982205a1d91d39e726344b3a9a412177354
     );
   }
 
