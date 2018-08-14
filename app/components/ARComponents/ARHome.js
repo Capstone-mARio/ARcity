@@ -6,6 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+console.disableYellowBox = true;
 
 import React, { Component } from 'react';
 import '../../../secrets';
@@ -18,7 +19,11 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import { ViroARSceneNavigator } from 'react-viro';
+import {location, targetLocation} from './LocationGetter'
+
+import {
+  ViroARSceneNavigator
+} from 'react-viro';
 
 import { Actions } from 'react-native-router-flux';
 
@@ -32,6 +37,8 @@ var sharedProps = {
 // Sets scenes you want for AR
 var InitialARScene = require('./HelloWorldSceneAR');
 var CubeLandingGame = require('./CubeLandingGame');
+var LocationSample = require('./LocationSample');
+var ShootingGame = require('./ShootingGame');
 
 var UNSET = 'UNSET';
 var AR_NAVIGATOR_TYPE = 'AR';
@@ -69,6 +76,7 @@ export default class ARHome extends Component {
     }
   }
 
+
   // Presents the user with a choice of an AR or VR experience
   _getExperienceSelector() {
     return (
@@ -101,6 +109,7 @@ export default class ARHome extends Component {
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
     return (
+<<<<<<< HEAD
       <View style={{ flex: 1 }}>
         <ViroARSceneNavigator
           {...this.state.sharedProps}
@@ -117,6 +126,13 @@ export default class ARHome extends Component {
           </Text>
         </View>
       </View>
+=======
+      <ViroARSceneNavigator
+        {...this.state.sharedProps}
+        initialScene={{ scene: InitialARScene }}
+        worldAlignment="GravityAndHeading"
+      />
+>>>>>>> b102d982205a1d91d39e726344b3a9a412177354
     );
   }
 

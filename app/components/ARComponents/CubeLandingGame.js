@@ -53,6 +53,7 @@ export default class CubeLandingGame extends Component {
   constructor() {
     super();
     this.state = {
+      loaded: false,
       platformphysics: { type: 'Static', restitution: 0 },
       score: 0,
       ballsRemaining: 10,
@@ -72,7 +73,7 @@ export default class CubeLandingGame extends Component {
   }
 
   render() {
-    return (
+    return this.state.loaded ? (
       <ViroARScene
         onTrackingUpdated={this._onInitialized}
         physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}
@@ -139,6 +140,17 @@ export default class CubeLandingGame extends Component {
           />
         </ViroNode>
       </ViroARScene>
+    ) : (
+      <ViroARScene
+        onTrackingUpdated={this._onInitialized}
+        physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}
+      >
+        <ViroText
+          style={styles.TextStyle}
+          position={[0, 0, -1]}
+          text="Loading..."
+        />
+      </ViroARScene>
     );
   }
 
@@ -146,30 +158,39 @@ export default class CubeLandingGame extends Component {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
         ballsRemaining: 9,
+        loaded: true,
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
       // Handle loss of tracking
     }
   }
 
-  _onFloorCollide1(collidedTag, collidedPoint, collidedNormal) {
+  _onFloorCollide1 = (collidedTag, collidedPoint, collidedNormal) => {
     if (collidedTag === 'gameCube') {
       this.setState({
         score: this.state.score + 100,
       });
       ball.setNativeProps({ materials: ['cube_hit'] });
       ball.setNativeProps({ physicsBody: null });
+
+      setTimeout(() => {
+        _resetCube(this);
+      }, 1000);
     }
-  }
-  _onFloorCollide2(collidedTag, collidedPoint, collidedNormal) {
+  };
+  _onFloorCollide2 = (collidedTag, collidedPoint, collidedNormal) => {
     if (collidedTag === 'gameCube') {
       this.setState({
         score: this.state.score + 200,
       });
       ball.setNativeProps({ materials: ['cube_hit'] });
       ball.setNativeProps({ physicsBody: null });
+
+      setTimeout(() => {
+        _resetCube(this);
+      }, 1000);
     }
-  }
+  };
 }
 
 ViroMaterials.createMaterials({
