@@ -1,12 +1,7 @@
 import { AppRegistry } from 'react-native';
 import App from './App.js';
-import { YellowBox } from 'react-native';
 
-YellowBox.ignoreWarnings([
-  'Warning: componentWillMount is deprecated',
-  'Warning: componentWillReceiveProps is deprecated',
-  'Warning: isMounted is deprecated'
-]);
+console.disableYellowBox = true;
 
 AppRegistry.registerComponent('ARExperience', () => App);
 
