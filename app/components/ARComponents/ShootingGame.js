@@ -32,7 +32,7 @@ export default class ShootingGame extends Component {
   }
 
   render(){
-    console.log(location);
+    // console.log(location);
     return(
       <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
         {this._displayLines()}

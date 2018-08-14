@@ -1,8 +1,23 @@
 
-var target = {
-  latitude: 40.70467766025543,
-  longitude: -74.00904218848154
-};
+var targets = [
+  {
+    latitude: 40.70467766025543,
+    longitude: -74.00904218848154,
+    x: 0,
+    y: 0,
+    id: 1,
+  },
+  {
+    latitude: 40.7051,
+    longitude: -74.0087,
+    x: 0,
+    y: 0,
+    id: 2
+  }
+];
+
+// {latitude: 40.7051,longitude: -74.0087,x: 0,y: 0,id: 2}
+
 
 let location = {}
 let targetLocation = {}
@@ -22,22 +37,24 @@ let targetLocation = {}
 //   location['y'] = XY.y;
 // }
 
-const targetXY = getXY(target.latitude, target.longitude)
-targetLocation['x'] = targetXY.x;
-targetLocation['y'] = targetXY.y;
+for (let i = 0; i < targets.length; i++) {
+  const targetXY = getXY(targets[i].latitude, targets[i].longitude)
+  targets[i].x = targetXY.x;
+  targets[i].y = targetXY.y;
+}
 
-function getXY(lat, lon){
-  let lon_rad = (lon/ 180.0 * Math.PI)
+function getXY(lat, lon) {
+  let lon_rad = (lon / 180.0 * Math.PI)
   let lat_rad = (lat / 180.0 * Math.PI)
   const sm_a = 6378137.0
   let x = sm_a * lon_rad
   let y = sm_a * Math.log((Math.sin(lat_rad) + 1) / Math.cos(lat_rad))
 
-  return {x, y}
+  return { x, y }
 }
 
 // function error(err) {
 //   console.warn(`ERROR(${err.code}): ${err.message}`);
 // }
 
-module.exports = { getXY, targetLocation};
+module.exports = { getXY, targets };
