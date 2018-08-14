@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import {
   ViroARScene,
   Viro3DObject,
+  ViroBox
 } from 'react-viro';
 
-import {getXY, targetLocation} from './LocationGetter'
+import { getXY, targetLocation } from './LocationGetter'
+import CubeLandingGame from './CubeLandingGame'
 
 var options = {
   enableHighAccuracy: true,
@@ -13,39 +15,41 @@ var options = {
   maximumAge: 0
 }
 
-export default class LocationSample extends Component{
-  constructor(){
-    super();
+export default class LocationSample extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       position: [],
       currLocation: {
         x: 0,
         y: 0
-      }
+      },
     }
     this.success = this.success.bind(this)
     this.error = this.error.bind(this)
+    this._jumpNextScene = this._jumpNextScene.bind(this)
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     await navigator.geolocation.getCurrentPosition(this.success, this.error, options)
   }
 
-  render(){
+  render() {
     navigator.geolocation.watchPosition(this.success, this.error, options);
     console.log('position', this.state.position);
 
     return this.state.currLocation.x !== 0 ?
-    (
-      <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }}>
-        <ViroBox
-          type="GLTF"
-          position={this.state.position}
-          height={5}
-          length={5}
-          width={5}
-        />
-        {/* <Viro3DObject
+      (
+        <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }}>
+          <ViroBox
+            type="GLTF"
+            position={this.state.position}
+            height={5}
+            length={5}
+            width={5}
+            onClick={this._jumpNextScene}
+          />
+          {/* <Viro3DObject
           type="GLTF"
           source={require('./res/hoa_hakananaia/scene.gltf')}
           resources={[
@@ -57,19 +61,19 @@ export default class LocationSample extends Component{
           position={this.state.position}
           scale={[1,1,1]}
         /> */}
-      </ViroARScene>
+        </ViroARScene>
 
-    ) : null
+      ) : null
   }
   success(pos) {
     var crd = pos.coords;
     const XY = getXY(crd.latitude, crd.longitude)
     this.setState({
-      currLocation : {x: XY.x, y: XY.y }
+      currLocation: { x: XY.x, y: XY.y }
     })
 
     const realX = targetLocation.x - this.state.currLocation.x;
-    const realY = targetLocation.y-this.state.currLocation.y;
+    const realY = targetLocation.y - this.state.currLocation.y;
 
     this.setState({
       position: [realX, 1, -realY]
@@ -84,5 +88,9 @@ export default class LocationSample extends Component{
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
+  _jumpNextScene() {
+    this.props.sceneNavigator.jump("Cube Game", { scene: CubeLandingGame })
+  }
+
 }
-module.exports=LocationSample
+module.exports = LocationSample
