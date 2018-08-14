@@ -14,6 +14,8 @@ import {
   ViroPolygon,
 } from 'react-viro';
 
+import location from './LocationGetter'
+
 export default class ShootingGame extends Component {
   constructor(){
     super();
@@ -30,6 +32,7 @@ export default class ShootingGame extends Component {
   }
 
   render(){
+    console.log(location);
     return(
       <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
         {this._displayLines()}
@@ -40,11 +43,13 @@ export default class ShootingGame extends Component {
   _shoot() { //////////////
     var lines = []
     for (let i = 0; i < this.state.numOfLines; i++) {
+      const lineKey='LineKey_'+i;
       var line = <ViroSphere ref={(obj) => this.line=obj}
         position={[0, 0, 3]}
         heightSegmentCount={5}
         widthSegementCount={5}
         radius={.1}
+        key={lineKey}
         visible={false}
         materials={['ball_color']}
         physicsBody={{ mass: 1, type: 'Dynamic', force: { value: this.state.force }, }}

@@ -6,6 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+console.disableYellowBox = true;
 
 import React, { Component } from 'react';
 import {
@@ -16,6 +17,8 @@ import {
   PixelRatio,
   TouchableHighlight,
 } from 'react-native';
+
+import {location, targetLocation} from './LocationGetter'
 
 import {
   ViroARSceneNavigator
@@ -29,7 +32,7 @@ var sharedProps = {
 }
 
 // Sets the default scene you want for AR and VR
-var InitialARScene = require('./ShootingGame');
+var InitialARScene = require('./LocationSample');
 
 var UNSET = "UNSET";
 var AR_NAVIGATOR_TYPE = "AR";
@@ -44,8 +47,9 @@ export default class ARHome extends Component {
 
     this.state = {
       navigatorType : defaultNavigatorType,
-      sharedProps : sharedProps
+      sharedProps : sharedProps,
     }
+
     this._getExperienceSelector = this._getExperienceSelector.bind(this);
     this._getARNavigator = this._getARNavigator.bind(this);
     this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
@@ -61,6 +65,7 @@ export default class ARHome extends Component {
       return this._getARNavigator();
     }
   }
+
 
   // Presents the user with a choice of an AR or VR experience
   _getExperienceSelector() {
@@ -89,7 +94,9 @@ export default class ARHome extends Component {
     return (
       <ViroARSceneNavigator
         {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
+        initialScene={{ scene: InitialARScene }}
+        worldAlignment="GravityAndHeading"
+      />
     );
   }
 
