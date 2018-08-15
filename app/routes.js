@@ -22,6 +22,7 @@ import CompleteProfile from './components/scenes/CompleteProfile/CompleteProfile
 import ARHome from './components/ARComponents/ARHome';
 import ForgotPassword from './components/scenes/ForgotPassword/ForgotPassword';
 import Profile from './components/scenes/Profile/Profile';
+import GeoView from './components/scenes/GeoView/GeoView';
 
 import { color, navTitleStyle } from './styles/theme';
 
@@ -92,6 +93,13 @@ export default class extends React.Component {
               component={Profile}
               title=""
               initial={true}
+              hideNavBar
+            />
+            <Scene
+              key="GeoView"
+              component={GeoView}
+              title=""
+              initial={false}
               hideNavBar
             />
           </Stack>
