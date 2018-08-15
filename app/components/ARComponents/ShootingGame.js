@@ -34,7 +34,7 @@ export default class ShootingGame extends Component {
   render(){
     // console.log(location);
     return(
-      <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
+      <ViroARScene physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
         {this._displayLines()}
       </ViroARScene>
     )
@@ -52,7 +52,7 @@ export default class ShootingGame extends Component {
         key={lineKey}
         visible={false}
         materials={['ball_color']}
-        physicsBody={{ mass: 1, type: 'Dynamic', force: { value: this.state.force }, }}
+        physicsBody={{ mass: 1, type: 'Dynamic', force: { value: this.state.force }, useGravity: false }}
       />
       lines.push(line)
     }
