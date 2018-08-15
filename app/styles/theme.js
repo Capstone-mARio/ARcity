@@ -1,5 +1,7 @@
 import { Dimensions, Platform } from 'react-native';
 import { moderateScale as normalize } from 'react-native-size-matters';
+import Color from 'react-native-material-color';
+import { iOSUIKit, material } from 'react-native-typography'
 
 const color = {
     black: "#3B3031",
@@ -9,7 +11,9 @@ const color = {
     light_grey: "#eaeaea",
     grey: "#ccc",
     red: "red",
-    underlayColor: "#ddd"
+    underlayColor: "#ddd",
+    delta_grey: "rgb(84, 84, 84)",
+    button_color: '#FF69B4',
 }
 
 const fontSize = {
@@ -19,11 +23,11 @@ const fontSize = {
 }
 
 const fontFamily = {
-    extrabold: "Verdana-Bold",
-    bold: "Verdana-Bold",
-    medium: "Verdana",
-    regular: "Verdana",
-    light: "Zapfino"
+    extrabold: "Futura-CondensedExtraBold",
+    bold: "Futura-CondensedExtraBold",
+    medium: "Futura-Medium",
+    regular: "Futura",
+    light: "Futura"
 }
 
 const padding = 8;

@@ -7,17 +7,18 @@ const resizeMode = 'contain';
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor: color.white
+        backgroundColor: color.delta_gray,
     },
 
     containerView:{
         width: windowWidth - 40
     },
 
-    button:{
-        backgroundColor: "#FF553F",
-        height: normalize(55)
-    },
+  button: {
+    margin: 10,
+    backgroundColor: color.button_color,
+    height: normalize(55),
+  },
 
     buttonText:{
         fontSize: fontSize.regular + 2,
