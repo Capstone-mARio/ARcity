@@ -16,8 +16,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: color.white,
+    backgroundColor: color.delta_grey,
   },
+
+  textContainer: {
+    margin: 10,
+  },
+
 
   listComponent: {
     width: windowWidth - 40,
@@ -29,35 +34,12 @@ const styles = StyleSheet.create({
   },
 
   listItem: {
-    fontFamily: 'Verdana',
+    backgroundColor: color.delta_grey,
   },
   containerView: {
     width: windowWidth - 40,
   },
 
-  button: {
-    height: normalize(55),
-  },
-
-  buttonText: {
-    fontSize: fontSize.regular + 2,
-    fontFamily: fontFamily.bold,
-  },
-
-  outer: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  title: {
-    padding: 30,
-    fontSize: 50,
-  },
-  username: {
-    fontSize: 30,
-    paddingBottom: 30,
-  },
 });
 
 export default styles;

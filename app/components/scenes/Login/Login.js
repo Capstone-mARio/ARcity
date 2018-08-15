@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { login } from '../../../redux/reducers/authReducer';
 
 import Form from '../../SubComponents/Form';
+import { iOSUIKit, material } from 'react-native-typography';
 
 const fields = [
   {
@@ -81,7 +82,8 @@ class Login extends React.Component {
         fields={fields}
         showLabel={false}
         onSubmit={this.onSubmit}
-        buttonTitle={'LOG IN'}
+        buttonTitle={'Log in'}
+        textStyle={material.titleWhite}
         error={this.state.error}
         onForgotPassword={this.onForgotPassword}
       />
