@@ -54,7 +54,7 @@ export default class extends React.Component {
           backButtonTintColor={color.black}
         >
           <Stack key="Auth">
-            {/* <Scene
+            <Scene
               key="Welcome"
               component={Welcome}
               title=""
@@ -94,12 +94,12 @@ export default class extends React.Component {
               title=""
               initial={true}
               hideNavBar
-            /> */}
+            />
             <Scene
               key="GeoView"
               component={GeoView}
               title=""
-              initial={true}
+              initial={false}
               hideNavBar
             />
           </Stack>
