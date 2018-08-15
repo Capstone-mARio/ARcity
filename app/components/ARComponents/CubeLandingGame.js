@@ -67,7 +67,7 @@ export default class CubeLandingGame extends Component {
     setInterval(async () => {
       const respond = await ball.getTransformAsync();
       if (respond.position[1] <= -10) {
-        this.props.sceneNavigator.pop();
+        _resetCube(this);
       }
     }, 500);
   }
