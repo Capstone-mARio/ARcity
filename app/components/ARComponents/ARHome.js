@@ -25,8 +25,7 @@ import {
 import '../../../secrets';
 
 //API key below
-var sharedProps = { apiKey: process.env.viroKey, };
-
+var sharedProps = { apiKey: process.env.viroKey };
 
 // Sets scenes you want for AR
 var InitialARScene = require('./HelloWorldSceneAR');
@@ -42,8 +41,7 @@ var SHOOTING_GAME = 'SHOOTING_GAME';
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR scenes. By default, we offer the user a choice.
-var defaultNavigatorType = LOCATION_SAMPLE;
-
+var defaultNavigatorType = AR_NAVIGATOR_TYPE;
 
 export default class ARHome extends Component {
   constructor() {
@@ -54,7 +52,9 @@ export default class ARHome extends Component {
     };
     this._getExperienceSelector = this._getExperienceSelector.bind(this);
     this._getARNavigator = this._getARNavigator.bind(this);
-    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
+    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(
+      this
+    );
     this._exitViro = this._exitViro.bind(this);
   }
 
@@ -86,18 +86,29 @@ export default class ARHome extends Component {
             <Text style={localStyles.buttonText}>HELLO WORLD AR</Text>
           </TouchableHighlight> */}
 
-          <TouchableHighlight style={localStyles.buttons} onPress={this._getExperienceButtonOnPress(CUBE_LANDING_GAME)} underlayColor={'#68a0ff'}>
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(CUBE_LANDING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
             <Text style={localStyles.buttonText}>CUBE GAME</Text>
           </TouchableHighlight>
 
-          <TouchableHighlight style={localStyles.buttons} onPress={this._getExperienceButtonOnPress(SHOOTING_GAME)} underlayColor={'#68a0ff'}>
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(SHOOTING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
             <Text style={localStyles.buttonText}>SHOOTING GAME</Text>
           </TouchableHighlight>
 
-          <TouchableHighlight style={localStyles.buttons} onPress={this._getExperienceButtonOnPress(LOCATION_SAMPLE)} underlayColor={'#68a0ff'}>
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(LOCATION_SAMPLE)}
+            underlayColor={'#68a0ff'}
+          >
             <Text style={localStyles.buttonText}>LOCATION SAMPLE</Text>
           </TouchableHighlight>
-
         </View>
       </View>
     );
@@ -107,9 +118,13 @@ export default class ARHome extends Component {
   _getARNavigator() {
     return (
       <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} worldAlignment="GravityAndHeading" initialScene={{ scene: InitialARScene }} />
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          worldAlignment="GravityAndHeading"
+          initialScene={{ scene: InitialARScene }}
+        />
         <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => this._exitViro() } >
+          <Text style={{ color: 'white' }} onPress={() => this._exitViro()}>
             Go Back
           </Text>
         </View>
@@ -120,9 +135,17 @@ export default class ARHome extends Component {
   _getCubeGameNavigator() {
     return (
       <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: CubeLandingGame }} />
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: CubeLandingGame }}
+        />
         <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => { this._exitViro() }}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              this._exitViro();
+            }}
+          >
             Go Back
           </Text>
         </View>
@@ -132,9 +155,17 @@ export default class ARHome extends Component {
   _getShootingGameNavigator() {
     return (
       <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: ShootingGame }} />
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: ShootingGame }}
+        />
         <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => { this._exitViro() }}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              this._exitViro();
+            }}
+          >
             Go Back
           </Text>
         </View>
@@ -144,9 +175,17 @@ export default class ARHome extends Component {
   _getLocationSampleNavigator() {
     return (
       <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: LocationSample }} />
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: LocationSample }}
+        />
         <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => { this.setState({navigatorType: LOCATION_SAMPLE}) }}>
+          <Text
+            style={{ color: 'white' }}
+            onPress={() => {
+              this.setState({ navigatorType: LOCATION_SAMPLE });
+            }}
+          >
             Go Back
           </Text>
         </View>
@@ -167,8 +206,6 @@ export default class ARHome extends Component {
     this.setState({ navigatorType: UNSET });
   }
 }
-
-
 
 //StyleSheet
 var localStyles = StyleSheet.create({
