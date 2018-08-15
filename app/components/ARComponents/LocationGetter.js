@@ -7,6 +7,20 @@ var targets = [
     y: 0,
     id: 1,
   },
+  // {
+  //   latitude: 40.7313,
+  //   longitude: -73.9901,
+  //   x: 0,
+  //   y: 0,
+  //   id: 1
+  // },
+  // {
+  //   latitude: 40.7315,
+  //   longitude: -73.9904,
+  //   x: 0,
+  //   y: 0,
+  //   id: 3
+  // },
   {
     latitude: 40.7051,
     longitude: -74.0087,
