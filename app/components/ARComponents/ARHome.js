@@ -11,12 +11,7 @@ console.disableYellowBox = true;
 //React Imports
 import React, { Component } from 'react';
 import { ViroARSceneNavigator } from 'react-viro';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 //Redux Imports
 import { connect } from 'react-redux';
@@ -72,18 +67,29 @@ class ARHome extends Component {
             Choose your desired experience:
           </Text>
 
-          <TouchableHighlight style={localStyles.buttons} onPress={() => this.props.setNav(CUBE_LANDING_GAME)} underlayColor={'#68a0ff'}>
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={() => this.props.setNav(CUBE_LANDING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
             <Text style={localStyles.buttonText}>CUBE GAME</Text>
           </TouchableHighlight>
 
-          <TouchableHighlight style={localStyles.buttons} onPress={() => this.props.setNav(SHOOTING_GAME)} underlayColor={'#68a0ff'}>
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={() => this.props.setNav(SHOOTING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
             <Text style={localStyles.buttonText}>SHOOTING GAME</Text>
           </TouchableHighlight>
 
-          <TouchableHighlight style={localStyles.buttons} onPress={() => this.props.setNav(LOCATION_SAMPLE)} underlayColor={'#68a0ff'}>
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={() => this.props.setNav(LOCATION_SAMPLE)}
+            underlayColor={'#68a0ff'}
+          >
             <Text style={localStyles.buttonText}>LOCATION SAMPLE</Text>
           </TouchableHighlight>
-
         </View>
       </View>
     );
@@ -93,7 +99,10 @@ class ARHome extends Component {
   _getCubeGameNavigator() {
     return (
       <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: CubeLandingGame }} />
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: CubeLandingGame }}
+        />
         <MenuNav />
       </View>
     );
@@ -101,7 +110,10 @@ class ARHome extends Component {
   _getShootingGameNavigator() {
     return (
       <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: ShootingGame }} />
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: ShootingGame }}
+        />
         <MenuNav />
       </View>
     );
@@ -109,7 +121,10 @@ class ARHome extends Component {
   _getLocationSampleNavigator() {
     return (
       <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: LocationSample }} />
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: LocationSample }}
+        />
         <MenuNav />
       </View>
     );
@@ -183,13 +198,16 @@ var localStyles = StyleSheet.create({
 });
 
 //Redux Methods
-const mapToState = (state) => {
-  console.log(state)
-  return {navigator: state.arCityReducer.navigator}
-}
+const mapToState = state => {
+  console.log(state);
+  return { navigator: state.arCityReducer.navigator };
+};
 
-const mapToDispatch = (dispatch) => ({
-  setNav: (navScene) => dispatch(setNav(navScene)),
-})
+const mapToDispatch = dispatch => ({
+  setNav: navScene => dispatch(setNav(navScene)),
+});
 
-export default connect(mapToState, mapToDispatch)(ARHome);
+export default connect(
+  mapToState,
+  mapToDispatch
+)(ARHome);
