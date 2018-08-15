@@ -1,12 +1,4 @@
-
-var targets = [
-  {
-    latitude: 40.70467766025543,
-    longitude: -74.00904218848154,
-    x: 0,
-    y: 0,
-    id: 1,
-  },
+//Ben's Apartment Locations
   // {
   //   latitude: 40.7313,
   //   longitude: -73.9901,
@@ -21,7 +13,17 @@ var targets = [
   //   y: 0,
   //   id: 3
   // },
-  {
+
+var targets = [
+  { //starbucks
+    latitude: 40.70467766025543,
+    longitude: -74.00904218848154,
+    x: 0,
+    y: 0,
+    id: 1,
+  },
+
+  { //killarney rose
     latitude: 40.7051,
     longitude: -74.0087,
     x: 0,

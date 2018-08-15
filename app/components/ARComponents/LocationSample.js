@@ -103,13 +103,15 @@ export default class LocationSample extends Component {
       const realX = targets[i].x - this.state.currLocation.x;
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
+      console.log(realY)
       var obj = <ViroBox
         type="GLTF"
         position={[realX, 1, realY]}
         height={5}
         length={5}
         width={5}
-        materials={id === 1 ? "cube_color" : "cube_hit"}
+        visible={Math.abs(realY) <= 30 ? true : false}
+        materials={id === 1 ? "starbucks" : "killarney"}
         onClick={() => this._jumpNextScene(id)}
       />
       objs.push(obj)
@@ -127,11 +129,11 @@ export default class LocationSample extends Component {
 }
 
 ViroMaterials.createMaterials({
-  cube_color: {
-    diffuseColor: '#0021cbE6',
+  starbucks: {
+    diffuseColor: '#0021cbE6', //blue
   },
-  cube_hit: {
-    diffuseColor: '#83FF33',
+  killarney: {
+    diffuseColor: '#83FF33', //green
   },
 });
 
