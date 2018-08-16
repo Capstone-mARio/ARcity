@@ -28,7 +28,7 @@ class Bitcoins extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user,
+  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0}
 });
 
 const betterBitcoins = connect(
