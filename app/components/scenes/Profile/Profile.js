@@ -7,10 +7,11 @@ import { connect } from 'react-redux';
 import { createUser, signOut } from '../../../redux/reducers/authReducer';
 import AuthTextInput from '../../SubComponents/AuthTextInput';
 import { isEmpty, validate } from '../../utils/validate';
+import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { iOSUIKit, material } from 'react-native-typography';
-import ResponsiveButton from '../../SubComponents/ResponsiveButton';
+import { material } from 'react-native-typography';
+import SubTab from '../../SubComponents/SubTab'
 import { color } from '../../../styles/theme';
 
 import styles from './styles';
@@ -26,12 +27,6 @@ class Profile extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onSuccess = this.onSuccess.bind(this);
     this.onError = this.onError.bind(this);
-  }
-  onSwipeLeft() {
-    Actions.ARHome();
-  }
-  onSwipeRight() {
-    Actions.GeoView();
   }
   onSubmit() {
     const data = { username: this.state.username };
@@ -68,41 +63,27 @@ class Profile extends React.Component {
     });
   }
   render() {
-    const config = {
-      velocityThreshold: 0.3,
-      directionalOffsetThreshold: 80,
-    };
     return (
-      <GestureRecognizer
-        style={styles.container}
-        onSwipeLeft={() => this.onSwipeLeft()}
-        onSwipeRight={() => this.onSwipeRight()}
-        config={config}
-      >
+      <View style={styles.container}>
         <View style={styles.outerContainer}>
-          <View style={styles.container}>
             <View style={styles.headerContainer}>
-              <Image
-                style={{
-                  alignSelf: 'center',
-                  height: 80,
-                  width: 300,
-                  margin: 10,
-                }}
-                source={require('../../assets/ARcity_name.png')}
-              />
+            <Image
+              style={styles.logo}
+              source={require('../../assets/ARcity_name.png')}
+            />
             </View>
             <View style={styles.profileContainer}>
-              <Image
-                style={{
-                  alignSelf: 'center',
-                  height: 150,
-                  width: 150,
-                  borderRadius: 75,
-                  margin: 3,
-                }}
-                source={require('../../assets/doge.png')}
-              />
+            <TouchableOpacity
+            onPress={()=>{
+              this.props.signOut()
+              Actions.Welcome()
+            }}
+                  >
+            <Image
+              style={styles.doge}
+              source={require('../../assets/doge.png')}
+            />
+                              </TouchableOpacity>
               {this.state.edit ? (
                 <View style={styles.profileContainer}>
                   <AuthTextInput
@@ -140,38 +121,12 @@ class Profile extends React.Component {
                   </TouchableOpacity>
                 </View>
               )}
-                        <ResponsiveButton
-            text={'Logout'}
-            onPress={()=>{
-              this.props.signOut()
-              Actions.Welcome()
-            }}
-          />
-              <Text style={material.headlineWhite}>Games Completed</Text>
-              <List>
-                <ListItem
-                  key="Cube game"
-                  title="Cube game"
-                  titleStyle={material.titleWhite}
-                  subtitle="Score: 12"
-                  subtitleStyle={material.titleWhite}
-                  containerStyle={{ backgroundColor: color.delta_grey }}
-                  hideChevron
-                />
-                <ListItem
-                  title="Shooting game"
-                  key="Shooting game"
-                  titleStyle={material.titleWhite}
-                  subtitle="Score: 1"
-                  subtitleStyle={material.titleWhite}
-                  containerStyle={{ backgroundColor: color.delta_grey }}
-                  hideChevron
-                />
-              </List>
+            <View style={styles.tabContainer}>
+              <SubTab style={styles.subtab} />
             </View>
           </View>
         </View>
-      </GestureRecognizer>
+      </View>
     );
   }
 }

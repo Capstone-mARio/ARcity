@@ -5,6 +5,7 @@ import {
   fontSize,
   fontFamily,
   windowWidth,
+  windowHeight,
   normalize,
 } from '../../../styles/theme';
 
@@ -12,13 +13,13 @@ const resizeMode = 'contain';
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: color.white,
-  },
-  container: {
-    flex: 1,
     backgroundColor: color.delta_grey,
-    flexDirection: 'column',
-    alignItems: 'center',
+  },
+
+  container: {
+    backgroundColor: color.delta_grey,
+    // flexDirection: 'column',
+    // alignItems: 'center',
   },
 
   headerContainer: {
@@ -33,16 +34,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  buttonContainer: {
-    flex: 1,
-    backgroundColor: color.delta_grey,
-    flexDirection: 'column',
-    alignSelf: 'flex-end',
-    marginTop: 50,
+  logo: {
+    alignSelf: 'center',
+    height: 80,
+    width: 300,
+    margin: 10,
+  },
+
+  doge: {
+    alignSelf: 'center',
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+    margin: 3,
   },
 
   containerView: {
     width: windowWidth - 40,
+  },
+
+  subtab: {
+    margin: 10,
   },
 
   button: {
@@ -70,6 +82,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     paddingBottom: 30,
   },
+
+  tabContainer: {
+    margin: 20,
+  },
+
+  contentContainer: {
+    paddingVertical: 20
+  }
 });
 
 export default styles;

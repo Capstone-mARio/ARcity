@@ -104,11 +104,6 @@ class GeoView extends React.Component {
               const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
 
               return <ListItem
-                      scaleProps={{
-                        friction: 90,
-                        tension: 100,
-                        activeScale: 0.95,
-                      }}
                       containerStyle={styles.listItem}
                       avatar={{ uri: l.avatar_url }}
                       key={l.name}
