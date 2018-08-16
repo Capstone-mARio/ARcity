@@ -112,15 +112,17 @@ class ARHome extends Component {
 
   // ARNavigator()
   render() {
-    if (this.props.navigator == CUBE_LANDING_GAME) {
-      return this._getCubeGameNavigator();
-    } else if (this.props.navigator === SHOOTING_GAME) {
-      return this._getShootingGameNavigator();
-    } else if (this.props.navigator === LOCATION_SAMPLE) {
       return this._getLocationSampleNavigator();
-    } else {
-      return this._getExperienceSelector();
-    }
+
+    // if (this.props.navigator == CUBE_LANDING_GAME) {
+    //   return this._getCubeGameNavigator();
+    // } else if (this.props.navigator === SHOOTING_GAME) {
+    //   return this._getShootingGameNavigator();
+    // } else if (this.props.navigator === LOCATION_SAMPLE) {
+    //   return this._getLocationSampleNavigator();
+    // } else {
+    //   return this._getExperienceSelector();
+    // }
   }
 
   // Presents the user with a choice of an AR games.

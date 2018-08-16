@@ -10,12 +10,16 @@ import {
 
 //Redux Imports
 import { connect } from 'react-redux';
-import { setThis } from '../../redux/reducers/arCityReducer';
+import { setThis, setNav } from '../../redux/reducers/arCityReducer';
 
 //Location And Games
 import { getXY, targets } from './LocationGetter'
 import CubeLandingGame from './CubeLandingGame'
 import ShootingGame from './ShootingGame'
+
+//Scene Strings
+const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
+const SHOOTING_GAME = 'SHOOTING_GAME';
 
 //Tracking Options
 var options = {
@@ -68,11 +72,17 @@ class LocationSample extends Component {
   //Jump To Game Method
   _jumpNextScene(id) {
     switch (id) {
-      case 1: this.props.arSceneNavigator.jump("Cube Game", { scene: CubeLandingGame })
+      case 1: 
+      this.props.setNav(CUBE_LANDING_GAME)
+      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
         break;
-      case 2: this.props.arSceneNavigator.jump("Shooting Game", { scene: ShootingGame })
+      case 2: 
+      this.props.setNav(SHOOTING_GAME)
+      this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
         break;
-      default: this.props.arSceneNavigator.jump("Cube Game", { scene: CubeLandingGame })
+      default:
+      this.props.setNav(CUBE_LANDING_GAME)
+      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
 
   }
@@ -118,6 +128,7 @@ ViroMaterials.createMaterials({
 });
 
 const mapToDispatch = (dispatch) => ({
+  setNav: (navScene) => { dispatch(setNav(navScene)) },
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })
 

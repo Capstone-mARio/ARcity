@@ -57,4 +57,4 @@ function getXY(lat, lon) {
 //   location['y'] = XY.y;
 // }
 
-export default { getXY, targets };
+export { getXY, targets };

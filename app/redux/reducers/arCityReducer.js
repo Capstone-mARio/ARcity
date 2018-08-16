@@ -1,9 +1,8 @@
 //Navigator Scenes
-const UNSET = 'UNSET';
-
+const LOCATION_SAMPLE = 'LOCATION_SAMPLE';
 
 const initialState = {
-  navigator: UNSET,
+  navigator: LOCATION_SAMPLE,
   thisIs: '',
 };
 
