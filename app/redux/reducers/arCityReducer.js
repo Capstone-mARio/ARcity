@@ -1,13 +1,12 @@
 //Navigator Scenes
 const UNSET = 'UNSET';
 
-//Initial State 
+
 const initialState = {
   navigator: UNSET,
   thisIs: '',
 };
 
-//Action Types
 const SET_NAV = 'SET_NAV'
 const SET_THIS = 'SET_THIS'
 
@@ -32,7 +31,7 @@ const arCityReducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
 
 export default arCityReducer;
 

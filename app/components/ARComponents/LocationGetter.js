@@ -1,26 +1,13 @@
 var targets = [
-  {
+  { //starbucks
     latitude: 40.70467766025543,
     longitude: -74.00904218848154,
     x: 0,
     y: 0,
     id: 1,
   },
-  // {
-  //   latitude: 40.7313,
-  //   longitude: -73.9901,
-  //   x: 0,
-  //   y: 0,
-  //   id: 1
-  // },
-  // {
-  //   latitude: 40.7315,
-  //   longitude: -73.9904,
-  //   x: 0,
-  //   y: 0,
-  //   id: 3
-  // },
-  {
+
+  { //killarney rose
     latitude: 40.7051,
     longitude: -74.0087,
     x: 0,

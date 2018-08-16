@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { iOSUIKit, material } from 'react-native-typography'
 import {
   padding,
   color,
@@ -15,13 +16,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: color.white,
+    justifyContent: 'space-between',
+    backgroundColor: color.delta_grey,
+
   },
   container: {
     flex: 1,
-    backgroundColor: color.white,
+    backgroundColor: color.delta_grey,
     flexDirection: 'column',
     alignItems: 'center',
+  },
+
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+
   },
 
   containerView: {
@@ -30,13 +40,8 @@ const styles = StyleSheet.create({
 
   button: {
     margin: 10,
-    backgroundColor: '#FF553F',
+    backgroundColor: color.button_color,
     height: normalize(55),
-  },
-
-  buttonText: {
-    fontSize: fontSize.regular + 2,
-    fontFamily: fontFamily.bold,
   },
 
   outer: {
@@ -45,6 +50,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
   },
+
+  image: {
+    flex: 3,
+    width: null,
+    height: 220,
+    resizeMode: 'stretch',
+  }
 });
 
 export default styles;

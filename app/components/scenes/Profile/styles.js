@@ -16,9 +16,25 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: color.white,
+    backgroundColor: color.delta_grey,
     flexDirection: 'column',
     alignItems: 'center',
+  },
+
+  headerContainer: {
+    alignItems: 'center',
+  },
+
+  profileContainer: {
+    alignItems: 'center',
+  },
+
+  buttonContainer: {
+    flex: 1,
+    backgroundColor: color.delta_grey,
+    flexDirection: 'column',
+    alignSelf: 'flex-end',
+    marginTop: 50,
   },
 
   containerView: {
@@ -26,6 +42,8 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    margin: 10,
+    backgroundColor: color.button_color,
     height: normalize(55),
   },
 

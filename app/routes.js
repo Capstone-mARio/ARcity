@@ -7,12 +7,12 @@ import {
   Modal,
   Tabs,
 } from 'react-native-router-flux';
-
+import { Text, Image } from 'react-native';
 //Authentication Scenes
 
 //Import Store, actions
 import store from './redux/store';
-// import { checkLoginStatus } from "../modules/auth/actions";
+import { iOSUIKit, material } from 'react-native-typography'
 
 // Import components
 import Welcome from './components/scenes/Welcome/Welcome';
@@ -25,6 +25,22 @@ import Profile from './components/scenes/Profile/Profile';
 import GeoView from './components/scenes/GeoView/GeoView';
 
 import { color, navTitleStyle } from './styles/theme';
+
+const TabIcon = ({ selected, name, title }) => {
+  if(title === "Geo") {
+    return (
+      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/Geo_icon.png')}/>
+    );
+  } else if(title === "Profile") {
+    return (
+      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/Profile_icon.png')}/>
+    );
+  } else if(title === "AR") {
+    return (
+      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/AR_icon.png')}/>
+    );
+  }
+}
 
 export default class extends React.Component {
   constructor() {
@@ -49,8 +65,8 @@ export default class extends React.Component {
         <Scene
           key="root"
           hideNavBar
-          navigationBarStyle={{ backgroundColor: '#fff' }}
-          titleStyle={navTitleStyle}
+          navigationBarStyle={{ backgroundColor: color.delta_grey }}
+          titleStyle={material.title}
           backButtonTintColor={color.black}
         >
           <Stack key="Auth">
@@ -80,29 +96,40 @@ export default class extends React.Component {
               title="Forgot Password"
             />
           </Stack>
-          <Stack key="Main">
+          <Scene key="Main">
             <Scene
-              key="ARHome"
-              component={ARHome}
-              title=""
-              initial={false}
+              key="tabbar"
+              tabs={true}
+              tabBarStyle={{ backgroundColor: '#66d973' }}
               hideNavBar
-            />
-            <Scene
-              key="Profile"
-              component={Profile}
-              title=""
-              initial={true}
-              hideNavBar
-            />
-            <Scene
-              key="GeoView"
-              component={GeoView}
-              title=""
-              initial={false}
-              hideNavBar
-            />
-          </Stack>
+            >
+              <Scene
+                key="AR"
+                title="AR"
+                icon={TabIcon}
+                component={ARHome}
+                tabBarPosition="bottom"
+                initial={false}
+                hideNavBar
+              />
+              <Scene
+                key="Profile"
+                title="Profile"
+                icon={TabIcon}
+                component={Profile}
+                initial={true}
+                hideNavBar
+              />
+              <Scene
+                key="GeoView"
+                title="Geo"
+                icon={TabIcon}
+                component={GeoView}
+                initial={false}
+                hideNavBar
+              />
+            </Scene>
+          </Scene>
         </Scene>
       </Router>
     );
