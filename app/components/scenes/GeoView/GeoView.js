@@ -27,16 +27,7 @@ class GeoView extends React.Component {
       currentLat: 0,
       currentLong: 0,
     }
-    this.onSwipeRight = this.onSwipeRight.bind(this);
-    this.onSwipeLeft = this.onSwipeLeft.bind(this);
     this.success = this.success.bind(this);
-  }
-  onSwipeLeft() {
-    Actions.Profile();
-  }
-
-  onSwipeRight() {
-    Actions.ARHome();
   }
 
   success(pos) {
@@ -81,54 +72,48 @@ class GeoView extends React.Component {
       },
     ];
     const { currentLat, currentLong } = this.state;
+    console.log("locations:", locations);
     return (
-      <GestureRecognizer
-        style={styles.container}
-        onSwipeLeft={() => this.onSwipeLeft()}
-        onSwipeRight={() => this.onSwipeRight()}
-        config={config}
-      >
-        <View style={styles.container}>
-          <List>
-            {list.map(l => {
-              const distance = Number((geolib.getDistance({
-                  latitude: currentLat,
-                  longitude: currentLong
-                }, {
-                  latitude: l.latitude,
-                  longitude: l.longitude,
-                }, 100) * 0.000621371).toFixed(3));
+      <View style={styles.container}>
+        <List>
+          {list.map(l => {
+            const distance = Number((geolib.getDistance({
+                latitude: currentLat,
+                longitude: currentLong
+              }, {
+                latitude: l.latitude,
+                longitude: l.longitude,
+              }, 100) * 0.000621371).toFixed(3));
 
-              const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
+            const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
 
-              const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
+            const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
 
-              return <ListItem
-                      containerStyle={styles.listItem}
-                      avatar={{ uri: l.avatar_url }}
-                      key={l.name}
-                      title={l.name}
-                      titleStyle={material.titleWhite}
-                      avatarStyle={{ backgroundColor: color.delta_grey }}
-                      subtitle={`Distance away: ${distanceDisplay}`}
-                      subtitleStyle={material.subheadingWhite}
-                      onPress={() => Linking.openURL(itemQuery) }
-                      hideChevron
-                    />
-            })}
-          </List>
-          <View style={styles.textContainer}>
-            <Text style={material.titleWhite}>This is my lat: {this.state.currentLat}</Text>
-            <Text style={material.titleWhite}>This is my long: {this.state.currentLong}</Text>
-          </View>
+            return <ListItem
+                    containerStyle={styles.listItem}
+                    avatar={{ uri: l.avatar_url }}
+                    key={l.name}
+                    title={l.name}
+                    titleStyle={material.titleWhite}
+                    avatarStyle={{ backgroundColor: color.delta_grey }}
+                    subtitle={`Distance away: ${distanceDisplay}`}
+                    subtitleStyle={material.subheadingWhite}
+                    onPress={() => Linking.openURL(itemQuery) }
+                    hideChevron
+                  />
+          })}
+        </List>
+        <View style={styles.textContainer}>
+          <Text style={material.titleWhite}>This is my lat: {this.state.currentLat}</Text>
+          <Text style={material.titleWhite}>This is my long: {this.state.currentLong}</Text>
         </View>
-      </GestureRecognizer>
+      </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user,
+  locations: state.locationReducer.locations,
 });
 
 export default connect(
