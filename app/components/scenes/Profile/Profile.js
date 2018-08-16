@@ -1,13 +1,14 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 
-import { Button } from 'react-native-elements';
+import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { iOSUIKit, material } from 'react-native-typography';
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
+import { color } from '../../../styles/theme';
 
 import styles from './styles';
 
@@ -55,20 +56,25 @@ class Profile extends React.Component {
                 source={require('../../assets/doge.png')}
               />
               <Text style={material.headlineWhite}>Username: {this.props.user.username}</Text>
-            </View>
-            <View style={styles.buttonContainer}>
-              <ResponsiveButton
-                text={'Enter ARcity'}
-                onPress={() => {
-                  Actions.ARHome();
-                }}
-              />
-              <ResponsiveButton
-                text={'Go to Geo View'}
-                onPress={() => {
-                  Actions.GeoView();
-                }}
-              />
+              <Text style={material.headlineWhite}>Games Completed</Text>
+              <List>
+                <ListItem
+                  key="Cube game"
+                  title="Cube game"
+                  titleStyle={material.titleWhite}
+                  subtitle="Score: 12"
+                  subtitleStyle={material.titleWhite}
+                  containerStyle={{ backgroundColor: color.delta_grey }}
+                  hideChevron />
+                <ListItem
+                  title="Shooting game"
+                  key="Cube game"
+                  titleStyle={material.titleWhite}
+                  subtitle="Score: 1"
+                  subtitleStyle={material.titleWhite}
+                  containerStyle={{ backgroundColor: color.delta_grey }}
+                  hideChevron />
+              </List>
             </View>
           </View>
         </View>
