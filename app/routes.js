@@ -53,7 +53,7 @@ export default class extends React.Component {
           titleStyle={navTitleStyle}
           backButtonTintColor={color.black}
         >
-          <Stack key="Auth">
+          {/* <Stack key="Auth">
             <Scene
               key="Welcome"
               component={Welcome}
@@ -79,7 +79,7 @@ export default class extends React.Component {
               component={ForgotPassword}
               title="Forgot Password"
             />
-          </Stack>
+          </Stack> */}
           <Stack key="Main">
             <Scene
               key="ARHome"
@@ -88,7 +88,7 @@ export default class extends React.Component {
               initial={false}
               hideNavBar
             />
-            <Scene
+            {/* <Scene
               key="Profile"
               component={Profile}
               title=""
@@ -101,7 +101,7 @@ export default class extends React.Component {
               title=""
               initial={false}
               hideNavBar
-            />
+            /> */}
           </Stack>
         </Scene>
       </Router>

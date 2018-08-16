@@ -5,9 +5,9 @@ const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
 const LOCATION_SAMPLE = 'LOCATION_SAMPLE';
 const SHOOTING_GAME = 'SHOOTING_GAME';
 
-//Initial State 
+//Initial State
 const initialState = {
-  navigator: UNSET,
+  navigator: SHOOTING_GAME,
 };
 
 //Action Types
