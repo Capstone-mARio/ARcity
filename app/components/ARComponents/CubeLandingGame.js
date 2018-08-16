@@ -1,9 +1,8 @@
 'use strict';
 
+//React Imports
 import React, { Component } from 'react';
-
 import { StyleSheet } from 'react-native';
-
 import {
   ViroARScene,
   ViroQuad,
@@ -14,9 +13,7 @@ import {
   ViroConstants,
 } from 'react-viro';
 
-import { setThis } from '../../redux/reducers/arCityReducer';
-import { connect } from 'react-redux';
-
+//StyleSheet
 const styles = StyleSheet.create({
   TextStyle: {
     fontFamily: 'Arial',
@@ -27,8 +24,8 @@ const styles = StyleSheet.create({
   },
 });
 
+//Ball Related Code
 var ball;
-
 const ballphysics = {
   type: 'Dynamic',
   mass: 3,
@@ -36,7 +33,7 @@ const ballphysics = {
   restitution: 0,
   friction: 0.75,
 };
-
+//Ball Reset Method
 const _resetCube = thisContext => {
   let ballsRemaining = thisContext.state.ballsRemaining;
   if (ballsRemaining) {
@@ -52,6 +49,7 @@ const _resetCube = thisContext => {
   }
 };
 
+
 class CubeLandingGame extends Component {
   constructor() {
     super();
@@ -66,17 +64,15 @@ class CubeLandingGame extends Component {
     this._onInitialized = this._onInitialized.bind(this);
   }
 
-  componentDidMount() {
+  render() {
+    //Ball Position Checker
     setInterval(async () => {
       const respond = await ball.getTransformAsync();
       if (respond.position[1] <= -10) {
         _resetCube(this);
       }
     }, 500);
-  }
 
-  render() {
-    this.props.setThis(this);
     return this.state.loaded ? (
       <ViroARScene
         onTrackingUpdated={this._onInitialized}
@@ -158,7 +154,7 @@ class CubeLandingGame extends Component {
     );
   }
 
-  _onInitialized(state, reason) {
+  _onInitialized(state) {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
         ballsRemaining: 9,
@@ -169,7 +165,8 @@ class CubeLandingGame extends Component {
     }
   }
 
-  _onFloorCollide1 = (collidedTag, collidedPoint, collidedNormal) => {
+  //Scoring Collision
+  _onFloorCollide1 = (collidedTag, collidedPoint) => {
     if (collidedTag === 'gameCube') {
       this.setState({
         score: this.state.score + 100,
@@ -182,7 +179,7 @@ class CubeLandingGame extends Component {
       }, 1000);
     }
   };
-  _onFloorCollide2 = (collidedTag, collidedPoint, collidedNormal) => {
+  _onFloorCollide2 = (collidedTag, collidedPoint) => {
     if (collidedTag === 'gameCube') {
       this.setState({
         score: this.state.score + 200,
@@ -209,8 +206,4 @@ ViroMaterials.createMaterials({
   },
 });
 
-const mapToDispatch = (dispatch) => ({
-  setThis: (aThis) => { dispatch(setThis(aThis)) }
-})
-
-export default connect(null, mapToDispatch)(CubeLandingGame)
+export default CubeLandingGame;

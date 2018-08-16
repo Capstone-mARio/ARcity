@@ -24,6 +24,7 @@ var options = {
   maximumAge: 0
 }
 
+
 class LocationSample extends Component {
   constructor() {
     super();
@@ -51,6 +52,7 @@ class LocationSample extends Component {
         </ViroARScene>
       ) : null
   }
+  //On Successful Location Found
   success(pos) {
     var crd = pos.coords;
     const XY = getXY(crd.latitude, crd.longitude)
@@ -58,10 +60,12 @@ class LocationSample extends Component {
       currLocation: { x: XY.x, y: XY.y }
     })
   }
+  //On A Error
   error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
+  //Jump To Game Method
   _jumpNextScene(id) {
     switch (id) {
       case 1: this.props.arSceneNavigator.jump("Cube Game", { scene: CubeLandingGame })
@@ -73,13 +77,13 @@ class LocationSample extends Component {
 
   }
 
+  //Make A Obj At Location
   _makeObj() { //////////////
     var objs = []
     for (let i = 0; i < targets.length; i++) {
       const realX = targets[i].x - this.state.currLocation.x;
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
-      console.log(realY)
       var obj = <ViroBox
         position={[realX, 1, realY]}
         height={5}
@@ -94,6 +98,7 @@ class LocationSample extends Component {
     return objs;
   }
 
+  //Display The Obj At Location
   _displayObjs() {
     return (
       <ViroNode>
@@ -116,4 +121,4 @@ const mapToDispatch = (dispatch) => ({
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })
 
-export default connect(null, mapToDispatch)(LocationSample)
+export default connect(null, mapToDispatch)(LocationSample);

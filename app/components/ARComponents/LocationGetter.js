@@ -18,24 +18,9 @@ var targets = [
 
 // {latitude: 40.7051,longitude: -74.0087,x: 0,y: 0,id: 2}
 
-
 let location = {}
 let targetLocation = {}
 
-// function success(pos) {
-//   var crd = pos.coords;
-//   location['latitude'] = crd.latitude;
-//   location['longitude'] = crd.longitude;
-//   location['accuracy'] = crd.accuracy;
-
-//   // console.log('Your current position is:');
-//   // console.log(`Latitude : ${crd.latitude}`);
-//   // console.log(`Longitude: ${crd.longitude}`);
-//   // console.log(`More or less ${crd.accuracy} meters.`);
-//   const XY = getXY(crd.latitude, crd.longitude)
-//   location['x'] = XY.x;
-//   location['y'] = XY.y;
-// }
 
 for (let i = 0; i < targets.length; i++) {
   const targetXY = getXY(targets[i].latitude, targets[i].longitude)
@@ -57,4 +42,19 @@ function getXY(lat, lon) {
 //   console.warn(`ERROR(${err.code}): ${err.message}`);
 // }
 
-module.exports = { getXY, targets };
+// function success(pos) {
+//   var crd = pos.coords;
+//   location['latitude'] = crd.latitude;
+//   location['longitude'] = crd.longitude;
+//   location['accuracy'] = crd.accuracy;
+
+//   // console.log('Your current position is:');
+//   // console.log(`Latitude : ${crd.latitude}`);
+//   // console.log(`Longitude: ${crd.longitude}`);
+//   // console.log(`More or less ${crd.accuracy} meters.`);
+//   const XY = getXY(crd.latitude, crd.longitude)
+//   location['x'] = XY.x;
+//   location['y'] = XY.y;
+// }
+
+export default { getXY, targets };

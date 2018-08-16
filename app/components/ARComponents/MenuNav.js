@@ -10,12 +10,21 @@ import {
 //Redux Imports
 import { connect } from 'react-redux'
 
-//Scene Imports
-import CubeLandingGame from './CubeLandingGame'
-import LocationSample from './LocationSample'
-import ShootingGame from './ShootingGame'
+//StyleSheet
+var localStyles = StyleSheet.create({
+  listView: {
+    flex: 1,
+    height: '5%',
+    width: '100%',
+    padding: 10,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 0,
+    backgroundColor: '#000000aa',
+  },
+});
 
-const UNSET = 'UNSET';
 
 class MenuNav extends Component {
   constructor(){
@@ -24,33 +33,18 @@ class MenuNav extends Component {
   }
 
   render() {
-    console.log('Menu:', this.props)
-    console.log('Scene', this.props.aThis.props)
     return (
       <View style={localStyles.listView}>
         <Text style={{ color: 'white' }} onPress={() => this.props.aThis.props.arSceneNavigator.pop()}>
-          Go Back
+          Back To ArCity
         </Text>
       </View>
     )
   }
 }
 
-//StyleSheet
-var localStyles = StyleSheet.create({
-  listView: {
-    flex: 1,
-    height: '15%',
-    width: '100%',
-    padding: 10,
-    position: 'absolute',
-    alignItems: 'center',
-    bottom: 0,
-    backgroundColor: '#000000aa',
-  },
-});
-
 const mapToState = (state) => ({
+  navigator: state.arCityReducer.navigator,
   aThis: state.arCityReducer.thisIs
 })
 
