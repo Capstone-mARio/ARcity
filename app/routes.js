@@ -12,7 +12,7 @@ import { Text, Image } from 'react-native';
 
 //Import Store, actions
 import store from './redux/store';
-import { iOSUIKit, material } from 'react-native-typography'
+import { iOSUIKit, material } from 'react-native-typography';
 
 // Import components
 import Welcome from './components/scenes/Welcome/Welcome';
@@ -23,24 +23,34 @@ import ARHome from './components/ARComponents/ARHome';
 import ForgotPassword from './components/scenes/ForgotPassword/ForgotPassword';
 import Profile from './components/scenes/Profile/Profile';
 import GeoView from './components/scenes/GeoView/GeoView';
+import SubTab from './components/SubComponents/SubTab';
 
 import { color, navTitleStyle } from './styles/theme';
 
 const TabIcon = ({ selected, name, title }) => {
-  if(title === "Geo") {
+  if (title === 'Geo') {
     return (
-      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/Geo_icon.png')}/>
+      <Image
+        style={{ width: 40, height: 40 }}
+        source={require('./components/assets/Geo_icon.png')}
+      />
     );
-  } else if(title === "Profile") {
+  } else if (title === 'Profile') {
     return (
-      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/Profile_icon.png')}/>
+      <Image
+        style={{ width: 40, height: 40 }}
+        source={require('./components/assets/Profile_icon.png')}
+      />
     );
-  } else if(title === "AR") {
+  } else if (title === 'AR') {
     return (
-      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/AR_icon.png')}/>
+      <Image
+        style={{ width: 40, height: 40 }}
+        source={require('./components/assets/AR_icon.png')}
+      />
     );
   }
-}
+};
 
 export default class extends React.Component {
   constructor() {
@@ -96,7 +106,7 @@ export default class extends React.Component {
               title="Forgot Password"
             />
           </Stack>
-          <Scene key="Main">
+          <Scene key="Main" style={{ backgroundColor: color.delta_grey }}>
             <Scene
               key="tabbar"
               tabs={true}

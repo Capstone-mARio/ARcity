@@ -10,7 +10,7 @@ import { isEmpty, validate } from '../utils/validate';
 import styles from './FormStyles';
 
 import AuthTextInput from './AuthTextInput';
-import { iOSUIKit, material } from 'react-native-typography'
+import { iOSUIKit, material } from 'react-native-typography';
 
 class Form extends React.Component {
   constructor(props) {
@@ -99,10 +99,7 @@ class Form extends React.Component {
             );
           })}
 
-          <ResponsiveButton
-            text={buttonTitle}
-            onPress={this.onSubmit}
-          />
+          <ResponsiveButton text={buttonTitle} onPress={this.onSubmit} />
           {this.props.onForgotPassword !== null && (
             <Text
               style={material.subheadingWhite}
