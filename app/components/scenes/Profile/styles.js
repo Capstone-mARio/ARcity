@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
   profileContainer: {
     alignItems: 'center',
   },
+  usernameContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 
   buttonContainer: {
     flex: 1,
