@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
   profileContainer: {
     alignItems: 'center',
   },
+  usernameContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 
   logo: {
     alignSelf: 'center',

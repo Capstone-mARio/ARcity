@@ -39,6 +39,7 @@ class AuthTextInput extends Component {
           inputStyle={material.titleWhite}
           placeholderTextColor={'grey'}
           keyboardType={keyboardType}
+          textAlign={this.props.textAlign || 'auto'}
           value={this.props.value}
         />
         {!isEmpty(this.props.error) && (
