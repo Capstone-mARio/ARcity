@@ -1,23 +1,36 @@
+//React Imports
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { setNav } from '../../redux/reducers/arCityReducer'
 import { Actions } from 'react-native-router-flux';
-
 import {
   Text,
   View,
   StyleSheet,
 } from 'react-native';
 
+//Redux Imports
+import { connect } from 'react-redux'
+
+//Scene Imports
+import CubeLandingGame from './CubeLandingGame'
+import LocationSample from './LocationSample'
+import ShootingGame from './ShootingGame'
+
 const UNSET = 'UNSET';
 
 class MenuNav extends Component {
+  constructor(){
+    super();
+    this.state = {};
+  }
+
   render() {
+    console.log('Menu:', this.props)
+    console.log('Scene', this.props.aThis.props)
     return (
       <View style={localStyles.listView}>
-        <Text style={{ color: 'white' }} onPress={ Actions.Profile }>
+        <Text style={{ color: 'white' }} onPress={() => this.props.aThis.props.arSceneNavigator.pop()}>
           Go Back
-          </Text>
+        </Text>
       </View>
     )
   }
@@ -29,14 +42,16 @@ var localStyles = StyleSheet.create({
     flex: 1,
     height: '15%',
     width: '100%',
+    padding: 10,
     position: 'absolute',
     alignItems: 'center',
     bottom: 0,
     backgroundColor: '#000000aa',
   },
 });
-const mapToDispatch = (dispatch) => ({
-  setNav: (navScene) => { dispatch(setNav(navScene)) }
+
+const mapToState = (state) => ({
+  aThis: state.arCityReducer.thisIs
 })
 
-export default connect(null, mapToDispatch)(MenuNav);
+export default connect(mapToState, null)(MenuNav);

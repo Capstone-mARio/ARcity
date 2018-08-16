@@ -29,18 +29,17 @@ import '../../../secrets';
 var sharedProps = { apiKey: process.env.viroKey };
 
 // Gets scenes you want for AR
-const CubeLandingGame = require('./CubeLandingGame');
-const LocationSample = require('./LocationSample');
-const ShootingGame = require('./ShootingGame');
+import CubeLandingGame from './CubeLandingGame';
+import LocationSample from './LocationSample';
+import ShootingGame from './ShootingGame';
 import MenuNav from './MenuNav';
 
 //NAV Scenes
-const UNSET = 'UNSET';
-const AR_NAVIGATOR_TYPE = 'AR';
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
 const LOCATION_SAMPLE = 'LOCATION_SAMPLE';
 const SHOOTING_GAME = 'SHOOTING_GAME';
 
+//ARHome
 class ARHome extends Component {
   constructor() {
     super();
@@ -65,6 +64,7 @@ class ARHome extends Component {
 
   // Presents the user with a choice of an AR games.
   _getExperienceSelector() {
+    console.log(this.props)
     return (
       <View style={localStyles.outer}>
         <View style={localStyles.inner}>
@@ -183,11 +183,9 @@ var localStyles = StyleSheet.create({
 });
 
 //Redux Methods
-const mapToState = (state) => {
-  console.log(state)
-  return {navigator: state.arCityReducer.navigator}
-}
-
+const mapToState = (state) => ({
+  navigator: state.arCityReducer.navigator
+})
 const mapToDispatch = (dispatch) => ({
   setNav: (navScene) => dispatch(setNav(navScene)),
 })

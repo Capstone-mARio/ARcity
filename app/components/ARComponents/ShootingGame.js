@@ -33,7 +33,7 @@ export default class ShootingGame extends Component {
 
   render(){
     // console.log(location);
-    return(
+    return (
       <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
         {this._displayLines()}
       </ViroARScene>
@@ -52,7 +52,7 @@ export default class ShootingGame extends Component {
         key={lineKey}
         visible={false}
         materials={['ball_color']}
-        physicsBody={{ mass: 1, type: 'Dynamic', force: { value: this.state.force }, }}
+        physicsBody={{ mass: 1, type: 'Dynamic', force: { value: this.state.force } }}
       />
       lines.push(line)
     }
@@ -60,7 +60,7 @@ export default class ShootingGame extends Component {
   }
 
   _addLine() { //////////////////
-    this.line.setNativeProps({visible:true,})
+    this.line.setNativeProps({visible: true})
     // this.line.setNativeProps({physicsBody:{ mass: 1, type: 'Dynamic',force: { value: [this.state.position[0],this.state.position[1],this.state.position[2] ] }}})
     this.setState({ numOfLines: this.state.numOfLines + 1 })
   }
@@ -96,5 +96,3 @@ ViroMaterials.createMaterials({
     diffuseColor: "#FFA500"
   },
 })
-
-module.exports = ShootingGame;

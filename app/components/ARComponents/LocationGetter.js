@@ -1,4 +1,3 @@
-
 var targets = [
   {
     latitude: 40.70467766025543,

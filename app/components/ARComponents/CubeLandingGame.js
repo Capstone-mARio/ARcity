@@ -14,6 +14,9 @@ import {
   ViroConstants,
 } from 'react-viro';
 
+import { setThis } from '../../redux/reducers/arCityReducer';
+import { connect } from 'react-redux';
+
 const styles = StyleSheet.create({
   TextStyle: {
     fontFamily: 'Arial',
@@ -49,7 +52,7 @@ const _resetCube = thisContext => {
   }
 };
 
-export default class CubeLandingGame extends Component {
+class CubeLandingGame extends Component {
   constructor() {
     super();
     this.state = {
@@ -73,6 +76,7 @@ export default class CubeLandingGame extends Component {
   }
 
   render() {
+    this.props.setThis(this);
     return this.state.loaded ? (
       <ViroARScene
         onTrackingUpdated={this._onInitialized}
@@ -205,4 +209,8 @@ ViroMaterials.createMaterials({
   },
 });
 
-module.exports = CubeLandingGame;
+const mapToDispatch = (dispatch) => ({
+  setThis: (aThis) => { dispatch(setThis(aThis)) }
+})
+
+export default connect(null, mapToDispatch)(CubeLandingGame)
