@@ -92,8 +92,8 @@ export default class ShootingGame extends Component {
     return balls;
   }
 
-  _addLine() { //////////////////
-    this.ball.setNativeProps({visible:true,})
+  _addLine() {
+    this.ball.setNativeProps({visible:true})
     // this.line.setNativeProps({physicsBody:{ mass: 1, type: 'Dynamic',force: { value: [this.state.position[0],this.state.position[1],this.state.position[2] ] }}})
     this.setState({ numOfBalls: this.state.numOfBalls + 1 })
   }
@@ -175,5 +175,3 @@ ViroMaterials.createMaterials({
     diffuseColor: '#FF60E4'
   }
 })
-
-module.exports = ShootingGame;

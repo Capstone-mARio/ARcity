@@ -23,18 +23,83 @@ import '../../../secrets';
 //API key below
 var sharedProps = { apiKey: process.env.viroKey };
 
-// Gets scenes you want for AR
-const CubeLandingGame = require('./CubeLandingGame');
-const LocationSample = require('./LocationSample');
-const ShootingGame = require('./ShootingGame');
+//Scenes for AR
+import CubeLandingGame from './CubeLandingGame';
+import LocationSample from './LocationSample';
+import ShootingGame from './ShootingGame';
 import MenuNav from './MenuNav';
 
-//NAV Scenes
-const UNSET = 'UNSET';
-const AR_NAVIGATOR_TYPE = 'AR';
+//Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
 const LOCATION_SAMPLE = 'LOCATION_SAMPLE';
 const SHOOTING_GAME = 'SHOOTING_GAME';
+
+//StyleSheet
+const localStyles = StyleSheet.create({
+  viroContainer: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  outer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'black',
+  },
+  inner: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'black',
+  },
+  titleText: {
+    paddingTop: 30,
+    paddingBottom: 20,
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 25,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  buttons: {
+    height: 80,
+    width: 250,
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#68a0cf',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+    justifyContent: 'center',
+  },
+  exitButton: {
+    height: 50,
+    width: 100,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#68a0cf',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  listView: {
+    flex: 1,
+    height: '15%',
+    width: '100%',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+    backgroundColor: '#000000aa',
+  },
+});
+
 
 class ARHome extends Component {
   constructor() {
@@ -47,15 +112,17 @@ class ARHome extends Component {
 
   // ARNavigator()
   render() {
-    if (this.props.navigator == CUBE_LANDING_GAME) {
-      return this._getCubeGameNavigator();
-    } else if (this.props.navigator === SHOOTING_GAME) {
-      return this._getShootingGameNavigator();
-    } else if (this.props.navigator === LOCATION_SAMPLE) {
       return this._getLocationSampleNavigator();
-    } else {
-      return this._getExperienceSelector();
-    }
+
+    // if (this.props.navigator == CUBE_LANDING_GAME) {
+    //   return this._getCubeGameNavigator();
+    // } else if (this.props.navigator === SHOOTING_GAME) {
+    //   return this._getShootingGameNavigator();
+    // } else if (this.props.navigator === LOCATION_SAMPLE) {
+    //   return this._getLocationSampleNavigator();
+    // } else {
+    //   return this._getExperienceSelector();
+    // }
   }
 
   // Presents the user with a choice of an AR games.
@@ -131,81 +198,13 @@ class ARHome extends Component {
   }
 }
 
-//StyleSheet
-var localStyles = StyleSheet.create({
-  viroContainer: {
-    flex: 1,
-    backgroundColor: 'black',
-  },
-  outer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  inner: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  titleText: {
-    paddingTop: 30,
-    paddingBottom: 20,
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 25,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 20,
-  },
-  buttons: {
-    height: 80,
-    width: 250,
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: '#68a0cf',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff',
-    justifyContent: 'center',
-  },
-  exitButton: {
-    height: 50,
-    width: 100,
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: '#68a0cf',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#fff',
-  },
-  listView: {
-    flex: 1,
-    height: '15%',
-    width: '100%',
-    position: 'absolute',
-    alignItems: 'center',
-    bottom: 0,
-    backgroundColor: '#000000aa',
-  },
-});
-
 //Redux Methods
-const mapToState = state => {
-  console.log(state);
-  return { navigator: state.arCityReducer.navigator };
-};
-
-const mapToDispatch = dispatch => ({
-  setNav: navScene => dispatch(setNav(navScene)),
-});
+const mapToState = (state) => ({
+  navigator: state.arCityReducer.navigator
+})
+const mapToDispatch = (dispatch) => ({
+  setNav: (navScene) => dispatch(setNav(navScene)),
+})
 
 export default connect(
   mapToState,
