@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-const ballCount = 15;
+const blockCount = 20;
 
 const randomPos = [];
-for(let i = 0; i < ballCount; i++){
-  randomPos.push([Math.random() * 2, Math.random() * 5, (Math.random() * (6 - 1 + 1) -3 )])
+for(let i = 0; i < blockCount; i++){
+  randomPos.push([Math.random() * (6 - 1 + 1) - 3, Math.random() * (10 - 5 + 5), (Math.random() * (6 - 1 + 1) -3)])
 }
 
 export default class ShootingGame extends Component {
@@ -38,10 +38,11 @@ export default class ShootingGame extends Component {
     this.state = {
       force: [0,0,0],
       numOfBalls: 1,
-      numOfBlocks: ballCount,
+      numOfBlocks: blockCount,
       isHit : [false, false],
       score: 0,
-      blocksRemaining: ballCount,
+      blocksRemaining: blockCount,
+      isReady: false,
     }
     this._addLine = this._addLine.bind(this);
     this._displayLines = this._displayLines.bind(this);
@@ -50,10 +51,14 @@ export default class ShootingGame extends Component {
     this._displayBlocks = this._displayBlocks.bind(this);
     this._makeBlocks = this._makeBlocks.bind(this);
   }
-
+  componentDidMount(){
+    setTimeout(()=> {
+      this.setState({isReady: true})
+    }, 5000)
+  }
   render(){
-    console.log(this.state.blocksRemaining)
-      return(
+    console.log(this.state.isReady)
+      return (
         <ViroARScene physicsWorld={{ gravity: [0, -.2, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
             <ViroQuad
               scale={[8, 8, 8]}
@@ -63,12 +68,21 @@ export default class ShootingGame extends Component {
               viroTag="platform"
               opacity={0}
             />
-            {this._displayLines()}
-            {this._displayBlocks()}
+            {this.state.isReady ?
+              [this._displayLines(),
+              this._displayBlocks()] : null}
+
             <ViroText
               text={'Score: ' + this.state.score.toString()}
               position={[0, 0, -3]}
               style={styles.TextStyle}
+              visible={this.state.isReady}
+            />
+            <ViroText
+              text={'Get Ready!'}
+              position={[0, 0, -3]}
+              style={styles.TextStyle}
+              visible={!this.state.isReady}
             />
             {this.state.blocksRemaining <= 0 ?
             <ViroText
@@ -99,18 +113,20 @@ export default class ShootingGame extends Component {
     return balls;
   }
 
-  _addLine() { //////////////////
-    this.ball.setNativeProps({visible:true,})
-    // this.line.setNativeProps({physicsBody:{ mass: 1, type: 'Dynamic',force: { value: [this.state.position[0],this.state.position[1],this.state.position[2] ] }}})
-    this.setState({ numOfBalls: this.state.numOfBalls + 1 })
+  _addLine() {
+    if(this.ball !== undefined){
+      this.ball.setNativeProps({visible:true})
+      // this.line.setNativeProps({physicsBody:{ mass: 1, type: 'Dynamic',force: { value: [this.state.position[0],this.state.position[1],this.state.position[2] ] }}})
+      this.setState({ numOfBalls: this.state.numOfBalls + 1 })
+    }
   }
 
   _displayLines() { /////////////////////
-    return (
+    return this.state.isReady ? (
       <ViroNode>
         {this._shoot()}
       </ViroNode>
-    )
+    ) : null
   }
 
   _cameraChange(coords){
@@ -124,9 +140,11 @@ export default class ShootingGame extends Component {
     this.setState({
       force: [forwardX*10, forwardY*10,forwardZ*10]
     })
-    this.ball.setNativeProps({
-      position: [positionX, positionY, positionZ]
-    })
+    if (this.ball) {
+      this.ball.setNativeProps({
+        position: [positionX, positionY, positionZ]
+      })
+    }
   }
   _makeBlocks() { //////////////
     var blocks = []
@@ -178,5 +196,3 @@ ViroMaterials.createMaterials({
     diffuseColor: '#FF60E4'
   }
 })
-
-module.exports = ShootingGame;
