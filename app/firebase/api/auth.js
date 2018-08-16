@@ -5,7 +5,7 @@ export function register(data, callback) {
   const { email, password, username } = data;
   auth
     .createUserWithEmailAndPassword(email, password)
-    .then(resp => createUser({ username, uid: resp.user.uid }, callback))
+    .then(resp => createUser({ username, uid: resp.user.uid, games: '[]', objects:'[]', coins:0 }, callback))
     .catch(error => callback(false, null, error));
 }
 
