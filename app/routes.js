@@ -23,6 +23,7 @@ import ARHome from './components/ARComponents/ARHome';
 import ForgotPassword from './components/scenes/ForgotPassword/ForgotPassword';
 import Profile from './components/scenes/Profile/Profile';
 import GeoView from './components/scenes/GeoView/GeoView';
+import SubTab from './components/SubComponents/SubTab';
 
 import { color, navTitleStyle } from './styles/theme';
 
@@ -96,7 +97,7 @@ export default class extends React.Component {
               title="Forgot Password"
             />
           </Stack>
-          <Scene key="Main">
+          <Scene key="Main" style={{ backgroundColor: color.delta_grey }}>
             <Scene
               key="tabbar"
               tabs={true}
