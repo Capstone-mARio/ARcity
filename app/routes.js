@@ -7,7 +7,7 @@ import {
   Modal,
   Tabs,
 } from 'react-native-router-flux';
-import { Text } from 'react-native';
+import { Text, Image } from 'react-native';
 //Authentication Scenes
 
 //Import Store, actions
@@ -26,10 +26,20 @@ import GeoView from './components/scenes/GeoView/GeoView';
 
 import { color, navTitleStyle } from './styles/theme';
 
-const TabIcon = ({ selected, title }) => {
-  return (
-    <Text style={{color: selected ? 'red' :'black'}}>{title}</Text>
-  );
+const TabIcon = ({ selected, name, title }) => {
+  if(title === "Geo") {
+    return (
+      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/Geo_icon.png')}/>
+    );
+  } else if(title === "Profile") {
+    return (
+      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/Profile_icon.png')}/>
+    );
+  } else if(title === "AR") {
+    return (
+      <Image style={{ width: 40, height: 40 }} source={require('./components/assets/AR_icon.png')}/>
+    );
+  }
 }
 
 export default class extends React.Component {
@@ -90,10 +100,11 @@ export default class extends React.Component {
             <Scene
               key="tabbar"
               tabs={true}
-              tabBarStyle={{ backgroundColor: '#FFFFFF' }}
+              tabBarStyle={{ backgroundColor: '#66d973' }}
+              hideNavBar
             >
               <Scene
-                key="Main"
+                key="AR"
                 title="AR"
                 icon={TabIcon}
                 component={ARHome}
