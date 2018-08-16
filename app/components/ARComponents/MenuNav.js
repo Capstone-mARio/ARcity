@@ -36,21 +36,16 @@ class MenuNav extends Component {
   }
 
   render() {
-    return (
+    return this.props.navigator !== LOCATION_SAMPLE ? (
       <View style={localStyles.listView}>
-      {this.props.navigator !== LOCATION_SAMPLE ? 
         <Text style={{ padding: 10, color: 'white' }} onPress={() => {
           this.props.setNav(LOCATION_SAMPLE)
           this.props.aThis.props.arSceneNavigator.pop()
         }}>
           Back To ArCity
-        </Text> :
-        <Text style={{ color: 'white' }} onPress={ Actions.Profile }>
-          Back To Profile
         </Text>
-      }
       </View>
-    )
+    ) : null
   }
 }
 

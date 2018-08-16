@@ -79,7 +79,7 @@ export default class extends React.Component {
           titleStyle={material.title}
           backButtonTintColor={color.black}
         >
-          <Stack key="Auth">
+        <Stack key="Auth">
             <Scene
               key="Welcome"
               component={Welcome}
