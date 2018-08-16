@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, Linking } from 'react-native';
+import { color } from '../../../styles/theme';
 
 import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
@@ -8,6 +9,9 @@ import { connect } from 'react-redux';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import geolib from 'geolib'
 
+import styles from './styles';
+import { iOSUIKit, material } from 'react-native-typography';
+
 var options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -15,8 +19,6 @@ var options = {
 }
 
 const googleMapsQuery = "https://www.google.com/maps/dir/?api=1&origin=";
-
-import styles from './styles';
 
 class GeoView extends React.Component {
   constructor() {
@@ -86,35 +88,45 @@ class GeoView extends React.Component {
         onSwipeRight={() => this.onSwipeRight()}
         config={config}
       >
-        <List>
-          {list.map(l => {
-            const distance = Number((geolib.getDistance({
-                latitude: currentLat,
-                longitude: currentLong
-              }, {
-                latitude: l.latitude,
-                longitude: l.longitude,
-              }, 100) * 0.000621371).toFixed(3));
+        <View style={styles.container}>
+          <List>
+            {list.map(l => {
+              const distance = Number((geolib.getDistance({
+                  latitude: currentLat,
+                  longitude: currentLong
+                }, {
+                  latitude: l.latitude,
+                  longitude: l.longitude,
+                }, 100) * 0.000621371).toFixed(3));
 
-            const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
+              const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
 
-            const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
+              const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
 
-            return <ListItem
-              style={styles.listItem}
-              avatar={{ uri: l.avatar_url }}
-              key={l.name}
-              title={l.name}
-              avatarStyle={{ backgroundColor: 'white' }}
-              subtitle={`Distance away: ${distanceDisplay}`}
-              onPress={() => Linking.openURL(itemQuery) }
-              hideChevron
-            />
-          })}
-        </List>
-
-        <Text>This is my lat: {this.state.currentLat}</Text>
-        <Text>This is my long: {this.state.currentLong}</Text>
+              return <ListItem
+                      scaleProps={{
+                        friction: 90,
+                        tension: 100,
+                        activeScale: 0.95,
+                      }}
+                      containerStyle={styles.listItem}
+                      avatar={{ uri: l.avatar_url }}
+                      key={l.name}
+                      title={l.name}
+                      titleStyle={material.titleWhite}
+                      avatarStyle={{ backgroundColor: color.delta_grey }}
+                      subtitle={`Distance away: ${distanceDisplay}`}
+                      subtitleStyle={material.subheadingWhite}
+                      onPress={() => Linking.openURL(itemQuery) }
+                      hideChevron
+                    />
+            })}
+          </List>
+          <View style={styles.textContainer}>
+            <Text style={material.titleWhite}>This is my lat: {this.state.currentLat}</Text>
+            <Text style={material.titleWhite}>This is my long: {this.state.currentLong}</Text>
+          </View>
+        </View>
       </GestureRecognizer>
     );
   }

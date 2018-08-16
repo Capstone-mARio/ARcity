@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 
-import { Button } from 'react-native-elements';
+import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
-
-// import {actions as auth} from "../../index"
-// const {} = auth;
+import { iOSUIKit, material } from 'react-native-typography';
+import ResponsiveButton from '../../SubComponents/ResponsiveButton';
+import { color } from '../../../styles/theme';
 
 import styles from './styles';
 
@@ -33,31 +33,49 @@ class Profile extends React.Component {
       >
         <View style={styles.outerContainer}>
           <View style={styles.container}>
-          <Text style={styles.title}>AR City</Text>
-            <Image source={require('./default.png')} />
-            <Text style={styles.username}>{this.props.user.username}</Text>
-            <Button
-            raised
-            borderRadius={4}
-            title={'Enter the AR World'}
-            containerViewStyle={[styles.containerView]}
-            buttonStyle={[styles.button]}
-            textStyle={styles.buttonText}
-            onPress={() => {
-              Actions.ARHome();
-            }}
-          />
-                      <Button
-            raised
-            borderRadius={4}
-            title={'Go to Geo View'}
-            containerViewStyle={[styles.containerView]}
-            buttonStyle={[styles.button]}
-            textStyle={styles.buttonText}
-            onPress={() => {
-              Actions.GeoView();
-            }}
-          />
+            <View style={styles.headerContainer}>
+              <Image
+                style={{
+                alignSelf: 'center',
+                height: 80,
+                width: 300,
+                margin: 10,
+              }}
+                source={require('../../assets/ARcity_name.png')}
+              />
+            </View>
+            <View style={styles.profileContainer}>
+              <Image
+                style={{
+                alignSelf: 'center',
+                height: 150,
+                width: 150,
+                borderRadius: 75,
+                margin: 3,
+              }}
+                source={require('../../assets/doge.png')}
+              />
+              <Text style={material.headlineWhite}>Username: {this.props.user.username}</Text>
+              <Text style={material.headlineWhite}>Games Completed</Text>
+              <List>
+                <ListItem
+                  key="Cube game"
+                  title="Cube game"
+                  titleStyle={material.titleWhite}
+                  subtitle="Score: 12"
+                  subtitleStyle={material.titleWhite}
+                  containerStyle={{ backgroundColor: color.delta_grey }}
+                  hideChevron />
+                <ListItem
+                  title="Shooting game"
+                  key="Cube game"
+                  titleStyle={material.titleWhite}
+                  subtitle="Score: 1"
+                  subtitleStyle={material.titleWhite}
+                  containerStyle={{ backgroundColor: color.delta_grey }}
+                  hideChevron />
+              </List>
+            </View>
           </View>
         </View>
       </GestureRecognizer>

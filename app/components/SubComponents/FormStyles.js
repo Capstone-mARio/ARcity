@@ -12,12 +12,13 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: color.white,
+    backgroundColor: color.delta_grey,
   },
 
   wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 15,
   },
 
   errorText: {
@@ -39,7 +40,8 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#FF553F',
+    margin: 10,
+    backgroundColor: color.button_color,
     height: normalize(55),
   },
 
