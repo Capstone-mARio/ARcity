@@ -89,15 +89,14 @@ class Suitcase extends Component {
             );
           }}
         />
-        {this.state.briefcaseText ? (
           <ViroText
             style={styles.TextStyle}
-            position={[0, 0, 0]}
+            position={[0, -10, 0]}
             scale={[1, 1, 1]}
             text="+100!"
-            animation={{ name: 'rise', run: true }}
+            visible={this.state.briefcaseText}
+            animation={{ name: 'rise', run: this.state.briefcaseText }}
           />
-        ) : null}
       </ViroNode>
     );
   }
