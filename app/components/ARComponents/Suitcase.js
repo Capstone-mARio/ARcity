@@ -90,6 +90,7 @@ class Suitcase extends Component {
           }}
         />
           <ViroText
+                  transformBehaviors='billboard'
             style={styles.TextStyle}
             position={[0, -10, 0]}
             scale={[1, 1, 1]}

@@ -50,6 +50,11 @@ class TestZone extends Component {
         {/* need viroNode, to wrap object */}
         {/* <Suitcase pos={[0, 0, -10]} /> */}
         <Coin pos={[0, 0, -10]} />
+        <Coin pos={[0, 0, 10]} />
+        <Coin pos={[10, 0, 0]} />
+        <Coin pos={[-10, 0, 0]} />
+        <Suitcase pos={[-10, 0, 10]} />
+        <Suitcase pos={[10, 0, -10]} />
       </ViroARScene>
     ) : (
       <ViroARScene onTrackingUpdated={this._onInitialized}>
