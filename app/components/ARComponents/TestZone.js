@@ -91,11 +91,12 @@ class CubeLandingGame extends Component {
            rotation={[-90, 0, 0]}
            type='VRX'
            onClick={()=>{
+             this.visible = false
             this.props.createUser(
               {
                 uid: this.props.user.uid,
                 username: this.props.user.username,
-                coins: this.props.user.coins + 10,
+                coins: this.props.user.coins + 100,
                 games: this.props.user.games,
                 objects: this.props.user.objects
               },
