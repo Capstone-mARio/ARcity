@@ -1,57 +1,71 @@
 //React Imports
-import React, { Components } from 'react'
+import React, { Component } from 'react'
+import { StyleSheet } from 'react-native';
 import {
   ViroARScene,
+  ViroBox,
+  ViroText,
 } from 'react-viro'
 
-class CollectCoins extends Components {
+const styles = StyleSheet.create({
+  TextStyle: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
+
+var coin;
+
+export default class CollectCoins extends Component {
   constructor() {
     super();
     this.state = {
-      coinNum: 1,
-      coinSpawn: 5000
+      coinSpawn: false,
     }
-    this._addCoin = this._addCoin.bind(this);
-    this._makeCoins = this._makeCoins.bind(this);
-    this._displayCoins = this._displayCoins.bind(this);
+    this._spawnCoin = this._spawnCoin.bind(this)
+    this._checkCoin = this._checkCoin.bind(this)
   }
 
   render() {
+    this._spawnCoin();
     return (
       <ViroARScene>
-        {this._displayCoins()}
+        <ViroText
+          text="Look For The Coins!"
+          position={[0, 0, -2]}
+          style={styles.TextStyle}
+        />
+        <ViroBox
+          ref={obj => {coin = obj}}
+          scale={[.25, .25, .25]}
+          position={[Math.floor(Math.random() * 1) - 3, 0, Math.floor(Math.random() * 1) - 3]}
+          viroTag="coin"
+          visible={false}
+        />
       </ViroARScene>
     )
   }
 
-  _addCoin() {
-    setTimeout(function () {
+  _spawnCoin(){
+    setTimeout(() => {
       this.setState({
-        coinNum: this.state.coinNum + 1
+        coinSpawn: true
       })
-    }, this.state.coinSpawn)
+      coin.setNativeProps({visible: true});
+      this._checkCoin()
+    }, 5000)
   }
 
-  _makeCoins() {
-    var coins = []
-    for (let i = 0; i < this.state.coinNum; coins++) {
-      var coin = <ViroBox
-        scale={[1, 1, 1]}
-        position={[0, 1, -1]}
-        viroTag="coin"
-      />
-      coins.push(coin);
-    }
-    return coins;
-  }
-
-  _displayCoins() {
-    return this.state.coinNum ? (
-      <ViroNode>
-        {this._makeCoins()}
-      </ViroNode>
-    ) : null
+  _checkCoin(){
+    setTimeout(() => {
+      this.setState({
+        coinSpawn: false
+      })
+      coin.setNativeProps({visible: false});
+      this._spawnCoin()
+    }, 10000)
   }
 }
-
-export default CollectCoins;

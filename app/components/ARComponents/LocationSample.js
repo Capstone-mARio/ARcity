@@ -73,16 +73,16 @@ class LocationSample extends Component {
   _jumpNextScene(id) {
     switch (id) {
       case 1:
-      this.props.setNav(CUBE_LANDING_GAME)
-      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+        this.props.setNav(CUBE_LANDING_GAME)
+        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
         break;
       case 2:
-      this.props.setNav(SHOOTING_GAME)
-      this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
+        this.props.setNav(SHOOTING_GAME)
+        this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
         break;
       default:
-      this.props.setNav(CUBE_LANDING_GAME)
-      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+        this.props.setNav(CUBE_LANDING_GAME)
+        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
 
   }
@@ -94,15 +94,27 @@ class LocationSample extends Component {
       const realX = targets[i].x - this.state.currLocation.x;
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
-      var obj = <ViroBox
-        position={[realX, 1, realY]}
-        height={5}
-        length={5}
-        width={5}
-        visible={Math.abs(realY) <= 30 ? true : true}
-        materials={id === 1 ? "starbucks" : "killarney"}
-        onClick={() => this._jumpNextScene(id)}
-      />
+      if (id < 3) {
+        var obj = <ViroBox
+          position={[realX, 1, realY]}
+          height={5}
+          length={5}
+          width={5}
+          visible={Math.abs(realY) <= 30 ? true : true}
+          materials={id === 1 ? "starbucks" : "killarney"}
+          onClick={() => this._jumpNextScene(id)}
+          />
+      } else {
+        var obj = <ViroBox
+          position={[realX, 1, realY]}
+          height={5}
+          length={5}
+          width={5}
+          visible={Math.abs(realY) <= 30 ? true : true}
+          materials={id === 1 ? "starbucks" : "killarney"}
+          onClick={() => this._jumpNextScene(id)}
+          />
+      }
       objs.push(obj)
     }
     return objs;
