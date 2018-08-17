@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 
 import {
   ViroARScene,
-  ViroARPlane,
-  ViroARPlaneSelector,
   ViroQuad,
   ViroBox,
   ViroMaterials,
   ViroNode,
-  ViroFlexView,
   ViroText,
   ViroSphere,
-  ViroPolygon,
+  ViroCamera
 } from 'react-viro';
 
 import { StyleSheet } from 'react-native';
@@ -25,11 +22,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-const blockCount = 20;
+const blockCount = 25;
 
 const randomPos = [];
 for(let i = 0; i < blockCount; i++){
-  randomPos.push([Math.random() * (6 - 1 + 1) - 3, Math.random() * (10 - 5 + 5), (Math.random() * (6 - 1 + 1) -3)])
+  randomPos.push([Math.random() * (7 - 1 + 1) - 4, Math.random() * (20 - 5 + 5), (Math.random() * (7 - 1 + 1) -4)])
 }
 
 export default class ShootingGame extends Component {
@@ -59,7 +56,8 @@ export default class ShootingGame extends Component {
   render(){
     console.log(this.state.isReady)
       return (
-        <ViroARScene physicsWorld={{ gravity: [0, -.2, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
+        <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
+            <ViroCamera position={[0, 0, -1]} rotation={[0,0,0]} active={true} />
             <ViroQuad
               scale={[8, 8, 8]}
               position={[0, -3, 0]}
@@ -161,7 +159,7 @@ export default class ShootingGame extends Component {
         materials={['block_color']}
         viroTag={blockTag}
         onCollision={this._onBlockCollide.bind(this, i)}
-        physicsBody={{mass: 1, type:'Dynamic', torque:[0,.02,0]} }
+        physicsBody={{mass: 1, type:'Dynamic', torque:[0,.02,0], velocity: [0,-1,0]} }
       />
       blocks.push(block)
     }
