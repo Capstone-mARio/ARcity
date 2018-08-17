@@ -29,6 +29,8 @@ import LocationSample from './LocationSample';
 import ShootingGame from './ShootingGame';
 import MenuNav from './MenuNav';
 
+import TestZone from './TestZone';
+
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
 const LOCATION_SAMPLE = 'LOCATION_SAMPLE';
@@ -192,7 +194,7 @@ class ARHome extends Component {
       <View style={{ flex: 1 }}>
         <ViroARSceneNavigator
           {...this.state.sharedProps}
-          initialScene={{ scene: LocationSample }}
+          initialScene={{ scene: TestZone }}
           worldAlignment="GravityAndHeading"
         />
         <MenuNav />
