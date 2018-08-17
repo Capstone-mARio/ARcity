@@ -11,6 +11,7 @@ import {
   ViroNode,
   ViroText,
   ViroConstants,
+  ViroCamera,
 } from 'react-viro';
 
 //StyleSheet
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
 var ball;
 const ballphysics = {
   type: 'Dynamic',
-  mass: 3,
+  mass: 10000,
   useGravity: true,
   restitution: 0,
   friction: 0.75,
@@ -64,6 +65,7 @@ class CubeLandingGame extends Component {
     this._onInitialized = this._onInitialized.bind(this);
   }
 
+
   render() {
     //Ball Position Checker
     setInterval(async () => {
@@ -74,11 +76,9 @@ class CubeLandingGame extends Component {
     }, 500);
 
     return this.state.loaded ? (
-      <ViroARScene
-        onTrackingUpdated={this._onInitialized}
-        physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}
-      >
+      <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}>
         {/*original spawn plane*/}
+        <ViroCamera  position={[0, 0, 1]} active={true} />
         <ViroQuad
           scale={[1, 1, 1]}
           position={[0, -1, -1]}
@@ -118,7 +118,7 @@ class CubeLandingGame extends Component {
           position={[0, 0.25, -1]}
           rotation={[0, 0, 0]}
           physicsBody={ballphysics}
-          dragType="FixedToWorld"
+          dragType="FixedDistance"
           viroTag="gameCube"
           materials="cube_color"
           onDrag={() => {}}
