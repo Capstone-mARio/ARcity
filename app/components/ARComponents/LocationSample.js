@@ -44,9 +44,12 @@ class LocationSample extends Component {
     this._makeObj = this._makeObj.bind(this)
     this._displayObjs = this._displayObjs.bind(this)
   }
+  componentDidMount(){ //HOPEFULLY THE RIGHT WAY
+    navigator.geolocation.watchPosition(this.success, this.error, options);
+  }
 
   render() {
-    navigator.geolocation.watchPosition(this.success, this.error, options);
+
     this.props.setThis(this);
     return this.state.currLocation.x !== 0 ?
       (
