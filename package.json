@@ -19,6 +19,7 @@
     "react-native-elements": "^0.19.1",
     "react-native-ionicons": "^0.2.2",
     "react-native-material-color": "^1.0.15",
+    "react-native-modal": "^6.5.0",
     "react-native-redux-listener": "^0.3.0",
     "react-native-router-flux": "^4.0.0-beta.43",
     "react-native-size-matters": "^0.1.2",
