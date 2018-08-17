@@ -4,6 +4,8 @@ import { AsyncStorage } from 'react-native';
 export const LOGGED_IN = 'auth/LOGGED_IN';
 export const LOGGED_OUT = 'auth/LOGGED_OUT';
 export const INSTRUCTIONS_VISIBLE = 'INSTRUCTIONS_VISIBLE';
+export const INSTRUCTIONS_FROM_MENU = 'INSTRUCTIONS_FROM_MENU';
+export const MENU_VISIBLE = 'MENU_VISIBLE';
 
 // ACTION CREATORS
 import * as api from '../../firebase/api/auth';
@@ -111,6 +113,7 @@ let initialState = {
   isLoggedIn: false,
   user: null,
   instructions: false,
+  menu: false,
 };
 
 export default (authReducer = (state = initialState, action) => {
@@ -130,7 +133,7 @@ export default (authReducer = (state = initialState, action) => {
       return { ...state, isLoggedIn: false, user: null };
 
     case INSTRUCTIONS_VISIBLE:
-      return {...state, instructions: action.instructions }
+      return {...state, instructions: action.instructions };
 
     default:
       return state;

@@ -4,12 +4,13 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { createUser, signOut, instructionsVisible } from '../../../redux/reducers/authReducer';
+import { createUser, signOut, instructionsVisible, menuVisible } from '../../../redux/reducers/authReducer';
 import AuthTextInput from '../../SubComponents/AuthTextInput';
 import { isEmpty, validate } from '../../utils/validate';
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 
 import InstructionModal from '../Instructions/Instructions';
+import MenuModal from '../Menu/Menu';
 import { material } from 'react-native-typography';
 import SubTab from '../../SubComponents/SubTab';
 import { color } from '../../../styles/theme';
@@ -83,10 +84,7 @@ class Profile extends React.Component {
           </View>
           <View style={styles.profileContainer}>
             <TouchableOpacity
-              onPress={() => {
-                this.props.signOut();
-                Actions.Welcome();
-              }}
+              onPress={() => this.props.instructionsVisible(true) }
             >
               <Image
                 style={styles.doge}
@@ -130,7 +128,9 @@ class Profile extends React.Component {
                 </TouchableOpacity>
               </View>
             )}
+
             <InstructionModal />
+
             {/* <<<<<<<< REMOVE UP TO NEXT COMMENT BEFORE DEPLOY >>>>>>>> */}
             {/* <View style={{flexDirection: 'row'}}>
               <Button text={'Win Game'} onPress={()=>{
@@ -191,6 +191,7 @@ class Profile extends React.Component {
 const mapStateToProps = state => ({
   user: state.authReducer.user || {games:'[]', objects:'[]', coins:0},
   instructions: state.authReducer.instructions,
+  menu: state.authReducer.menu,
 });
 
 const mapDispatchToProps = dispatch => ({

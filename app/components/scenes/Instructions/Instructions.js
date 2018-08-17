@@ -5,7 +5,8 @@ import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 import SubTab from '../../SubComponents/SubTab';
 import GameScore from '../../SubComponents/GameScore/GameScore';
 import GameObjects from '../../SubComponents/GameObjects/GameObjects';
-import { instructionsVisible } from '../../../redux/reducers/authReducer';
+import { Actions } from 'react-native-router-flux';
+import { instructionsVisible, signOut } from '../../../redux/reducers/authReducer';
 import { connect } from 'react-redux';
 
 import styles from './styles';
@@ -24,25 +25,49 @@ const DogeComponent = () => (
   />
 )
 
+const defaultState = {
+    menu: true,
+    first: false,
+    second: false,
+    third: false,
+    fourth: false,
+    fifth: false,
+}
+
 class Instructions extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      first: true,
-      second: false,
-      third: false,
-      fourth: false,
-      fifth: false,
-    }
+    this.state = defaultState;
   }
   render() {
+    console.log("hello");
     return (
       <View style={styles.container}>
         <Modal
           isVisible={this.props.instructions}
-          onBackdropPress={() => this.props.instructionsVisible(false)}
+          onBackdropPress={() => {
+            this.setState(defaultState);
+            this.props.instructionsVisible(false);
+          }}
           backdropOpacity={0.88}
           >
+
+          {(this.state.menu &&
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <ResponsiveButton
+                text="View instructions"
+                onPress={() => this.setState({ menu: false, first: true }) }
+              />
+              <ResponsiveButton
+                text="Sign out"
+                onPress={() => {
+                  Actions.Welcome();
+                  this.props.signOut();
+                  this.props.instructionsVisible(false);
+                }}
+              />
+            </View>)}
+
           {(this.state.first &&
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
@@ -99,7 +124,10 @@ class Instructions extends Component {
               <DogeComponent />
               <ResponsiveButton
                 text="Exit"
-                onPress={() => this.props.instructionsVisible(false)}
+                onPress={() => {
+                  this.setState(defaultState);
+                  this.props.instructionsVisible(false);
+                }}
               />
             </View>)}
 
@@ -115,6 +143,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   instructionsVisible: bool => dispatch(instructionsVisible(bool)),
+  signOut: () => dispatch(signOut()),
 });
 
 export default connect(

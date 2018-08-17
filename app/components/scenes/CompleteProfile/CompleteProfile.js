@@ -44,11 +44,11 @@ class CompleteProfile extends React.Component {
         data['games'] = '[]'
         data['objects'] = '[]'
 
-        this.props.createUser(data, this.onSuccess, this.onError)
+        this.props.createUser(data, this.onSuccess, this.onError);
+        this.props.instructionsVisible(true);
     }
 
     onSuccess() {
-        this.props.instructionsVisible(true);
         Actions.Main()
     }
 
