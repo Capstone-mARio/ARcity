@@ -38,6 +38,9 @@ class Profile extends React.Component {
         {
           uid: this.props.user.uid,
           username: data.username.value,
+          coins: this.props.user.coins,
+          games: this.props.user.games,
+          objects: this.props.user.objects
         },
         this.onSuccess,
         this.onError
@@ -121,6 +124,19 @@ class Profile extends React.Component {
                   </TouchableOpacity>
                 </View>
               )}
+              <ResponsiveButton text={'Pick up Coin'} onPress={()=>{
+      this.props.createUser(
+        {
+          uid: this.props.user.uid,
+          username: this.props.user.username,
+          coins: this.props.user.coins + 1,
+          games: this.props.user.games,
+          objects: this.props.user.objects
+        },
+        this.onSuccess,
+        this.onError
+      );
+                }} />
             <View style={styles.tabContainer}>
               <SubTab style={styles.subtab} />
             </View>
@@ -132,13 +148,13 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user || {}
+  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0}
 });
 
 const mapDispatchToProps = dispatch => ({
   createUser: (user, success, error) =>
     dispatch(createUser(user, success, error)),
-    signOut: () => dispatch(signOut())
+    signOut: () => dispatch(signOut()),
 });
 
 export default connect(

@@ -9,28 +9,28 @@ import { connect } from 'react-redux';
 import styles from './styles';
 import { material } from 'react-native-typography';
 
-const objects = [
-      {
-        object: 'AR Giraffe',
-        cost: 12,
-      },
-      {
-        object: 'AR Balloon',
-        cost: 27,
-      },
-      {
-        object: 'AR Monkey',
-        cost: 27,
-      },
-      {
-        object: 'AR Kitty',
-        cost: 270,
-      },
-      {
-        object: 'AR Babboon',
-        cost: 2700,
-      },
-    ];
+// const objects = [
+//       {
+//         object: 'AR Giraffe',
+//         cost: 12,
+//       },
+//       {
+//         object: 'AR Balloon',
+//         cost: 27,
+//       },
+//       {
+//         object: 'AR Monkey',
+//         cost: 27,
+//       },
+//       {
+//         object: 'AR Kitty',
+//         cost: 270,
+//       },
+//       {
+//         object: 'AR Babboon',
+//         cost: 2700,
+//       },
+//     ];
 
 class GameObjects extends Component {
   constructor() {
@@ -38,11 +38,13 @@ class GameObjects extends Component {
   }
 
   render() {
+    const gameObjects = JSON.parse(this.props.user.objects);
     return (
+      gameObjects &&
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <List style={styles.list}>
-            {objects.map(object => {
+            {gameObjects.map(object => {
               return <ListItem
                       containerStyle={styles.listItem}
                       avatar={require('../../assets/planet_icon_white.png')}
@@ -63,7 +65,7 @@ class GameObjects extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user,
+  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0}
 });
 
 export default connect(

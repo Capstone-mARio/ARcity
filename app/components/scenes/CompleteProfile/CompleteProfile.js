@@ -40,6 +40,9 @@ class CompleteProfile extends React.Component {
         //attach user id
         const { user } = this.props;
         data['uid'] = user.uid;
+        data['coins'] = 0
+        data['games'] = '[]'
+        data['objects'] = '[]'
 
         this.props.createUser(data, this.onSuccess, this.onError)
     }
