@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions, Image, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import GameScore from './GameScore/GameScore'
 import GameObjects from './GameObjects/GameObjects'
@@ -13,12 +14,27 @@ const Scores = () => (
 const Objects = () => (
   <GameObjects />
 );
-const Bitcoins = () => (
-  <View style={styles.container}>
-    <Text style={material.display2White}>You have: 10</Text>
-    <Image style={styles.bitcoin} source={require('../assets/bitcoin_icon_white.png')} />
-  </View>
-)
+class Bitcoins extends Component {
+
+  render() {
+    const coins = Number(this.props.user.coins);
+    return (
+      <View style={styles.container}>
+        <Text style={material.display2White}>You have: {coins}</Text>
+        <Image style={styles.bitcoin} source={require('../assets/bitcoin_icon_white.png')} />
+      </View>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0}
+});
+
+const betterBitcoins = connect(
+  mapStateToProps,
+  {}
+)(Bitcoins);
 
 export default class SubTab extends Component {
   state = {
@@ -37,7 +53,7 @@ export default class SubTab extends Component {
         renderScene={SceneMap({
           scores: Scores,
           objects: Objects,
-          bitcoins: Bitcoins,
+          bitcoins: betterBitcoins,
         })}
         renderTabBar={props =>
           <TabBar

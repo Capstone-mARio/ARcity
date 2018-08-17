@@ -9,24 +9,24 @@ import { connect } from 'react-redux';
 import styles from './styles';
 import { material } from 'react-native-typography';
 
-const scores = [
-      {
-        game: 'Cube game',
-        score: 12,
-      },
-      {
-        game: 'Shooting game',
-        score: 27,
-      },
-      {
-        game: 'Cube game',
-        score: 12,
-      },
-      {
-        game: 'Shooting game',
-        score: 27,
-      },
-    ];
+// const scores = [
+//       {
+//         game: 'Cube game',
+//         score: 12,
+//       },
+//       {
+//         game: 'Shooting game',
+//         score: 27,
+//       },
+//       {
+//         game: 'Cube game',
+//         score: 12,
+//       },
+//       {
+//         game: 'Shooting game',
+//         score: 27,
+//       },
+//     ];
 
 class GameScore extends React.Component {
   constructor() {
@@ -34,11 +34,13 @@ class GameScore extends React.Component {
   }
 
   render() {
+    const gameScores = JSON.parse(this.props.user.games);
     return (
+      (gameScores &&
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <List style={styles.list}>
-            {scores.map(score => {
+            {gameScores.map(score => {
               return <ListItem
                       containerStyle={styles.listItem}
                       avatar={require('../../assets/plane_icon_white.png')}
@@ -53,13 +55,13 @@ class GameScore extends React.Component {
             })}
           </List>
         </ScrollView>
-      </View>
+      </View>)
     );
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user,
+  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0}
 });
 
 export default connect(
