@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
+import ResponsiveButton from './ResponsiveButton';
 
 import { isEmpty, validate } from '../utils/validate';
 
 import styles from './FormStyles';
 
 import AuthTextInput from './AuthTextInput';
+import { iOSUIKit, material } from 'react-native-typography';
 
 class Form extends React.Component {
   constructor(props) {
@@ -97,18 +99,10 @@ class Form extends React.Component {
             );
           })}
 
-          <Button
-            raised
-            title={buttonTitle}
-            borderRadius={0}
-            containerViewStyle={styles.containerView}
-            buttonStyle={styles.button}
-            textStyle={styles.buttonText}
-            onPress={this.onSubmit}
-          />
+          <ResponsiveButton text={buttonTitle} onPress={this.onSubmit} />
           {this.props.onForgotPassword !== null && (
             <Text
-              style={styles.forgotText}
+              style={material.subheadingWhite}
               onPress={this.props.onForgotPassword}
             >
               Forgot password?

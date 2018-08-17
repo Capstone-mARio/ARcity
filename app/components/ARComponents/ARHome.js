@@ -11,167 +11,31 @@ console.disableYellowBox = true;
 //React Imports
 import React, { Component } from 'react';
 import { ViroARSceneNavigator } from 'react-viro';
-import { Actions } from 'react-native-router-flux';
-import {
-  AppRegistry,
-  Text,
-  View,
-  StyleSheet,
-  PixelRatio,
-  TouchableHighlight,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+
+//Redux Imports
+import { connect } from 'react-redux';
+import { setNav } from '../../redux/reducers/arCityReducer';
 
 //Secrets
 import '../../../secrets';
 
 //API key below
-var sharedProps = { apiKey: process.env.viroKey, };
+var sharedProps = { apiKey: process.env.viroKey };
 
+//Scenes for AR
+import CubeLandingGame from './CubeLandingGame';
+import LocationSample from './LocationSample';
+import ShootingGame from './ShootingGame';
+import MenuNav from './MenuNav';
 
-// Sets scenes you want for AR
-var InitialARScene = require('./HelloWorldSceneAR');
-var CubeLandingGame = require('./CubeLandingGame');
-var LocationSample = require('./LocationSample');
-var ShootingGame = require('./ShootingGame');
-
-var UNSET = 'UNSET';
-var AR_NAVIGATOR_TYPE = 'AR';
-var CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
-var LOCATION_SAMPLE = 'LOCATION_SAMPLE';
-var SHOOTING_GAME = 'SHOOTING_GAME';
-
-// This determines which type of experience to launch in, or UNSET, if the user should
-// be presented with a choice of AR scenes. By default, we offer the user a choice.
-var defaultNavigatorType = LOCATION_SAMPLE;
-
-
-export default class ARHome extends Component {
-  constructor() {
-    super();
-    this.state = {
-      navigatorType: defaultNavigatorType,
-      sharedProps: sharedProps, //API KEY
-    };
-    this._getExperienceSelector = this._getExperienceSelector.bind(this);
-    this._getARNavigator = this._getARNavigator.bind(this);
-    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
-    this._exitViro = this._exitViro.bind(this);
-  }
-
-  // ARNavigator()
-  render() {
-    if (this.state.navigatorType == UNSET) {
-      return this._getExperienceSelector();
-    } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
-      return this._getARNavigator();
-    } else if (this.state.navigatorType == CUBE_LANDING_GAME) {
-      return this._getCubeGameNavigator();
-    } else if (this.state.navigatorType === SHOOTING_GAME) {
-      return this._getShootingGameNavigator();
-    } else if (this.state.navigatorType === LOCATION_SAMPLE) {
-      return this._getLocationSampleNavigator();
-    }
-  }
-
-  // Presents the user with a choice of an AR games.
-  _getExperienceSelector() {
-    return (
-      <View style={localStyles.outer}>
-        <View style={localStyles.inner}>
-          <Text style={localStyles.titleText}>
-            Choose your desired experience:
-          </Text>
-
-          {/* <TouchableHighlight style={localStyles.buttons} onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)} underlayColor={'#68a0ff'}>
-            <Text style={localStyles.buttonText}>HELLO WORLD AR</Text>
-          </TouchableHighlight> */}
-
-          <TouchableHighlight style={localStyles.buttons} onPress={this._getExperienceButtonOnPress(CUBE_LANDING_GAME)} underlayColor={'#68a0ff'}>
-            <Text style={localStyles.buttonText}>CUBE GAME</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight style={localStyles.buttons} onPress={this._getExperienceButtonOnPress(SHOOTING_GAME)} underlayColor={'#68a0ff'}>
-            <Text style={localStyles.buttonText}>SHOOTING GAME</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight style={localStyles.buttons} onPress={this._getExperienceButtonOnPress(LOCATION_SAMPLE)} underlayColor={'#68a0ff'}>
-            <Text style={localStyles.buttonText}>LOCATION SAMPLE</Text>
-          </TouchableHighlight>
-
-        </View>
-      </View>
-    );
-  }
-
-  // Returns the ViroARSceneNavigator which will start the AR experience
-  _getARNavigator() {
-    return (
-      <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} worldAlignment="GravityAndHeading" initialScene={{ scene: InitialARScene }} />
-        <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => this._exitViro() } >
-            Go Back
-          </Text>
-        </View>
-      </View>
-    );
-  }
-
-  _getCubeGameNavigator() {
-    return (
-      <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: CubeLandingGame }} />
-        <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => { this._exitViro() }}>
-            Go Back
-          </Text>
-        </View>
-      </View>
-    );
-  }
-  _getShootingGameNavigator() {
-    return (
-      <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: ShootingGame }} />
-        <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => { this._exitViro() }}>
-            Go Back
-          </Text>
-        </View>
-      </View>
-    );
-  }
-  _getLocationSampleNavigator() {
-    return (
-      <View style={{ flex: 1 }}>
-        <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: LocationSample }} />
-        <View style={localStyles.listView}>
-          <Text style={{ color: 'white' }} onPress={() => { this.setState({navigatorType: LOCATION_SAMPLE}) }}>
-            Go Back
-          </Text>
-        </View>
-      </View>
-    );
-  }
-
-  // This function returns an anonymous/lambda function to be used
-  // by the experience selector buttons
-  _getExperienceButtonOnPress(navigatorType) {
-    return () => {
-      this.setState({ navigatorType: navigatorType });
-    };
-  }
-
-  // This function "exits" Viro by setting the navigatorType to UNSET.
-  _exitViro() {
-    this.setState({ navigatorType: UNSET });
-  }
-}
-
-
+//Scene Strings
+const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
+const LOCATION_SAMPLE = 'LOCATION_SAMPLE';
+const SHOOTING_GAME = 'SHOOTING_GAME';
 
 //StyleSheet
-var localStyles = StyleSheet.create({
+const localStyles = StyleSheet.create({
   viroContainer: {
     flex: 1,
     backgroundColor: 'black',
@@ -236,4 +100,116 @@ var localStyles = StyleSheet.create({
   },
 });
 
-module.exports = ARHome;
+
+class ARHome extends Component {
+  constructor() {
+    super();
+    this.state = {
+      sharedProps: sharedProps, //API KEY
+    };
+    this._getExperienceSelector = this._getExperienceSelector.bind(this);
+  }
+
+  // ARNavigator()
+  render() {
+      return this._getLocationSampleNavigator();
+
+    // if (this.props.navigator == CUBE_LANDING_GAME) {
+    //   return this._getCubeGameNavigator();
+    // } else if (this.props.navigator === SHOOTING_GAME) {
+    //   return this._getShootingGameNavigator();
+    // } else if (this.props.navigator === LOCATION_SAMPLE) {
+    //   return this._getLocationSampleNavigator();
+    // } else {
+    //   return this._getExperienceSelector();
+    // }
+  }
+
+  // Presents the user with a choice of an AR games.
+  _getExperienceSelector() {
+    return (
+      <View style={localStyles.outer}>
+        <View style={localStyles.inner}>
+          <Text style={localStyles.titleText}>
+            Choose your desired experience:
+          </Text>
+
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={() => this.props.setNav(CUBE_LANDING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
+            <Text style={localStyles.buttonText}>CUBE GAME</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={() => this.props.setNav(SHOOTING_GAME)}
+            underlayColor={'#68a0ff'}
+          >
+            <Text style={localStyles.buttonText}>SHOOTING GAME</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={() => this.props.setNav(LOCATION_SAMPLE)}
+            underlayColor={'#68a0ff'}
+          >
+            <Text style={localStyles.buttonText}>LOCATION SAMPLE</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    );
+  }
+
+  // Returns the ViroARSceneNavigator which will start the AR experience
+  _getCubeGameNavigator() {
+    return (
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: CubeLandingGame }}
+          worldAlignment="GravityAndHeading"
+        />
+        <MenuNav />
+      </View>
+    );
+  }
+  _getShootingGameNavigator() {
+    return (
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: ShootingGame }}
+          worldAlignment="GravityAndHeading"
+        />
+        <MenuNav />
+      </View>
+    );
+  }
+  _getLocationSampleNavigator() {
+    return (
+      <View style={{ flex: 1 }}>
+        <ViroARSceneNavigator
+          {...this.state.sharedProps}
+          initialScene={{ scene: LocationSample }}
+          worldAlignment="GravityAndHeading"
+        />
+        <MenuNav />
+      </View>
+    );
+  }
+}
+
+//Redux Methods
+const mapToState = (state) => ({
+  navigator: state.arCityReducer.navigator
+})
+const mapToDispatch = (dispatch) => ({
+  setNav: (navScene) => dispatch(setNav(navScene)),
+})
+
+export default connect(
+  mapToState,
+  mapToDispatch
+)(ARHome);

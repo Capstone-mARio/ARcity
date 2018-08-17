@@ -50,13 +50,12 @@ export function resetPassword(data, successCB, errorCB) {
   };
 }
 
-export function signOut(successCB, errorCB) {
+export function signOut() {
   return dispatch => {
     api.signOut(function(success, data, error) {
       if (success) {
         dispatch({ type: LOGGED_OUT });
-        successCB();
-      } else if (error) errorCB(error);
+      } else if (error) console.log(error);
     });
   };
 }

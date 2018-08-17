@@ -10,6 +10,7 @@ import {
 } from 'react-native-elements';
 import { isEmpty } from '../utils/validate';
 import styles from './AuthTextInputStyles';
+import { iOSUIKit, material } from 'react-native-typography';
 
 class AuthTextInput extends Component {
   render() {
@@ -34,10 +35,11 @@ class AuthTextInput extends Component {
           autoFocus={autoFocus}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry}
-          containerStyle={styles.containerStyle}
-          inputStyle={styles.inputContainer}
-          placeholderTextColor={placeholderTextColor}
+          containerStyle={styles.inputContainer}
+          inputStyle={material.titleWhite}
+          placeholderTextColor={'grey'}
           keyboardType={keyboardType}
+          textAlign={this.props.textAlign || 'auto'}
           value={this.props.value}
         />
         {!isEmpty(this.props.error) && (
