@@ -15,7 +15,7 @@ var targets = [
     id: 2
   },
 
-  { //coin
+  { //suitcase
     latitude: 40.704863,
     longitude: -74.008927,
     x: 0,
@@ -23,7 +23,7 @@ var targets = [
     id: 3
   },
 
-  { //coin
+  { //suitcase
     latitude: 40.704960,
     longitude: -74.010402,
     x: 0,
