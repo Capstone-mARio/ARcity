@@ -25,6 +25,10 @@ ViroAnimations.registerAnimations({
     easing: 'EaseOut',
     duration: 1000,
   },
+  rotate: {
+    properties: { rotateY: '+=45' },
+    duration: 500,
+  },
 });
 
 //StyleSheet
@@ -68,9 +72,10 @@ class Coin extends Component {
           source={require('../assets/coin/dogecoin.vrx')}
           position={[0, -10, 0]}
           scale={[0.01, 0.01, 0.01]}
-          rotation={[-90, 90, 0]}
+          rotation={[-90, 0, 0]}
           type="VRX"
           visible={this.state.coin}
+          animation={{ name: 'rotate', run: true, loop: true }}
           onClick={() => {
             this.setState({ coin: false, coinText: true });
             setTimeout(() => {
