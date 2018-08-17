@@ -103,7 +103,6 @@ const localStyles = StyleSheet.create({
   },
 });
 
-
 class ARHome extends Component {
   constructor() {
     super();
@@ -115,7 +114,7 @@ class ARHome extends Component {
 
   // ARNavigator()
   render() {
-      return this._getLocationSampleNavigator();
+    return this._getLocationSampleNavigator();
 
     // if (this.props.navigator == CUBE_LANDING_GAME) {
     //   return this._getCubeGameNavigator();
@@ -195,9 +194,8 @@ class ARHome extends Component {
       <View style={{ flex: 1 }}>
         <ViroARSceneNavigator
           {...this.state.sharedProps}
-          // initialScene={{ scene: LocationSample }}
+          initialScene={{ scene: LocationSample }}
           // initialScene={{ scene: TestZone }}
-          initialScene={{ scene: CollectCoins }}
           worldAlignment="GravityAndHeading"
         />
         <MenuNav />
@@ -207,12 +205,12 @@ class ARHome extends Component {
 }
 
 //Redux Methods
-const mapToState = (state) => ({
-  navigator: state.arCityReducer.navigator
-})
-const mapToDispatch = (dispatch) => ({
-  setNav: (navScene) => dispatch(setNav(navScene)),
-})
+const mapToState = state => ({
+  navigator: state.arCityReducer.navigator,
+});
+const mapToDispatch = dispatch => ({
+  setNav: navScene => dispatch(setNav(navScene)),
+});
 
 export default connect(
   mapToState,
