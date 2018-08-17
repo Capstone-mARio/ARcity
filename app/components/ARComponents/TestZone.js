@@ -13,19 +13,11 @@ import {
   ViroConstants,
   Viro3DObject,
   ViroAmbientLight,
-  ViroAnimations
+  ViroAnimations,
 } from 'react-viro';
 
-import { connect } from 'react-redux';
-import { createUser } from '../../redux/reducers/authReducer';
+import Suitcase from './Suitcase';
 
-ViroAnimations.registerAnimations({
-  rise:{properties:{positionX: 0, positionZ: 0, positionY: 1, opacity: 0.0},
-        easing:"EaseOut",
-        duration: 1000},
-});
-
-//StyleSheet
 const styles = StyleSheet.create({
   TextStyle: {
     fontFamily: 'Arial',
@@ -41,22 +33,9 @@ class TestZone extends Component {
     super();
     this.state = {
       loaded: false,
-      briefcase: true,
-      briefcaseText: false,
     };
     this._onInitialized = this._onInitialized.bind(this);
-    this.onSuccess = this.onSuccess.bind(this);
-    this.onError = this.onError.bind(this);
   }
-  onSuccess() {
-    console.log('success')
-  }
-  onError(error) {
-    if (error.hasOwnProperty('message')) {
-      console.log('error')
-    }
-  }
-
   render() {
     //Ball Position Checker
 
@@ -68,44 +47,10 @@ class TestZone extends Component {
         {/* need ambient light, otherwise object won't display */}
         <ViroAmbientLight color="#FFFFFF" />
         {/* need viroNode, to wrap object */}
-        <ViroNode position={[0, -2, -2]}>
-          <Viro3DObject
-           source={require('../assets/suitcase/Vintage_Suitcase_LP.vrx')}
-           position={[0, -10, -10]}
-           scale={[0.10, 0.10, 0.10]}
-           rotation={[-90, 0, 0]}
-           type='VRX'
-           visible={this.state.briefcase}
-           onClick={()=>{
-             this.setState({briefcase: false, briefcaseText: true})
-             setTimeout(()=>{this.setState({briefcaseText: false})}, 1000)
-            this.props.createUser(
-              {
-                uid: this.props.user.uid,
-                username: this.props.user.username,
-                coins: this.props.user.coins + 100,
-                games: this.props.user.games,
-                objects: this.props.user.objects
-              },
-              this.onSuccess,
-              this.onError
-            );
-           }}
-         />
-         {this.state.briefcaseText?
-         <ViroText
-          style={styles.TextStyle}
-          position={[0, -10, -10]}
-          scale={[1,1,1]}
-          text="+100!"
-          animation={{name:'rise', run:true}}
-        />:null}
-         </ViroNode>
+        <Suitcase pos={[0, 0, -10]} />
       </ViroARScene>
     ) : (
-      <ViroARScene
-        onTrackingUpdated={this._onInitialized}
-      >
+      <ViroARScene onTrackingUpdated={this._onInitialized}>
         <ViroText
           style={styles.TextStyle}
           position={[0, 0, -1]}
@@ -126,14 +71,4 @@ class TestZone extends Component {
     }
   }
 }
-
-const mapStateToProps = state => ({
-  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0}
-});
-
-const mapDispatchToProps = dispatch => ({
-  createUser: (user, success, error) =>
-    dispatch(createUser(user, success, error)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TestZone)
+export default TestZone;
