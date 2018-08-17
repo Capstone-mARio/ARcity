@@ -3,10 +3,18 @@ import { AsyncStorage } from 'react-native';
 // ACTION TYPES
 export const LOGGED_IN = 'auth/LOGGED_IN';
 export const LOGGED_OUT = 'auth/LOGGED_OUT';
+export const INSTRUCTIONS_VISIBLE = 'INSTRUCTIONS_VISIBLE';
 
 // ACTION CREATORS
 import * as api from '../../firebase/api/auth';
 import { auth } from '../../firebase/firebase';
+
+export function instructionsVisible(bool) {
+  return {
+    type: INSTRUCTIONS_VISIBLE,
+    instructions: bool,
+  }
+}
 
 export function register(data, successCB, errorCB) {
   return dispatch => {
@@ -102,6 +110,7 @@ export function signInWithFacebook(facebookToken, successCB, errorCB) {
 let initialState = {
   isLoggedIn: false,
   user: null,
+  instructions: false,
 };
 
 export default (authReducer = (state = initialState, action) => {
@@ -119,6 +128,9 @@ export default (authReducer = (state = initialState, action) => {
       AsyncStorage.multiRemove(keys);
 
       return { ...state, isLoggedIn: false, user: null };
+
+    case INSTRUCTIONS_VISIBLE:
+      return {...state, instructions: action.instructions }
 
     default:
       return state;

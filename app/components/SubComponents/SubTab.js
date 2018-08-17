@@ -45,6 +45,7 @@ export default class SubTab extends Component {
   };
 
   render() {
+    console.log("hello i am here");
     return (
       <TabView
         navigationState={this.state}

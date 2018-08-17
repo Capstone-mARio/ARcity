@@ -2,7 +2,7 @@ import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-import { createUser } from '../../../redux/reducers/authReducer';
+import { createUser, instructionsVisible } from '../../../redux/reducers/authReducer';
 import Form from '../../SubComponents/Form';
 
 const fields = [
@@ -48,6 +48,7 @@ class CompleteProfile extends React.Component {
     }
 
     onSuccess() {
+        this.props.instructionsVisible(true);
         Actions.Main()
     }
 
@@ -77,4 +78,9 @@ class CompleteProfile extends React.Component {
     }
 }
 
-export default connect(null, { createUser })(CompleteProfile);
+const mapDispatchToProps = dispatch => ({
+  instructionsVisible: bool => dispatch(instructionsVisible(bool)),
+  createUser: (data, onSuccess, onErr) => dispatch(createUser(data, onSuccess, onErr))
+});
+
+export default connect(null, mapDispatchToProps)(CompleteProfile);

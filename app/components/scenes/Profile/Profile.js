@@ -4,12 +4,12 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { createUser, signOut } from '../../../redux/reducers/authReducer';
+import { createUser, signOut, instructionsVisible } from '../../../redux/reducers/authReducer';
 import AuthTextInput from '../../SubComponents/AuthTextInput';
 import { isEmpty, validate } from '../../utils/validate';
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 
-import GestureRecognizer from 'react-native-swipe-gestures';
+import InstructionModal from '../Instructions/Instructions';
 import { material } from 'react-native-typography';
 import SubTab from '../../SubComponents/SubTab';
 import { color } from '../../../styles/theme';
@@ -28,6 +28,7 @@ class Profile extends React.Component {
     this.onSuccess = this.onSuccess.bind(this);
     this.onError = this.onError.bind(this);
   }
+
   onSubmit() {
     const data = { username: this.state.username };
     const result = validate(data);
@@ -47,24 +48,29 @@ class Profile extends React.Component {
       );
     }
   }
+
   onSuccess() {
     this.setState({ edit: false });
   }
+
   onError(error) {
     if (error.hasOwnProperty('message')) {
       this.setState({ error: error.message });
     }
   }
+
   onChange(key, text) {
     const state = this.state;
     state[key]['value'] = text;
     this.setState(state);
   }
+
   componentDidMount() {
     this.setState({
       username: { type: 'username', value: this.props.user.username },
     });
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -124,6 +130,7 @@ class Profile extends React.Component {
                 </TouchableOpacity>
               </View>
             )}
+            <InstructionModal />
             {/* <<<<<<<< REMOVE UP TO NEXT COMMENT BEFORE DEPLOY >>>>>>>> */}
             {/* <View style={{flexDirection: 'row'}}>
               <Button text={'Win Game'} onPress={()=>{
@@ -172,7 +179,7 @@ class Profile extends React.Component {
               </View> */}
             {/* <<<<<<<<<<<<<<< REMOVE ABOVE BEFORE DEPLOY >>>>>>>>>>>>>>>*/}
             <View style={styles.tabContainer}>
-              <SubTab style={styles.subtab} />
+              <SubTab key="Scores" style={styles.subtab} />
             </View>
           </View>
         </View>
@@ -182,13 +189,14 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0},
+  instructions: state.authReducer.instructions,
 });
 
 const mapDispatchToProps = dispatch => ({
-  createUser: (user, success, error) =>
-    dispatch(createUser(user, success, error)),
+  createUser: (user, success, error) => dispatch(createUser(user, success, error)),
   signOut: () => dispatch(signOut()),
+  instructionsVisible: bool => dispatch(instructionsVisible(bool)),
 });
 
 export default connect(
