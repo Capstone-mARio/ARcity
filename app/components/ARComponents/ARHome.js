@@ -30,6 +30,7 @@ import ShootingGame from './ShootingGame';
 import MenuNav from './MenuNav';
 
 import TestZone from './TestZone';
+import CollectCoins from './CollectCoins';
 
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
