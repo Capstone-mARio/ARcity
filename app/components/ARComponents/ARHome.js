@@ -29,6 +29,8 @@ import LocationSample from './LocationSample';
 import ShootingGame from './ShootingGame';
 import MenuNav from './MenuNav';
 
+import TestZone from './TestZone';
+
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
 const LOCATION_SAMPLE = 'LOCATION_SAMPLE';
