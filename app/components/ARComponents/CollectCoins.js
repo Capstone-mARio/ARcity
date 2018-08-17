@@ -8,7 +8,7 @@ class CollectCoins extends Components {
   constructor() {
     super();
     this.state = {
-      coinNum: 0,
+      coinNum: 1,
       coinSpawn: 5000
     }
     this._addCoin = this._addCoin.bind(this);
@@ -27,7 +27,7 @@ class CollectCoins extends Components {
   _addCoin() {
     setTimeout(function () {
       this.setState({
-        coinNum: coinNum + 1
+        coinNum: this.state.coinNum + 1
       })
     }, this.state.coinSpawn)
   }
@@ -46,11 +46,11 @@ class CollectCoins extends Components {
   }
 
   _displayCoins() {
-    return (
+    return this.state.coinNum ? (
       <ViroNode>
         {this._makeCoins()}
       </ViroNode>
-    )
+    ) : null
   }
 }
 
