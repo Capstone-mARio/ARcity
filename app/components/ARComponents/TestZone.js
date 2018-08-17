@@ -29,33 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-//Ball Related Code
-var ball;
-const ballphysics = {
-  type: 'Dynamic',
-  mass: 3,
-  useGravity: true,
-  restitution: 0,
-  friction: 0.75,
-};
-//Ball Reset Method
-const _resetCube = thisContext => {
-  let ballsRemaining = thisContext.state.ballsRemaining;
-  if (ballsRemaining) {
-    thisContext.setState({
-      ballsRemaining: ballsRemaining - 1,
-    });
-    ball.setNativeProps({ physicsBody: null });
-    ball.setNativeProps({ position: [0, 0.25, -1] });
-    ball.setNativeProps({ materials: ['cube_color'] });
-    setTimeout(() => {
-      ball.setNativeProps({ physicsBody: ballphysics });
-    }, 500);
-  }
-};
-
-
-class CubeLandingGame extends Component {
+class TestZone extends Component {
   constructor() {
     super();
     this.state = {
@@ -90,8 +64,8 @@ class CubeLandingGame extends Component {
            scale={[0.15, 0.15, 0.15]}
            rotation={[-90, 0, 0]}
            type='VRX'
-           onClick={()=>{
-             this.visible = false
+           onClick={(pos, source)=>{
+             console.log(source)
             this.props.createUser(
               {
                 uid: this.props.user.uid,
@@ -141,4 +115,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(createUser(user, success, error)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CubeLandingGame)
+export default connect(mapStateToProps, mapDispatchToProps)(TestZone)
