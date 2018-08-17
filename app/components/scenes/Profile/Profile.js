@@ -124,19 +124,53 @@ class Profile extends React.Component {
                   </TouchableOpacity>
                 </View>
               )}
-              <ResponsiveButton text={'Pick up Coin'} onPress={()=>{
-      this.props.createUser(
-        {
-          uid: this.props.user.uid,
-          username: this.props.user.username,
-          coins: this.props.user.coins + 1,
-          games: this.props.user.games,
-          objects: this.props.user.objects
-        },
-        this.onSuccess,
-        this.onError
-      );
-                }} />
+              {/* <<<<<<<< REMOVE UP TO NEXT COMMENT BEFORE DEPLOY >>>>>>>> */}
+              <View style={{flexDirection: 'row'}}>
+              <Button text={'Win Game'} onPress={()=>{
+                let prevGames = JSON.parse(this.props.user.games)
+                prevGames.push({game: 'Test Game', score: 10000})
+                this.props.createUser(
+                  {
+                    uid: this.props.user.uid,
+                    username: this.props.user.username,
+                    coins: this.props.user.coins,
+                    games: JSON.stringify(prevGames),
+                    objects: this.props.user.objects
+                  },
+                  this.onSuccess,
+                  this.onError
+                );
+              }} />
+              <Button text={'Pick up Object'} onPress={()=>{
+                let prevObjects = JSON.parse(this.props.user.objects)
+                prevObjects.push({object: 'Test Object', cost: 100})
+                this.props.createUser(
+                  {
+                    uid: this.props.user.uid,
+                    username: this.props.user.username,
+                    coins: this.props.user.coins,
+                    games: this.props.user.games,
+                    objects: JSON.stringify(prevObjects)
+                  },
+                  this.onSuccess,
+                  this.onError
+                );
+              }} />
+              <Button text={'Pick up Coin'} onPress={()=>{
+                this.props.createUser(
+                  {
+                    uid: this.props.user.uid,
+                    username: this.props.user.username,
+                    coins: this.props.user.coins + 1,
+                    games: this.props.user.games,
+                    objects: this.props.user.objects
+                  },
+                  this.onSuccess,
+                  this.onError
+                );
+              }} />
+              </View>
+              {/* <<<<<<<<<<<<<<< REMOVE ABOVE BEFORE DEPLOY >>>>>>>>>>>>>>>*/}
             <View style={styles.tabContainer}>
               <SubTab style={styles.subtab} />
             </View>
