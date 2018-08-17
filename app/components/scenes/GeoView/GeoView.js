@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, Linking } from 'react-native';
 import { color } from '../../../styles/theme';
+import { fetchLocations, postLocation } from '../../../redux/reducers/locationReducer';
 
 import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-import GestureRecognizer from 'react-native-swipe-gestures';
 import geolib from 'geolib'
 
 import styles from './styles';
@@ -16,6 +16,14 @@ var options = {
   enableHighAccuracy: true,
   timeout: 5000,
   maximumAge: 0
+}
+
+const fakeLocation = {
+  object: "AR Giraffe",
+  latitude: 40.71,
+  longitude: -74,
+  avatar_url:
+          'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
 }
 
 const googleMapsQuery = "https://www.google.com/maps/dir/?api=1&origin=";
@@ -45,7 +53,7 @@ class GeoView extends React.Component {
 
   async componentDidMount(){
     await navigator.geolocation.watchPosition(this.success, this.error, options);
-    console.log('position', this.state.position);
+    await this.props.fetchLocations("FiDi");
   }
 
   render() {
@@ -53,30 +61,12 @@ class GeoView extends React.Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
-    const list = [
-      {
-        name: 'AR Balloon',
-        avatar_url:
-          'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-        subtitle: 'Vice President',
-        latitude: 40.71,
-        longitude: -74,
-      },
-      {
-        name: 'AR Giraffe',
-        avatar_url:
-          'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-        subtitle: 'Vice Chairman',
-        latitude: 40.70522,
-        longitude: -74.00909,
-      },
-    ];
     const { currentLat, currentLong } = this.state;
-    console.log("locations:", locations);
+    const { locations } = this.props;
     return (
       <View style={styles.container}>
         <List>
-          {list.map(l => {
+          {locations.map(l => {
             const distance = Number((geolib.getDistance({
                 latitude: currentLat,
                 longitude: currentLong
@@ -92,8 +82,8 @@ class GeoView extends React.Component {
             return <ListItem
                     containerStyle={styles.listItem}
                     avatar={{ uri: l.avatar_url }}
-                    key={l.name}
-                    title={l.name}
+                    key={l.object}
+                    title={l.object}
                     titleStyle={material.titleWhite}
                     avatarStyle={{ backgroundColor: color.delta_grey }}
                     subtitle={`Distance away: ${distanceDisplay}`}
@@ -116,7 +106,12 @@ const mapStateToProps = state => ({
   locations: state.locationReducer.locations,
 });
 
+const mapDispatchToProps = dispatch => ({
+  fetchLocations: (district) => dispatch(fetchLocations(district)),
+  postLocation: (district, location) => dispatch(postLocation(district, location)),
+})
+
 export default connect(
   mapStateToProps,
-  {}
+  mapDispatchToProps
 )(GeoView);
