@@ -23,12 +23,12 @@ var targets = [
     id: 3
   },
 
-  { //suitcase
-    latitude: 40.704960,
-    longitude: -74.010402,
+  { //coin
+    latitude: 40.70467766025543,
+    longitude: -74.00904218840554,
     x: 0,
     y: 0,
-    id: 3
+    id: 4
   }
 ];
 

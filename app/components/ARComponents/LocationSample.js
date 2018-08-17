@@ -5,6 +5,7 @@ import {
   ViroBox,
   ViroMaterials,
   ViroNode,
+  ViroAmbientLight,
 } from 'react-viro';
 
 //Redux Imports
@@ -16,6 +17,7 @@ import { getXY, targets } from './LocationGetter'
 import CubeLandingGame from './CubeLandingGame'
 import ShootingGame from './ShootingGame'
 import Suitcase from './Suitcase'
+import Coin from './Coin'
 
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
@@ -54,6 +56,7 @@ class LocationSample extends Component {
     return this.state.currLocation.x !== 0 ?
       (
         <ViroARScene physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }}>
+          <ViroAmbientLight color="#FFFFFF" />
           {this._displayObjs()}
         </ViroARScene>
       ) : null
@@ -97,18 +100,20 @@ class LocationSample extends Component {
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
       var obj;
-      if (id < 3){
+      if (id === 3){
+        obj = <Suitcase pos={[realX, -10, realY]} />
+      } else if(id === 4){
+        obj = <Coin pos={[realX, -10, realY]} />
+      } else {
         obj = <ViroBox
         position={[realX, 1, realY]}
         height={5}
         length={5}
         width={5}
-        visible={Math.abs(realY) <= 30 ? true : false}
+        visible={Math.abs(realY) <= 30 ? true : true}
         materials={id === 1 ? "starbucks" : "killarney"}
         onClick={() => this._jumpNextScene(id)}
-      />
-      } else {
-        obj = <Suitcase pos={[realX, 0, realY]} />
+        />
       }
       objs.push(obj)
     }
