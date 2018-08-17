@@ -17,6 +17,7 @@ import {
 } from 'react-viro';
 
 import Suitcase from './Suitcase';
+import Coin from './Coin';
 
 const styles = StyleSheet.create({
   TextStyle: {
@@ -47,7 +48,8 @@ class TestZone extends Component {
         {/* need ambient light, otherwise object won't display */}
         <ViroAmbientLight color="#FFFFFF" />
         {/* need viroNode, to wrap object */}
-        <Suitcase pos={[0, 0, -10]} />
+        {/* <Suitcase pos={[0, 0, -10]} /> */}
+        <Coin pos={[0, 0, -10]} />
       </ViroARScene>
     ) : (
       <ViroARScene onTrackingUpdated={this._onInitialized}>
