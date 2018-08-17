@@ -93,8 +93,9 @@ class LocationSample extends Component {
       const realX = targets[i].x - this.state.currLocation.x;
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
+      var obj;
       if (id < 3){
-        var obj = <ViroBox
+        obj = <ViroBox
         position={[realX, 1, realY]}
         height={5}
         length={5}
@@ -104,7 +105,7 @@ class LocationSample extends Component {
         onClick={() => this._jumpNextScene(id)}
       />
       } else {
-        var obj = ''
+        obj = <Suitcase pos={[realX, 0, realY]} />
       }
       objs.push(obj)
     }

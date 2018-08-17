@@ -22,11 +22,10 @@ var coin;
 export default class CollectCoins extends Component {
   constructor() {
     super();
-    this.state = {
-      coinSpawn: false,
-    }
+    this.state = {}
     this._spawnCoin = this._spawnCoin.bind(this)
     this._checkCoin = this._checkCoin.bind(this)
+    this._randomPos = this._randomPos.bind(this)
   }
 
   render() {
@@ -34,14 +33,14 @@ export default class CollectCoins extends Component {
     return (
       <ViroARScene>
         <ViroText
-          text="Look For The Coins!"
+          text="COINS!"
           position={[0, 0, -2]}
           style={styles.TextStyle}
         />
         <ViroBox
-          ref={obj => {coin = obj}}
+          ref={obj => { coin = obj }}
           scale={[.25, .25, .25]}
-          position={[Math.floor(Math.random() * 1) - 3, 0, Math.floor(Math.random() * 1) - 3]}
+          position={this._randomPos()}
           viroTag="coin"
           visible={false}
         />
@@ -49,22 +48,21 @@ export default class CollectCoins extends Component {
     )
   }
 
-  _spawnCoin(){
+  _randomPos () {
+    return [Math.floor(Math.random() * 1) - 3, 0, Math.floor(Math.random() * 1) - 3];
+  }
+
+  _spawnCoin() {
     setTimeout(() => {
-      this.setState({
-        coinSpawn: true
-      })
-      coin.setNativeProps({visible: true});
+      coin.setNativeProps({ visible: true });
       this._checkCoin()
     }, 5000)
   }
 
-  _checkCoin(){
+  _checkCoin() {
     setTimeout(() => {
-      this.setState({
-        coinSpawn: false
-      })
-      coin.setNativeProps({visible: false});
+      coin.setNativeProps({ visible: false });
+      coin.setNativeProps({ position: this._randomPos() })
       this._spawnCoin()
     }, 10000)
   }
