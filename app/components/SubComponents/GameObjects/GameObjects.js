@@ -48,7 +48,7 @@ class GameObjects extends Component {
               return <ListItem
                       containerStyle={styles.listItem}
                       avatar={require('../../assets/planet_icon_white.png')}
-                      key={object.game}
+                      key={object.object}
                       title={`Object: ${object.object}`}
                       titleStyle={material.titleWhite}
                       avatarStyle={styles.avatar}
