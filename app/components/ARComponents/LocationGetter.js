@@ -22,6 +22,14 @@ var targets = [
     y: 0,
     id: 3
   }
+
+  { //coin
+    latitude: 40.704960,
+    longitude: -74.010402,
+    x: 0,
+    y: 0,
+    id: 3
+  }
 ];
 
 // {latitude: 40.7051,longitude: -74.0087,x: 0,y: 0,id: 2}

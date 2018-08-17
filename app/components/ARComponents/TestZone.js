@@ -12,11 +12,18 @@ import {
   ViroText,
   ViroConstants,
   Viro3DObject,
-  ViroAmbientLight
+  ViroAmbientLight,
+  ViroAnimations
 } from 'react-viro';
 
 import { connect } from 'react-redux';
 import { createUser } from '../../redux/reducers/authReducer';
+
+ViroAnimations.registerAnimations({
+  rise:{properties:{positionX: 0, positionZ: 0, positionY: 1, opacity: 0.0},
+        easing:"EaseOut",
+        duration: 1000},
+});
 
 //StyleSheet
 const styles = StyleSheet.create({
@@ -29,37 +36,13 @@ const styles = StyleSheet.create({
   },
 });
 
-//Ball Related Code
-var ball;
-const ballphysics = {
-  type: 'Dynamic',
-  mass: 3,
-  useGravity: true,
-  restitution: 0,
-  friction: 0.75,
-};
-//Ball Reset Method
-const _resetCube = thisContext => {
-  let ballsRemaining = thisContext.state.ballsRemaining;
-  if (ballsRemaining) {
-    thisContext.setState({
-      ballsRemaining: ballsRemaining - 1,
-    });
-    ball.setNativeProps({ physicsBody: null });
-    ball.setNativeProps({ position: [0, 0.25, -1] });
-    ball.setNativeProps({ materials: ['cube_color'] });
-    setTimeout(() => {
-      ball.setNativeProps({ physicsBody: ballphysics });
-    }, 500);
-  }
-};
-
-
-class CubeLandingGame extends Component {
+class TestZone extends Component {
   constructor() {
     super();
     this.state = {
       loaded: false,
+      briefcase: true,
+      briefcaseText: false,
     };
     this._onInitialized = this._onInitialized.bind(this);
     this.onSuccess = this.onSuccess.bind(this);
@@ -82,16 +65,20 @@ class CubeLandingGame extends Component {
         onTrackingUpdated={this._onInitialized}
         physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}
       >
-      <ViroAmbientLight color="#FFFFFF" />
-        <ViroNode position={[0, -10, -10]} onDrag={()=>{}}>
-      <Viro3DObject
+        {/* need ambient light, otherwise object won't display */}
+        <ViroAmbientLight color="#FFFFFF" />
+        {/* need viroNode, to wrap object */}
+        <ViroNode position={[0, -2, -2]}>
+          <Viro3DObject
            source={require('../assets/suitcase/Vintage_Suitcase_LP.vrx')}
            position={[0, -10, -10]}
-           scale={[0.15, 0.15, 0.15]}
+           scale={[0.10, 0.10, 0.10]}
            rotation={[-90, 0, 0]}
            type='VRX'
+           visible={this.state.briefcase}
            onClick={()=>{
-             this.visible = false
+             this.setState({briefcase: false, briefcaseText: true})
+             setTimeout(()=>{this.setState({briefcaseText: false})}, 1000)
             this.props.createUser(
               {
                 uid: this.props.user.uid,
@@ -105,6 +92,14 @@ class CubeLandingGame extends Component {
             );
            }}
          />
+         {this.state.briefcaseText?
+         <ViroText
+          style={styles.TextStyle}
+          position={[0, -10, -10]}
+          scale={[1,1,1]}
+          text="+100!"
+          animation={{name:'rise', run:true}}
+        />:null}
          </ViroNode>
       </ViroARScene>
     ) : (
@@ -141,4 +136,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(createUser(user, success, error)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CubeLandingGame)
+export default connect(mapStateToProps, mapDispatchToProps)(TestZone)

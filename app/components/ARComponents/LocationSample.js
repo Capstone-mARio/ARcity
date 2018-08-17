@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import {
   ViroARScene,
-  Viro3DObject,
   ViroBox,
   ViroMaterials,
   ViroNode,
@@ -16,6 +15,7 @@ import { setThis, setNav } from '../../redux/reducers/arCityReducer';
 import { getXY, targets } from './LocationGetter'
 import CubeLandingGame from './CubeLandingGame'
 import ShootingGame from './ShootingGame'
+import Suitcase from './Suitcase'
 
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
@@ -27,7 +27,6 @@ var options = {
   timeout: 10000,
   maximumAge: 0
 }
-
 
 class LocationSample extends Component {
   constructor() {
@@ -73,16 +72,16 @@ class LocationSample extends Component {
   _jumpNextScene(id) {
     switch (id) {
       case 1:
-        this.props.setNav(CUBE_LANDING_GAME)
-        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+      this.props.setNav(CUBE_LANDING_GAME)
+      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
         break;
       case 2:
-        this.props.setNav(SHOOTING_GAME)
-        this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
+      this.props.setNav(SHOOTING_GAME)
+      this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
         break;
       default:
-        this.props.setNav(CUBE_LANDING_GAME)
-        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+      this.props.setNav(CUBE_LANDING_GAME)
+      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
 
   }
@@ -94,26 +93,18 @@ class LocationSample extends Component {
       const realX = targets[i].x - this.state.currLocation.x;
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
-      if (id < 3) {
+      if (id < 3){
         var obj = <ViroBox
-          position={[realX, 1, realY]}
-          height={5}
-          length={5}
-          width={5}
-          visible={Math.abs(realY) <= 30 ? true : true}
-          materials={id === 1 ? "starbucks" : "killarney"}
-          onClick={() => this._jumpNextScene(id)}
-          />
+        position={[realX, 1, realY]}
+        height={5}
+        length={5}
+        width={5}
+        visible={Math.abs(realY) <= 30 ? true : false}
+        materials={id === 1 ? "starbucks" : "killarney"}
+        onClick={() => this._jumpNextScene(id)}
+      />
       } else {
-        var obj = <ViroBox
-          position={[realX, 1, realY]}
-          height={5}
-          length={5}
-          width={5}
-          visible={Math.abs(realY) <= 30 ? true : true}
-          materials={id === 1 ? "starbucks" : "killarney"}
-          onClick={() => this._jumpNextScene(id)}
-          />
+        var obj = ''
       }
       objs.push(obj)
     }

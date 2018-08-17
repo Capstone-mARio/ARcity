@@ -36,6 +36,7 @@ class GameScore extends React.Component {
   render() {
     const gameScores = JSON.parse(this.props.user.games);
     return (
+      (gameScores &&
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <List style={styles.list}>
@@ -54,7 +55,7 @@ class GameScore extends React.Component {
             })}
           </List>
         </ScrollView>
-      </View>
+      </View>)
     );
   }
 }
