@@ -11,7 +11,10 @@ import {
   ViroCamera
 } from 'react-viro';
 
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+
+import { connect } from 'react-redux';
+import { createUser } from '../../redux/reducers/authReducer';
 
 const styles = StyleSheet.create({
   TextStyle: {
@@ -22,14 +25,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-const blockCount = 25;
+const blockCount = 5;
 
 const randomPos = [];
 for (let i = 0; i < blockCount; i++) {
   randomPos.push([Math.random() * (7 - 1 + 1) - 4, Math.random() * (20 - 5 + 5), (Math.random() * (7 - 1 + 1) - 4)])
 }
 
-export default class ShootingGame extends Component {
+class ShootingGame extends Component {
   constructor() {
     super();
     this.state = {
@@ -40,7 +43,7 @@ export default class ShootingGame extends Component {
       score: 0,
       blocksRemaining: blockCount,
       isReady: false,
-      cameraPos: [0,0,0]
+      cameraPos: [0, 0, 0]
     }
     this._addLine = this._addLine.bind(this);
     this._displayLines = this._displayLines.bind(this);
@@ -48,7 +51,20 @@ export default class ShootingGame extends Component {
     this._cameraChange = this._cameraChange.bind(this);
     this._displayBlocks = this._displayBlocks.bind(this);
     this._makeBlocks = this._makeBlocks.bind(this);
+    this._updateProfile = this._updateProfile.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onError = this.onError.bind(this);
   }
+
+  onSuccess() {
+    console.log('success');
+  }
+  onError(error) {
+    if (error.hasOwnProperty('message')) {
+      console.log('error');
+    }
+  }
+  
   componentDidMount() {
     setTimeout(() => {
       this.setState({ isReady: true })
@@ -57,7 +73,7 @@ export default class ShootingGame extends Component {
   render() {
     return (
       <ViroARScene ref={(obj) => this.scene = obj} physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
-        <ViroCamera position={[0,0,0]} active={true} />
+        <ViroCamera position={[0, 0, 0]} active={true} />
         <ViroQuad
           scale={[8, 8, 8]}
           position={[0, -3, 0]}
@@ -76,20 +92,41 @@ export default class ShootingGame extends Component {
           style={styles.TextStyle}
           visible={this.state.isReady}
         />
-        <ViroText ref ={ (obj) => this.ready = obj}
+        <ViroText ref={(obj) => this.ready = obj}
           text={'Get Ready!'}
           position={[0, 0, -3]}
           style={styles.TextStyle}
           visible={!this.state.isReady}
         />
         {this.state.blocksRemaining <= 0 ?
-          <ViroText
+          [<ViroText
             text={'GAME OVER'}
             position={[0, 1, -3]}
             style={styles.TextStyle}
-          /> : null}
+          />,
+          this._updateProfile()] : null}
       </ViroARScene>
     )
+  }
+
+  _updateProfile() {
+    var executed = false;
+    return function() {
+      if(!executed){
+        executed = true;
+        this.props.createUser(
+          {
+            uid: this.props.user.uid,
+            username: this.props.user.username,
+            coins: this.props.user.coins + this.state.score,
+            games: this.props.user.games,
+            objects: this.props.user.objects,
+          },
+          this.onSuccess,
+          this.onError
+        );
+      }
+    }
   }
 
   _shoot() { //////////////
@@ -194,3 +231,17 @@ ViroMaterials.createMaterials({
     diffuseColor: '#FF60E4'
   }
 })
+
+const mapStateToProps = state => ({
+  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+});
+
+const mapDispatchToProps = dispatch => ({
+  createUser: (user, success, error) =>
+    dispatch(createUser(user, success, error)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShootingGame);

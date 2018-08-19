@@ -14,6 +14,10 @@ import {
   ViroCamera,
 } from 'react-viro';
 
+//Redux Imports
+import { connect } from 'react-redux';
+import { createUser } from '../../redux/reducers/authReducer';
+
 //StyleSheet
 const styles = StyleSheet.create({
   TextStyle: {
@@ -34,6 +38,7 @@ const ballphysics = {
   restitution: 0,
   friction: 0.75,
 };
+
 //Ball Reset Method
 const _resetCube = thisContext => {
   let ballsRemaining = thisContext.state.ballsRemaining;
@@ -42,11 +47,13 @@ const _resetCube = thisContext => {
       ballsRemaining: ballsRemaining - 1,
     });
     ball.setNativeProps({ physicsBody: null });
-    ball.setNativeProps({ position: [0, 0.25, -1] });
+    ball.setNativeProps({ position: [0, 0.25, -6] });
     ball.setNativeProps({ materials: ['cube_color'] });
     setTimeout(() => {
       ball.setNativeProps({ physicsBody: ballphysics });
     }, 500);
+  } else {
+    thisContext._gameOver();
   }
 };
 
@@ -58,27 +65,29 @@ class CubeLandingGame extends Component {
       loaded: false,
       platformphysics: { type: 'Static', restitution: 0 },
       score: 0,
-      ballsRemaining: 10,
+      ballsRemaining: 11,
     };
     this._onFloorCollide1 = this._onFloorCollide1.bind(this);
     this._onFloorCollide2 = this._onFloorCollide2.bind(this);
     this._onInitialized = this._onInitialized.bind(this);
+    this._gameOver = this._gameOver.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onError = this.onError.bind(this);
+  }
+  onSuccess() {
+    console.log('success');
+  }
+  onError(error) {
+    if (error.hasOwnProperty('message')) {
+      console.log('error');
+    }
   }
 
-
   render() {
-    //Ball Position Checker
-    setInterval(async () => {
-      const respond = await ball.getTransformAsync();
-      if (respond.position[1] <= -10) {
-        _resetCube(this);
-      }
-    }, 500);
-
     return this.state.loaded ? (
       <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}>
         {/*original spawn plane*/}
-        <ViroCamera  position={[0, 0, 1]} active={true} />
+        <ViroCamera position={[0, 0, 1]} active={true} />
         <ViroQuad
           scale={[1, 1, 1]}
           position={[0, -1, -1]}
@@ -121,12 +130,13 @@ class CubeLandingGame extends Component {
           dragType="FixedDistance"
           viroTag="gameCube"
           materials="cube_color"
-          onDrag={() => {}}
+          onDrag={() => { }}
         />
 
         <ViroNode position={[0, 1.5, -6]}>
           <ViroText
-            text={`Reset ${this.state.ballsRemaining} left`}
+            ref={obj => { this.text = obj; }}
+            text={`${this.state.ballsRemaining} Balls Left`}
             position={[1, 0, 0]}
             onClick={() => {
               _resetCube(this);
@@ -141,18 +151,39 @@ class CubeLandingGame extends Component {
         </ViroNode>
       </ViroARScene>
     ) : (
-      <ViroARScene
-        onTrackingUpdated={this._onInitialized}
-        physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}
-      >
-        <ViroText
-          style={styles.TextStyle}
-          position={[0, 0, -1]}
-          text="Loading..."
-        />
-      </ViroARScene>
-    );
+        <ViroARScene
+          onTrackingUpdated={this._onInitialized}
+          physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}
+        >
+          <ViroText
+            style={styles.TextStyle}
+            position={[0, 0, -1]}
+            text="Loading..."
+          />
+        </ViroARScene>
+      );
   }
+
+  _gameOver() {
+    var executed = false;
+    if (!executed) {
+      executed = true;
+      const newGame = JSON.stringify([...this.props.user.games, {game: 'Ball Tossing', score: this.state.score}])
+      this.text.setNativeProps({text: 'Game Over'})
+      this.props.createUser(
+        {
+          uid: this.props.user.uid,
+          username: this.props.user.username,
+          coins: this.props.user.coins + this.state.score,
+          games: newGame,
+          objects: this.props.user.objects,
+        },
+        this.onSuccess,
+        this.onError
+      );
+    }
+  }
+
 
   _onInitialized(state) {
     if (state == ViroConstants.TRACKING_NORMAL) {
@@ -179,6 +210,7 @@ class CubeLandingGame extends Component {
       }, 1000);
     }
   };
+
   _onFloorCollide2 = (collidedTag, collidedPoint) => {
     if (collidedTag === 'gameCube') {
       this.setState({
@@ -206,4 +238,16 @@ ViroMaterials.createMaterials({
   },
 });
 
-export default CubeLandingGame;
+const mapStateToProps = state => ({
+  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+});
+
+const mapDispatchToProps = dispatch => ({
+  createUser: (user, success, error) =>
+    dispatch(createUser(user, success, error)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CubeLandingGame);

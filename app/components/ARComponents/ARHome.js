@@ -24,13 +24,12 @@ import '../../../secrets';
 var sharedProps = { apiKey: process.env.viroKey };
 
 //Scenes for AR
-import CubeLandingGame from './CubeLandingGame';
 import LocationSample from './LocationSample';
+import CubeLandingGame from './CubeLandingGame';
 import ShootingGame from './ShootingGame';
 import MenuNav from './MenuNav';
 
 import TestZone from './TestZone';
-import CollectCoins from './CollectCoins';
 
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
@@ -194,8 +193,8 @@ class ARHome extends Component {
       <View style={{ flex: 1 }}>
         <ViroARSceneNavigator
           {...this.state.sharedProps}
-          initialScene={{ scene: LocationSample }}
-          // initialScene={{ scene: TestZone }}
+          // initialScene={{ scene: LocationSample }}
+          initialScene={{ scene: CubeLandingGame }}
           worldAlignment="GravityAndHeading"
         />
         <MenuNav />

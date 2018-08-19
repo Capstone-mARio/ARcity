@@ -4,15 +4,9 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {
-  ViroARScene,
-  ViroQuad,
-  ViroSphere,
-  ViroMaterials,
   ViroNode,
   ViroText,
-  ViroConstants,
   Viro3DObject,
-  ViroAmbientLight,
   ViroAnimations,
 } from 'react-viro';
 
