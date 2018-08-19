@@ -30,6 +30,17 @@ var options = {
   maximumAge: 0
 }
 
+//Style
+ViroMaterials.createMaterials({
+  starbucks: {
+    diffuseColor: '#0021cbE6', //blue
+  },
+  killarney: {
+    diffuseColor: '#83FF33', //green
+  },
+});
+
+
 class LocationSample extends Component {
   constructor() {
     super();
@@ -46,12 +57,12 @@ class LocationSample extends Component {
     this._makeObj = this._makeObj.bind(this)
     this._displayObjs = this._displayObjs.bind(this)
   }
+
   componentDidMount(){ //HOPEFULLY THE RIGHT WAY
     navigator.geolocation.watchPosition(this.success, this.error, options);
   }
 
   render() {
-
     this.props.setThis(this);
     return this.state.currLocation.x !== 0 ?
       (
@@ -73,7 +84,6 @@ class LocationSample extends Component {
   error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
-
   //Jump To Game Method
   _jumpNextScene(id) {
     switch (id) {
@@ -89,9 +99,7 @@ class LocationSample extends Component {
       this.props.setNav(CUBE_LANDING_GAME)
       this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
-
   }
-
   //Make A Obj At Location
   _makeObj() { //////////////
     var objs = []
@@ -119,7 +127,6 @@ class LocationSample extends Component {
     }
     return objs;
   }
-
   //Display The Obj At Location
   _displayObjs() {
     return (
@@ -129,15 +136,6 @@ class LocationSample extends Component {
     )
   }
 }
-
-ViroMaterials.createMaterials({
-  starbucks: {
-    diffuseColor: '#0021cbE6', //blue
-  },
-  killarney: {
-    diffuseColor: '#83FF33', //green
-  },
-});
 
 const mapToDispatch = (dispatch) => ({
   setNav: (navScene) => { dispatch(setNav(navScene)) },
