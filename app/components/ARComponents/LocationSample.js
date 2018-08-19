@@ -6,6 +6,7 @@ import {
   ViroMaterials,
   ViroNode,
   ViroAmbientLight,
+  ViroText,
 } from 'react-viro';
 
 //Redux Imports
@@ -32,6 +33,16 @@ var options = {
 }
 
 //Style
+const styles = StyleSheet.create({
+  TextStyle: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
+
 ViroMaterials.createMaterials({
   starbucks: {
     diffuseColor: '#0021cbE6', //blue
@@ -71,7 +82,7 @@ class LocationSample extends Component {
     }
   }
 
-  componentDidMount(){ //HOPEFULLY THE RIGHT WAY
+  componentDidMount() { //HOPEFULLY THE RIGHT WAY
     navigator.geolocation.watchPosition(this.success, this.error, options);
   }
 
@@ -101,49 +112,49 @@ class LocationSample extends Component {
   _jumpNextScene(id) {
     switch (id) {
       case 1:
-      this.props.setNav(CUBE_LANDING_GAME)
-      this.props.createUser(
-        {
-          uid: this.props.user.uid,
-          username: this.props.user.username,
-          coins: this.props.user.coins - 100,
-          games: this.props.user.games,
-          objects: this.props.user.objects,
-        },
-        this.onSuccess,
-        this.onError
-      );
-      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+        this.props.setNav(CUBE_LANDING_GAME)
+        this.props.createUser(
+          {
+            uid: this.props.user.uid,
+            username: this.props.user.username,
+            coins: this.props.user.coins - 100,
+            games: this.props.user.games,
+            objects: this.props.user.objects,
+          },
+          this.onSuccess,
+          this.onError
+        );
+        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
         break;
       case 2:
-      this.props.setNav(SHOOTING_GAME)
-      this.props.createUser(
-        {
-          uid: this.props.user.uid,
-          username: this.props.user.username,
-          coins: this.props.user.coins - 500,
-          games: this.props.user.games,
-          objects: this.props.user.objects,
-        },
-        this.onSuccess,
-        this.onError
-      );
-      this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
+        this.props.setNav(SHOOTING_GAME)
+        this.props.createUser(
+          {
+            uid: this.props.user.uid,
+            username: this.props.user.username,
+            coins: this.props.user.coins - 500,
+            games: this.props.user.games,
+            objects: this.props.user.objects,
+          },
+          this.onSuccess,
+          this.onError
+        );
+        this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
         break;
       default:
-      this.props.setNav(CUBE_LANDING_GAME)
-      this.props.createUser(
-        {
-          uid: this.props.user.uid,
-          username: this.props.user.username,
-          coins: this.props.user.coins - 100,
-          games: this.props.user.games,
-          objects: this.props.user.objects,
-        },
-        this.onSuccess,
-        this.onError
-      );
-      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+        this.props.setNav(CUBE_LANDING_GAME)
+        this.props.createUser(
+          {
+            uid: this.props.user.uid,
+            username: this.props.user.username,
+            coins: this.props.user.coins - 100,
+            games: this.props.user.games,
+            objects: this.props.user.objects,
+          },
+          this.onSuccess,
+          this.onError
+        );
+        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
   }
   //Make A Obj At Location
@@ -154,20 +165,27 @@ class LocationSample extends Component {
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
       var obj;
-      if (id === 3){
+      if (id === 3) {
         obj = <Suitcase pos={[realX, -10, realY]} />
-      } else if(id === 4){
+      } else if (id === 4) {
         obj = <Coin pos={[realX, -10, realY]} />
       } else {
-        obj = <ViroBox
-        position={[realX, 1, realY]}
-        height={5}
-        length={5}
-        width={5}
-        visible={Math.abs(realY) <= 30 ? true : true}
-        materials={id === 1 ? "starbucks" : "killarney"}
-        onClick={() => this._jumpNextScene(id)}
-        />
+        obj = <ViroNode position={[realX, 1, realY]}>
+          <ViroBox
+            position={[0,0,0]}
+            height={5}
+            length={5}
+            width={5}
+            visible={Math.abs(realY) <= 30 ? true : true}
+            materials={id === 1 ? "starbucks" : "killarney"}
+            onClick={() => this._jumpNextScene(id)}
+          />
+          <ViroText
+            position={[0,.5,0]}
+            text={id === 1 ? "Ball Throw" : "Shoot Cubes"}
+            style={styles.TextStyle}
+          />
+        </ViroNode>
       }
       objs.push(obj)
     }
@@ -183,13 +201,13 @@ class LocationSample extends Component {
   }
 }
 
-const mapToState  = state => ({
+const mapToState = state => ({
   user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
 });
 
 const mapToDispatch = (dispatch) => ({
   createUser: (user, success, error) =>
-  dispatch(createUser(user, success, error)),
+    dispatch(createUser(user, success, error)),
   setNav: (navScene) => { dispatch(setNav(navScene)) },
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })
