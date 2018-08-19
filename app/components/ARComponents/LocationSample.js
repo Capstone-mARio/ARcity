@@ -11,6 +11,7 @@ import {
 //Redux Imports
 import { connect } from 'react-redux';
 import { setThis, setNav } from '../../redux/reducers/arCityReducer';
+import { createUser } from '../../redux/reducers/authReducer';
 
 //Location And Games
 import { getXY, targets } from './LocationGetter'
@@ -56,6 +57,18 @@ class LocationSample extends Component {
     this._jumpNextScene = this._jumpNextScene.bind(this)
     this._makeObj = this._makeObj.bind(this)
     this._displayObjs = this._displayObjs.bind(this)
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onError = this.onError.bind(this);
+  }
+
+  //Functions For Firebase
+  onSuccess() {
+    console.log('success');
+  }
+  onError(error) {
+    if (error.hasOwnProperty('message')) {
+      console.log('error');
+    }
   }
 
   componentDidMount(){ //HOPEFULLY THE RIGHT WAY
@@ -89,19 +102,52 @@ class LocationSample extends Component {
     switch (id) {
       case 1:
       this.props.setNav(CUBE_LANDING_GAME)
+      this.props.createUser(
+        {
+          uid: this.props.user.uid,
+          username: this.props.user.username,
+          coins: this.props.user.coins - 100,
+          games: this.props.user.games,
+          objects: this.props.user.objects,
+        },
+        this.onSuccess,
+        this.onError
+      );
       this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
         break;
       case 2:
       this.props.setNav(SHOOTING_GAME)
+      this.props.createUser(
+        {
+          uid: this.props.user.uid,
+          username: this.props.user.username,
+          coins: this.props.user.coins - 500,
+          games: this.props.user.games,
+          objects: this.props.user.objects,
+        },
+        this.onSuccess,
+        this.onError
+      );
       this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
         break;
       default:
       this.props.setNav(CUBE_LANDING_GAME)
+      this.props.createUser(
+        {
+          uid: this.props.user.uid,
+          username: this.props.user.username,
+          coins: this.props.user.coins - 100,
+          games: this.props.user.games,
+          objects: this.props.user.objects,
+        },
+        this.onSuccess,
+        this.onError
+      );
       this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
   }
   //Make A Obj At Location
-  _makeObj() { //////////////
+  _makeObj() {
     var objs = []
     for (let i = 0; i < targets.length; i++) {
       const realX = targets[i].x - this.state.currLocation.x;
@@ -137,9 +183,15 @@ class LocationSample extends Component {
   }
 }
 
+const mapToState  = state => ({
+  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+});
+
 const mapToDispatch = (dispatch) => ({
+  createUser: (user, success, error) =>
+  dispatch(createUser(user, success, error)),
   setNav: (navScene) => { dispatch(setNav(navScene)) },
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })
 
-export default connect(null, mapToDispatch)(LocationSample);
+export default connect(mapToState, mapToDispatch)(LocationSample);
