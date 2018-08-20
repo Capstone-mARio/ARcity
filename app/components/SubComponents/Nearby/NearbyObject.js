@@ -38,7 +38,6 @@ class NearbyObject extends React.Component {
       currentLat : crd.latitude,
       currentLong: crd.longitude,
     })
-
     this.findClosest();
 
   }
@@ -47,9 +46,9 @@ class NearbyObject extends React.Component {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
-  async componentDidMount() {
-    this.props.fetchLocations();
-    await navigator.geolocation.watchPosition(this.success, this.error, options);
+  componentDidMount(){
+    this.props.fetchLocations()
+    navigator.geolocation.watchPosition(this.success, this.error, options)
   }
 
   findClosest() {
@@ -80,6 +79,7 @@ class NearbyObject extends React.Component {
   }
 
   render() {
+    console.log(this.props.locations)
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
