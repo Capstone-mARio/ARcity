@@ -65,6 +65,11 @@ class GeoView extends React.Component {
     const { locations } = this.props;
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={material.display2White}>
+            Game locations
+          </Text>
+        </View>
         <List>
           {locations.map(l => {
             const distance = Number((geolib.getDistance({

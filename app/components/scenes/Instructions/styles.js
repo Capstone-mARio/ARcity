@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
 
   container: {
     backgroundColor: color.delta_grey,
+    paddingBottom: 20,
     // flexDirection: 'column',
     // alignItems: 'center',
   },
@@ -60,12 +61,21 @@ const styles = StyleSheet.create({
   button: {
     margin: 10,
     backgroundColor: color.button_color,
-    height: normalize(55),
+    height: normalize(35),
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   buttonText: {
     fontSize: fontSize.regular + 2,
     fontFamily: fontFamily.bold,
+  },
+
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   outer: {

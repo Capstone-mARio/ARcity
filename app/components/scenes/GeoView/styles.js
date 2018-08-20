@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
+  header: {
+    alignItems: 'center',
+  },
 
   listComponent: {
     width: windowWidth - 40,

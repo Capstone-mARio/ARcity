@@ -1,35 +1,187 @@
 var targets = [
-  { //starbucks
-    latitude: 40.70467766025543,
-    longitude: -74.00904218848154,
-    x: 0,
-    y: 0,
-    id: 1
-  },
+ { //starbucks
+   latitude: 40.740478,
+   longitude: -73.9794524,
+   x: 0,
+   y: 0,
+   id: 1
+ },
 
-  { //killarney rose
-    latitude: 40.7051,
-    longitude: -74.0087,
-    x: 0,
-    y: 0,
-    id: 2
-  },
+ { //killarney rose
+   latitude: 40.740476,
+   longitude: -73.9794520,
+   x: 0,
+   y: 0,
+   id: 2
+ },
 
-  { //suitcase
-    latitude: 40.704863,
-    longitude: -74.008927,
-    x: 0,
-    y: 0,
-    id: 3
-  },
+ { //suitcase
+   latitude: 40.740476,
+   longitude: -73.9794520,
+   x: 0,
+   y: 0,
+   id: 3
+ },
 
-  { //coin
-    latitude: 40.70467766025543,
-    longitude: -74.00904218840554,
-    x: 0,
-    y: 0,
-    id: 4
-  }
+ { //coin
+   latitude: 40.740476,
+   longitude: -73.9794520,
+   x: 0,
+   y: 0,
+   id: 3
+ },
+
+ { //coin
+   latitude: 40.70467766021233,
+   longitude: -74.00904218840344,
+   x: 0,
+   y: 0,
+   id: 3
+ },
+
+ { //coin
+   latitude: 40.70467766023443,
+   longitude: -74.00904218750554,
+   x: 0,
+   y: 0,
+   id: 3
+ },
+
+ { //coin
+   latitude: 40.70467766034543,
+   longitude: -74.00904263240554,
+   x: 0,
+   y: 0,
+   id: 3
+ },
+
+ { //coin
+   latitude: 40.70467766023443,
+   longitude: -74.00904218853554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766026443,
+   longitude: -74.00904218845354,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766443543,
+   longitude: -74.0090421889554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766023543,
+   longitude: -74.00904218845754,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766683543,
+   longitude: -74.00904218840554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467765765543,
+   longitude: -74.00904218840554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766025673,
+   longitude: -74.00904218840554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766026753,
+   longitude: -74.00904218840554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766028793,
+   longitude: -74.00904218840554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766025673,
+   longitude: -74.009042188465454,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766027643,
+   longitude: -74.00904218844554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766012543,
+   longitude: -74.00904218842354,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766025233,
+   longitude: -74.00904218230554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766025343,
+   longitude: -74.00904218840554,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.70467766025453,
+   longitude: -74.00904216540564,
+   x: 0,
+   y: 0,
+   id: 4
+ },
+
+ { //coin
+   latitude: 40.704677660255434,
+   longitude: -74.00904218823554,
+   x: 0,
+   y: 0,
+   id: 4
+ }
 ];
 
 // {latitude: 40.7051,longitude: -74.0087,x: 0,y: 0,id: 2}

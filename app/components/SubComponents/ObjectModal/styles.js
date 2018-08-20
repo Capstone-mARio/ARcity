@@ -18,8 +18,15 @@ const styles = StyleSheet.create({
 
   container: {
     backgroundColor: color.delta_grey,
+    justifyContent: 'center',
+    alignItems: 'center',
     // flexDirection: 'column',
     // alignItems: 'center',
+  },
+
+  content: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   headerContainer: {
@@ -41,12 +48,12 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
-  doge: {
+  circle: {
     alignSelf: 'center',
-    height: 150,
-    width: 150,
-    borderRadius: 75,
-    margin: 3,
+    height: 80,
+    width: 80,
+    // borderRadius: 75,
+    margin: 10,
   },
 
   containerView: {
@@ -84,6 +91,7 @@ const styles = StyleSheet.create({
   },
 
   tabContainer: {
+    margin: 20,
   },
 
   contentContainer: {

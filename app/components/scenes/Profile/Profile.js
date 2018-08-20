@@ -11,6 +11,7 @@ import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 
 import InstructionModal from '../Instructions/Instructions';
 import MenuModal from '../Menu/Menu';
+import ObjectCollection from '../../SubComponents/ObjectCollection/ObjectCollection';
 import { material } from 'react-native-typography';
 import SubTab from '../../SubComponents/SubTab';
 import { color } from '../../../styles/theme';
@@ -88,7 +89,7 @@ class Profile extends React.Component {
             >
               <Image
                 style={styles.doge}
-                source={require('../../assets/doge.png')}
+                source={require('../../assets/doge_menu.png')}
               />
             </TouchableOpacity>
             {this.state.edit ? (
@@ -179,7 +180,7 @@ class Profile extends React.Component {
               </View> */}
             {/* <<<<<<<<<<<<<<< REMOVE ABOVE BEFORE DEPLOY >>>>>>>>>>>>>>>*/}
             <View style={styles.tabContainer}>
-              <SubTab key="Scores" style={styles.subtab} />
+              <ObjectCollection />
             </View>
           </View>
         </View>
