@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   listItem: {
     backgroundColor: color.delta_grey,
     height: normalize(75),
+    width: windowWidth - 50,
   },
   containerView: {
     width: windowWidth - 40,

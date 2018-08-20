@@ -182,7 +182,7 @@ class ARHome extends Component {
         <ViroARSceneNavigator
           {...this.state.sharedProps}
           initialScene={{ scene: ShootingGame }}
-          worldAlignment="Camera"
+          // worldAlignment="Camera"
         />
         <MenuNav />
       </View>

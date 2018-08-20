@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
     width: 250,
     // borderRadius: 75,
     margin: 3,
+    shadowColor: '#202020',
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 5
   },
 
   containerView: {

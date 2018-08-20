@@ -11,7 +11,9 @@ import {
   ViroNode,
   ViroText,
   ViroSphere,
-  ViroCamera
+  Viro3DObject,
+  ViroCamera,
+  ViroAmbientLight
 } from 'react-viro';
 
 //Redux Imports
@@ -32,10 +34,10 @@ const blockCount = 20;
 
 ViroMaterials.createMaterials({
   ball_color: {
-    diffuseColor: "#FFA500"
+    diffuseTexture: require('./res/object_sphere/ball_texture.png')
   },
   block_color: {
-    diffuseColor: '#FF60E4'
+    diffuseTexture: require('./res/object_cube/cube_texture.png')
   }
 })
 
@@ -81,6 +83,7 @@ class ShootingGame extends Component {
   }
 
   componentDidMount() {
+    this.props.sceneNavigator.resetARSession(true,false)
     setTimeout(() => {
       this.setState({ isReady: true })
     }, 3000);
@@ -89,8 +92,8 @@ class ShootingGame extends Component {
   render() {
     return (
       <ViroARScene ref={(obj) => this.scene = obj} physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
-        <ViroCamera position={[0, 0, 0]} active={true} />
-        {/*Reset Platform*/}
+        <ViroAmbientLight color="#FFFFFF" />
+        <ViroCamera position={[0,0,0]} active={true} />
         <ViroQuad
           scale={[8, 8, 8]}
           position={[0, -3, 0]}
@@ -162,6 +165,7 @@ class ShootingGame extends Component {
         visible={false}
         materials={['ball_color']}
         physicsBody={{ mass: 1, type: 'Dynamic', force: { value: this.state.force }, useGravity: false }}
+        type={"VRX"}
       />
       balls.push(ball)
     }

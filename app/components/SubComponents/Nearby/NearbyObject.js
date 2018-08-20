@@ -26,7 +26,7 @@ class NearbyObject extends React.Component {
     this.state = {
       currentLat: 0,
       currentLong: 0,
-      closestGame: {},
+      closestGame: { latitude: 0, longitude: 0 },
     }
     this.success = this.success.bind(this);
     this.findClosest = this.findClosest.bind(this);
@@ -47,15 +47,15 @@ class NearbyObject extends React.Component {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
-  async componentDidMount(){
-    await this.props.fetchLocations();
+  async componentDidMount() {
+    this.props.fetchLocations();
     await navigator.geolocation.watchPosition(this.success, this.error, options);
-
   }
 
   findClosest() {
     const { currentLat, currentLong } = this.state;
     const { locations } = this.props;
+    console.log("locations in find closest", locations);
     const distances = locations.map(l => {
       return Number((geolib.getDistance({
                 latitude: currentLat,
@@ -65,13 +65,8 @@ class NearbyObject extends React.Component {
                 longitude: l.longitude,
               }, 100) * 0.000621371).toFixed(5));
     });
-    console.log("distances:", distances);
-    console.log("spread distances", ...distances);
     const shortestDistance = Math.min(...distances);
-    console.log("This is the shortest distance", shortestDistance);
-    // find the object, set it to state
-    // do this at an
-    let closestGame;
+    let closestGame = { latitude: 0, longitude: 0 };
     for(let i = 0; i < locations.length; i ++) {
       if(distances[i] === shortestDistance) {
         closestGame = locations[i];
@@ -82,8 +77,6 @@ class NearbyObject extends React.Component {
       closestGame,
       shortestDistance
     });
-
-    console.log("This is the new state:", this.state);
   }
 
   render() {
@@ -93,12 +86,10 @@ class NearbyObject extends React.Component {
     };
     const { currentLat, currentLong, closestGame, shortestDistance } = this.state;
     const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${closestGame.latitude},${closestGame.longitude}`;
+    console.log("locations in render", this.props.locations)
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={material.display2White}>
-            Closest Game:
-          </Text>
         </View>
         <List>
             <ListItem
@@ -115,6 +106,9 @@ class NearbyObject extends React.Component {
             />
 
         </List>
+        <Text style={material.headlineWhite}>
+            Nearest game:
+        </Text>
       </View>
     );
   }

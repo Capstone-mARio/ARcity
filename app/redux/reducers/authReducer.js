@@ -11,10 +11,11 @@ export const MENU_VISIBLE = 'MENU_VISIBLE';
 import * as api from '../../firebase/api/auth';
 import { auth } from '../../firebase/firebase';
 
-export function instructionsVisible(bool) {
+export function instructionsVisible(instructions, initial) {
   return {
     type: INSTRUCTIONS_VISIBLE,
-    instructions: bool,
+    instructions,
+    initial
   }
 }
 
@@ -113,7 +114,7 @@ let initialState = {
   isLoggedIn: false,
   user: null,
   instructions: false,
-  menu: false,
+  initial: false,
 };
 
 export default (authReducer = (state = initialState, action) => {
@@ -133,7 +134,7 @@ export default (authReducer = (state = initialState, action) => {
       return { ...state, isLoggedIn: false, user: null };
 
     case INSTRUCTIONS_VISIBLE:
-      return {...state, instructions: action.instructions };
+      return {...state, instructions: action.instructions, initial: action.initial };
 
     default:
       return state;

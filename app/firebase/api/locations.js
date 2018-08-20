@@ -3,14 +3,16 @@ import { auth, database, provider } from '../firebase';
 //Create the user object in realtime database
 export async function get(callback) {
   try {
-    let gameObjects = [];
+    let all = [];
     const locRef = await database.ref().child('locations');
-    locRef.once("value", snapshot => {
+
+    await locRef.once("value", snapshot => {
       snapshot.forEach(child => {
-        gameObjects.push(child.val());
+        all.push(child.val());
       })
-    })
-    .then(() => callback(true, gameObjects, null))
+    });
+    const gameObjects = await Promise.all(all);
+    callback(true, gameObjects, null);
   } catch (err) {
     console.error(err);
   }

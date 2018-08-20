@@ -87,11 +87,11 @@ class Profile extends React.Component {
           </View>
           <View style={styles.profileContainer}>
             <TouchableOpacity
-              onPress={() => this.props.instructionsVisible(true)}
+              onPress={() => this.props.instructionsVisible(true, false)}
             >
               <Image
                 style={styles.doge}
-                source={require('../../assets/doge_menu.png')}
+                source={require('../../assets/doge.png')}
               />
             </TouchableOpacity>
             {this.state.edit ? (
@@ -199,7 +199,7 @@ const mapDispatchToProps = dispatch => ({
   createUser: (user, success, error) =>
     dispatch(createUser(user, success, error)),
   signOut: () => dispatch(signOut()),
-  instructionsVisible: bool => dispatch(instructionsVisible(bool)),
+  instructionsVisible: (instructions, initial) => dispatch(instructionsVisible(instructions, initial)),
 });
 
 export default connect(

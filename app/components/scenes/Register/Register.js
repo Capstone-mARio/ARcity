@@ -63,7 +63,7 @@ class Register extends React.Component {
     onSubmit(data) {
         this.setState({error: error}); //clear out error messages
         this.props.register(data, this.onSuccess, this.onError);
-        this.props.instructionsVisible(true);
+        this.props.instructionsVisible(true, true);
     }
 
     onSuccess(user) {
@@ -96,7 +96,7 @@ class Register extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  instructionsVisible: bool => dispatch(instructionsVisible(bool)),
+  instructionsVisible: (instructions, initial) => dispatch(instructionsVisible(instructions, initial)),
   register: (data, onSuccess, onErr) => dispatch(register(data, onSuccess, onErr))
 });
 
