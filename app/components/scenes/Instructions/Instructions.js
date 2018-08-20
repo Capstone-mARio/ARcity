@@ -4,8 +4,7 @@ import Modal from "react-native-modal";
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 import ResponsiveCircleButton from '../../SubComponents/ResponsiveCircleButton';
 import SubTab from '../../SubComponents/SubTab';
-import GameScore from '../../SubComponents/GameScore/GameScore';
-import GameObjects from '../../SubComponents/GameObjects/GameObjects';
+import Dogecoins from './Dogecoins';
 import { Actions } from 'react-native-router-flux';
 import { instructionsVisible, signOut } from '../../../redux/reducers/authReducer';
 import { connect } from 'react-redux';
@@ -55,9 +54,27 @@ class Instructions extends Component {
 
           {(this.state.menu &&
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Dogecoins />
+
               <ResponsiveButton
                 text="View instructions"
                 onPress={() => this.setState({ menu: false, first: true }) }
+              />
+              <ResponsiveButton
+                text="High Scores"
+                onPress={() => {
+                  Actions.Welcome();
+                  this.props.signOut();
+                  this.props.instructionsVisible(false);
+                }}
+              />
+              <ResponsiveButton
+                text="Trophies"
+                onPress={() => {
+                  Actions.Welcome();
+                  this.props.signOut();
+                  this.props.instructionsVisible(false);
+                }}
               />
               <ResponsiveButton
                 text="Sign out"

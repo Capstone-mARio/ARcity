@@ -8,9 +8,9 @@ export const ADD_LOCATION = 'ADD_LOCATION';
 import * as api from '../../firebase/api/locations';
 import { auth } from '../../firebase/firebase';
 
-export function fetchLocations(district) {
+export function fetchLocations() {
   return dispatch => {
-    api.get(district, function(success, data, error) {
+    api.get(function(success, data, error) {
       if (success) {
         dispatch({ type: SET_LOCATIONS, data });
       } else if (error) {
@@ -20,9 +20,9 @@ export function fetchLocations(district) {
   };
 }
 
-export function postLocation(district, location) {
+export function postLocation(location) {
   return dispatch => {
-    api.post(district, location, function(success, data, error) {
+    api.post(location, function(success, data, error) {
       if (success) {
         dispatch({ type: ADD_LOCATION, data });
       } else if (error) {

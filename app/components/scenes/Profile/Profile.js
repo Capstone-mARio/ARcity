@@ -1,21 +1,19 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-
 import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createUser, signOut, instructionsVisible, menuVisible } from '../../../redux/reducers/authReducer';
+
 import AuthTextInput from '../../SubComponents/AuthTextInput';
 import { isEmpty, validate } from '../../utils/validate';
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
-
 import InstructionModal from '../Instructions/Instructions';
-import MenuModal from '../Menu/Menu';
 import ObjectCollection from '../../SubComponents/ObjectCollection/ObjectCollection';
-import { material } from 'react-native-typography';
-import SubTab from '../../SubComponents/SubTab';
-import { color } from '../../../styles/theme';
+import NearbyObject from '../../SubComponents/Nearby/NearbyObject';
 
+import { material } from 'react-native-typography';
+import { color } from '../../../styles/theme';
 import styles from './styles';
 
 class Profile extends React.Component {
@@ -129,6 +127,7 @@ class Profile extends React.Component {
                 </TouchableOpacity>
               </View>
             )}
+            <NearbyObject />
 
             <InstructionModal />
 
@@ -179,9 +178,6 @@ class Profile extends React.Component {
               }} />
               </View> */}
             {/* <<<<<<<<<<<<<<< REMOVE ABOVE BEFORE DEPLOY >>>>>>>>>>>>>>>*/}
-            <View style={styles.tabContainer}>
-              <ObjectCollection />
-            </View>
           </View>
         </View>
       </View>
