@@ -18,15 +18,12 @@ const styles = StyleSheet.create({
 
   container: {
     backgroundColor: color.delta_grey,
-    paddingBottom: 20,
-    height: windowHeight,
-    // flexDirection: 'column',
-    // alignItems: 'center',
-  },
-
-  dogeContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    // flexDirection: 'column',
+    // alignItems: 'center',
   },
 
   headerContainer: {
@@ -41,11 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  dogecoin: {
-    height: 200,
-    width: 200,
-  },
-
   logo: {
     alignSelf: 'center',
     height: 80,
@@ -53,12 +45,12 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
-  doge: {
+  circle: {
     alignSelf: 'center',
-    height: 150,
-    width: 150,
-    borderRadius: 75,
-    margin: 3,
+    height: 80,
+    width: 80,
+    // borderRadius: 75,
+    margin: 10,
   },
 
   containerView: {
@@ -72,17 +64,12 @@ const styles = StyleSheet.create({
   button: {
     margin: 10,
     backgroundColor: color.button_color,
-    height: normalize(35),
-    width: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: normalize(55),
   },
 
-  buttonContainer: {
-    position: 'absolute',
-    bottom: -50,
-    flexDirection: 'row',
-    justifyContent: 'center',
+  buttonText: {
+    fontSize: fontSize.regular + 2,
+    fontFamily: fontFamily.bold,
   },
 
   outer: {

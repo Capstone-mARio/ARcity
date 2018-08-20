@@ -10,7 +10,7 @@ import styles from './SubTabStyles';
 
 const Scores = () => <GameScore />;
 const Objects = () => <GameObjects />;
-class Bitcoins extends Component {
+class Dogecoins extends Component {
   render() {
     const coins = Number(this.props.user.coins);
     return (
@@ -29,10 +29,10 @@ const mapStateToProps = state => ({
   user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
 });
 
-const betterBitcoins = connect(
+const betterDogecoins = connect(
   mapStateToProps,
   {}
-)(Bitcoins);
+)(Dogecoins);
 
 export default class SubTab extends Component {
   state = {
@@ -40,7 +40,7 @@ export default class SubTab extends Component {
     routes: [
       { key: 'scores', title: 'Game Scores' },
       { key: 'objects', title: 'My Objects' },
-      { key: 'bitcoins', title: 'Bitcoins' },
+      { key: 'dogecoins', title: 'Dogecoins' },
     ],
   };
 
@@ -52,7 +52,7 @@ export default class SubTab extends Component {
         renderScene={SceneMap({
           scores: Scores,
           objects: Objects,
-          bitcoins: betterBitcoins,
+          dogecoins: betterDogecoins,
         })}
         renderTabBar={props => (
           <TabBar
