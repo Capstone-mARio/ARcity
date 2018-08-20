@@ -14,9 +14,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: color.white,
   },
-
   container: {
-    flex: 1,
     backgroundColor: color.delta_grey,
   },
 
@@ -31,14 +29,10 @@ const styles = StyleSheet.create({
   listComponent: {
     width: windowWidth - 40,
   },
-  subtitleView: {
-    flexDirection: 'row',
-    paddingLeft: 10,
-    paddingTop: 5,
-  },
 
   listItem: {
     backgroundColor: color.delta_grey,
+    height: normalize(75),
   },
   containerView: {
     width: windowWidth - 40,

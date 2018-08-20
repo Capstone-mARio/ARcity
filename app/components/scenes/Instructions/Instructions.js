@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Text, TouchableHighlight, View, Image } from 'react-native';
 import Modal from "react-native-modal";
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
+import ResponsiveCircleButton from '../../SubComponents/ResponsiveCircleButton';
 import SubTab from '../../SubComponents/SubTab';
-import GameScore from '../../SubComponents/GameScore/GameScore';
-import GameObjects from '../../SubComponents/GameObjects/GameObjects';
+import Dogecoins from './Dogecoins';
 import { Actions } from 'react-native-router-flux';
 import { instructionsVisible, signOut } from '../../../redux/reducers/authReducer';
 import { connect } from 'react-redux';
@@ -54,9 +54,27 @@ class Instructions extends Component {
 
           {(this.state.menu &&
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Dogecoins />
+
               <ResponsiveButton
                 text="View instructions"
                 onPress={() => this.setState({ menu: false, first: true }) }
+              />
+              <ResponsiveButton
+                text="High Scores"
+                onPress={() => {
+                  Actions.Welcome();
+                  this.props.signOut();
+                  this.props.instructionsVisible(false);
+                }}
+              />
+              <ResponsiveButton
+                text="Trophies"
+                onPress={() => {
+                  Actions.Welcome();
+                  this.props.signOut();
+                  this.props.instructionsVisible(false);
+                }}
               />
               <ResponsiveButton
                 text="Sign out"
@@ -71,37 +89,55 @@ class Instructions extends Component {
           {(this.state.first &&
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                Welcome to ARcity! I'm Doge, and I'll be your guide on today's journey! To learn the rules of the game, hit the button below...
+                Welcome to ARcity! I'm Doge, I'll be your guide on today's journey! To learn the rules of the game, much press next...
               </Text>
               <DogeComponent />
-              <ResponsiveButton
-                text="Next"
-                onPress={() => this.setState({ first: false, second: true })}
-              />
+              <View style={styles.buttonContainer}>
+                <ResponsiveCircleButton
+                  text="Prev"
+                  onPress={() => this.setState({ menu: true, first: false })}
+                />
+                <ResponsiveCircleButton
+                  text="Next"
+                  onPress={() => this.setState({ first: false, second: true })}
+                />
+              </View>
             </View>)}
 
            {(this.state.second &&
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                This is an augmented-reality mini-game series, right here in FiDi! All you'll need is yourself and your phone. The rules are simple: find and complete all the mini-games, and you win!
+                This is very augmented-reality mini-game series, right here in FiDi! All you'll need is yourself and your phone. The rules are simple: find and complete all the mini-games, and you win!
               </Text>
               <DogeComponent />
-              <ResponsiveButton
-                text="Next"
-                onPress={() => this.setState({ second: false, third: true })}
-              />
+              <View style={styles.buttonContainer}>
+                <ResponsiveCircleButton
+                  text="Prev"
+                  onPress={() => this.setState({ first: true, second: false })}
+                />
+                <ResponsiveCircleButton
+                  text="Next"
+                  onPress={() => this.setState({ second: false, third: true })}
+                />
+              </View>
             </View>)}
 
            {(this.state.third &&
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                There's a catch: You have to find the coins! They are all around you, floating in space in FiDi. After you collect enough coins to play each game, and are able to win, you get a special item!
+                Wow, much catch: You have to find the coins! They are all around you, floating in space in FiDi. After you collect enough coins to play each game, and are able to win, you get a special item!
               </Text>
               <DogeComponent />
-              <ResponsiveButton
-                text="Next"
-                onPress={() => this.setState({ third: false, fourth: true })}
-              />
+              <View style={styles.buttonContainer}>
+                <ResponsiveCircleButton
+                  text="Prev"
+                  onPress={() => this.setState({ second: true, third: false })}
+                />
+                <ResponsiveCircleButton
+                  text="Next"
+                  onPress={() => this.setState({ third: false, fourth: true })}
+                />
+              </View>
             </View>)}
 
            {(this.state.fourth &&
@@ -110,10 +146,16 @@ class Instructions extends Component {
                 These items are suuuuper rare and worth much dogecoin. You can even use excess coins to purchase items from our store!
               </Text>
               <DogeComponent />
-              <ResponsiveButton
-                text="Next"
-                onPress={() => this.setState({ fourth: false, fifth: true })}
-              />
+              <View style={styles.buttonContainer}>
+                <ResponsiveCircleButton
+                  text="Prev"
+                  onPress={() => this.setState({ third: true, fourth: false })}
+                />
+                <ResponsiveCircleButton
+                  text="Next"
+                  onPress={() => this.setState({ fourth: false, fifth: true })}
+                />
+              </View>
             </View>)}
 
            {(this.state.fifth &&
