@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "create-thenable": "^1.0.2",
     "firebase": "^5.3.1",
     "geolib": "^2.0.24",
     "mercator-projection": "0.0.2",

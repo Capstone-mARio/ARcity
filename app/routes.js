@@ -24,9 +24,10 @@ import ForgotPassword from './components/scenes/ForgotPassword/ForgotPassword';
 import Profile from './components/scenes/Profile/Profile';
 import GeoView from './components/scenes/GeoView/GeoView';
 import SubTab from './components/SubComponents/SubTab';
+import UserTrophies from './components/scenes/UserTrophies/UserTrophies';
+import UserScores from './components/scenes/UserScores/UserScores';
 
 import { color, navTitleStyle } from './styles/theme';
-import UserTrophies from './components/scenes/UserTrophies/UserTrophies';
 
 const TabIcon = ({ selected, name, title }) => {
   if (title === 'Geo') {
@@ -140,6 +141,18 @@ export default class extends React.Component {
                 hideNavBar
               />
             </Scene>
+            <Scene
+                key="UserTrophies"
+                title="UserTrophies"
+                component={UserTrophies}
+                initial={false}
+              />
+              <Scene
+                key="UserScores"
+                title="UserScores"
+                component={UserScores}
+                initial={false}
+              />
           </Scene>
         </Scene>
       </Router>

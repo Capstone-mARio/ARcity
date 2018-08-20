@@ -25,9 +25,18 @@ const DogeComponent = () => (
   />
 )
 
-const defaultState = {
+const menuState = {
     menu: true,
     first: false,
+    second: false,
+    third: false,
+    fourth: false,
+    fifth: false,
+}
+
+const initialState = {
+    menu: false,
+    first: true,
     second: false,
     third: false,
     fourth: false,
@@ -37,17 +46,28 @@ const defaultState = {
 class Instructions extends Component {
   constructor(props) {
     super(props);
-    this.state = defaultState;
+    this.state = initialState;
   }
+
+  componentDidMount() {
+    const { initial } = this.props;
+    console.log("this is initial", initial)
+    if(!initial) {
+      this.setState({
+        menu: true,
+        first: false,
+      })
+    }
+  }
+
   render() {
-    console.log("hello");
     return (
       <View style={styles.container}>
         <Modal
           isVisible={this.props.instructions}
           onBackdropPress={() => {
-            this.setState(defaultState);
-            this.props.instructionsVisible(false);
+            this.setState(menuState);
+            this.props.instructionsVisible(false, false);
           }}
           backdropOpacity={0.88}
           >
@@ -63,17 +83,15 @@ class Instructions extends Component {
               <ResponsiveButton
                 text="High Scores"
                 onPress={() => {
-                  Actions.Welcome();
-                  this.props.signOut();
-                  this.props.instructionsVisible(false);
+                  Actions.UserScores();
+                  this.props.instructionsVisible(false, false);
                 }}
               />
               <ResponsiveButton
                 text="Trophies"
                 onPress={() => {
-                  Actions.Welcome();
-                  this.props.signOut();
-                  this.props.instructionsVisible(false);
+                  Actions.UserTrophies();
+                  this.props.instructionsVisible(false, false);
                 }}
               />
               <ResponsiveButton
@@ -81,7 +99,7 @@ class Instructions extends Component {
                 onPress={() => {
                   Actions.Welcome();
                   this.props.signOut();
-                  this.props.instructionsVisible(false);
+                  this.props.instructionsVisible(false, false);
                 }}
               />
             </View>)}
@@ -167,8 +185,8 @@ class Instructions extends Component {
               <ResponsiveButton
                 text="Exit"
                 onPress={() => {
-                  this.setState(defaultState);
-                  this.props.instructionsVisible(false);
+                  this.setState(menuState);
+                  this.props.instructionsVisible(false, false);
                 }}
               />
             </View>)}
@@ -181,10 +199,11 @@ class Instructions extends Component {
 
 const mapStateToProps = state => ({
   instructions: state.authReducer.instructions,
+  initial: state.authReducer.initial,
 });
 
 const mapDispatchToProps = dispatch => ({
-  instructionsVisible: bool => dispatch(instructionsVisible(bool)),
+  instructionsVisible: (instructions, initial) => dispatch(instructionsVisible(instructions, initial)),
   signOut: () => dispatch(signOut()),
 });
 
