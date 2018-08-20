@@ -27,6 +27,7 @@ import SubTab from './components/SubComponents/SubTab';
 
 import { color, navTitleStyle } from './styles/theme';
 import UserTrophies from './components/scenes/UserTrophies/UserTrophies';
+import UserScores from './components/scenes/UserScores/UserScores';
 
 const TabIcon = ({ selected, name, title }) => {
   if (title === 'Geo') {
@@ -127,7 +128,7 @@ export default class extends React.Component {
                 key="Profile"
                 title="Profile"
                 icon={TabIcon}
-                component={Profile}
+                component={UserScores}
                 initial={true}
                 hideNavBar
               />

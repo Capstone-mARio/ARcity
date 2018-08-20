@@ -17,12 +17,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  objectContainer: {
+  gameContainer: {
     backgroundColor: color.delta_grey,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     // flexDirection: 'column',
     // alignItems: 'center',
   },
@@ -33,6 +30,16 @@ const styles = StyleSheet.create({
     width: 100,
     // borderRadius: 75,
     margin: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    paddingLeft: '10%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  rowInfo: {
+    paddingLeft: '10%',
+    flexDirection: 'column',
   },
 });
 
