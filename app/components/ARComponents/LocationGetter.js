@@ -37,7 +37,6 @@ var targets = [
 let location = {}
 let targetLocation = {}
 
-
 for (let i = 0; i < targets.length; i++) {
   const targetXY = getXY(targets[i].latitude, targets[i].longitude)
   targets[i].x = targetXY.x;

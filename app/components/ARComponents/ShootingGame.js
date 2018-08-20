@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
+'use strict';
 
+//React Imports
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import {
   ViroARScene,
   ViroQuad,
@@ -13,8 +16,11 @@ import {
   ViroAmbientLight
 } from 'react-viro';
 
-import { StyleSheet} from 'react-native';
+//Redux Imports
+import { connect } from 'react-redux';
+import { createUser } from '../../redux/reducers/authReducer';
 
+//StyleSheets
 const styles = StyleSheet.create({
   TextStyle: {
     fontFamily: 'Arial',
@@ -24,14 +30,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-const blockCount = 25;
+const blockCount = 20;
 
+ViroMaterials.createMaterials({
+  ball_color: {
+    diffuseTexture: require('./res/object_sphere/ball_texture.png')
+  },
+  block_color: {
+    diffuseTexture: require('./res/object_cube/cube_texture.png')
+  }
+})
+
+//Calculates The Position Of The Blocks Randomly
 const randomPos = [];
 for (let i = 0; i < blockCount; i++) {
   randomPos.push([Math.random() * (7 - 1 + 1) - 4, Math.random() * (20 - 5 + 5), (Math.random() * (7 - 1 + 1) - 4)])
 }
 
-export default class ShootingGame extends Component {
+
+class ShootingGame extends Component {
   constructor() {
     super();
     this.state = {
@@ -42,7 +59,7 @@ export default class ShootingGame extends Component {
       score: 0,
       blocksRemaining: blockCount,
       isReady: false,
-      cameraPos: [0,0,0]
+      cameraPos: [0, 0, 0]
     }
     this._addLine = this._addLine.bind(this);
     this._displayLines = this._displayLines.bind(this);
@@ -50,13 +67,28 @@ export default class ShootingGame extends Component {
     this._cameraChange = this._cameraChange.bind(this);
     this._displayBlocks = this._displayBlocks.bind(this);
     this._makeBlocks = this._makeBlocks.bind(this);
+    this._gameOver = this._gameOver.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onError = this.onError.bind(this);
   }
+
+  //Functions For Firebase
+  onSuccess() {
+    console.log('success');
+  }
+  onError(error) {
+    if (error.hasOwnProperty('message')) {
+      console.log('error');
+    }
+  }
+
   componentDidMount() {
     this.props.sceneNavigator.resetARSession(true,false)
     setTimeout(() => {
       this.setState({ isReady: true })
-    }, 5000);
+    }, 3000);
   }
+
   render() {
     return (
       <ViroARScene ref={(obj) => this.scene = obj} physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
@@ -70,41 +102,64 @@ export default class ShootingGame extends Component {
           viroTag="platform"
           opacity={0}
         />
+        {/*Game Starter*/}
         {this.state.isReady ?
           [this._displayLines(),
           this._displayBlocks()] : null}
-
+        {/*Score*/}
         <ViroText
           text={'Score: ' + this.state.score.toString()}
           position={[0, 0, -3]}
           style={styles.TextStyle}
           visible={this.state.isReady}
         />
-        <ViroText ref ={ (obj) => this.ready = obj}
+        {/*Get Ready*/}
+        <ViroText ref={(obj) => this.ready = obj}
           text={'Get Ready!'}
           position={[0, 0, -3]}
           style={styles.TextStyle}
           visible={!this.state.isReady}
         />
+        {/*Game Over*/}
         {this.state.blocksRemaining <= 0 ?
-          <ViroText
+          [<ViroText
             text={'GAME OVER'}
             position={[0, 1, -3]}
             style={styles.TextStyle}
-          /> : null}
+          />,
+          this._gameOver()] : null}
       </ViroARScene>
     )
   }
-
-  _shoot() { //////////////
+  //GameOver Method
+  _gameOver() {
+    var executed = false;
+    if (!executed) {
+      executed = true;
+      const gameScores = JSON.parse(this.props.user.games);
+      const newGame = JSON.stringify([...gameScores, { game: 'Shoot It', score: this.state.score }])
+      this.props.createUser(
+        {
+          uid: this.props.user.uid,
+          username: this.props.user.username,
+          coins: this.props.user.coins + this.state.score,
+          games: newGame,
+          objects: this.props.user.objects,
+        },
+        this.onSuccess,
+        this.onError
+      );
+    }
+  }
+  //Shooting Method
+  _shoot() {
     var balls = []
     for (let i = 0; i < this.state.numOfBalls; i++) {
-      var ball = <Viro3DObject ref={(obj) => this.ball = obj}
-        source={require('./res/object_sphere/object_sphere.vrx')}
+      var ball = <ViroSphere ref={(obj) => this.ball = obj}
         position={[0, 0, 3]}
         heightSegmentCount={5}
         widthSegementCount={5}
-        scale={[.1,.1,.1]}
+        radius={.1}
         key={i}
         viroTag="ball"
         visible={false}
@@ -116,14 +171,14 @@ export default class ShootingGame extends Component {
     }
     return balls;
   }
-
+  //Part Of Shooting Method
   _addLine() {
     if (this.ball !== undefined) {
       this.ball.setNativeProps({ visible: true })
       this.setState({ numOfBalls: this.state.numOfBalls + 1 })
     }
   }
-
+  //Part Of Shooting Method
   _displayLines() { /////////////////////
     return this.state.isReady ? (
       <ViroNode>
@@ -131,16 +186,14 @@ export default class ShootingGame extends Component {
       </ViroNode>
     ) : null
   }
-
+  //Camera For Aim Redecoration
   _cameraChange(coords) {
     const positionX = coords.cameraTransform.position[0];
     const positionY = coords.cameraTransform.position[1];
     const positionZ = coords.cameraTransform.position[2];
-
     const forwardX = coords.cameraTransform.forward[0];
     const forwardY = coords.cameraTransform.forward[1];
     const forwardZ = coords.cameraTransform.forward[2];
-
     this.setState({
       force: [forwardX * 10, forwardY * 10, forwardZ * 10]
     })
@@ -150,16 +203,17 @@ export default class ShootingGame extends Component {
       })
     }
   }
+  //Makes Targets
   _makeBlocks() { //////////////
     var blocks = []
     this.block = [];
     for (let i = 0; i < this.state.numOfBlocks; i++) {
       const blockTag = 'blocktag' + i;
-      var block = <Viro3DObject ref={(obj) => this.block[i] = obj}
-        source={require('./res/object_cube/object_cube.vrx')}
-        type={"VRX"}
+      var block = <ViroBox ref={(obj) => this.block[i] = obj}
         visible={true}
-        scale={[.5,.5,.5]}
+        height={.5}
+        length={.5}
+        width={.5}
         key={blockTag}
         position={randomPos[i]}
         materials={['block_color']}
@@ -171,7 +225,7 @@ export default class ShootingGame extends Component {
     }
     return blocks;
   }
-
+  //Part Of Making Targets
   _displayBlocks() { /////////////////////
     return (
       <ViroNode>
@@ -179,7 +233,7 @@ export default class ShootingGame extends Component {
       </ViroNode>
     )
   }
-
+  //Part Of Block Collision
   _onBlockCollide(idx, collidedTag, collidedPoint, collidedNormal) {
     if (collidedTag === 'ball') {
       this.setState({ score: this.state.score + 100 })
@@ -192,11 +246,16 @@ export default class ShootingGame extends Component {
 
 }
 
-ViroMaterials.createMaterials({
-  ball_color: {
-    diffuseColor: "#FFA500"
-  },
-  block_color: {
-    diffuseColor: '#FF60E4'
-  }
-})
+const mapStateToProps = state => ({
+  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+});
+
+const mapDispatchToProps = dispatch => ({
+  createUser: (user, success, error) =>
+    dispatch(createUser(user, success, error)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShootingGame);
