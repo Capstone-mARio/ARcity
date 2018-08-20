@@ -20,7 +20,7 @@ class ObjectModal extends Component {
   }
 
   render() {
-
+    let trophy = this.props.selectedObject
     return (
       <View style={styles.container}>
         <Modal
@@ -33,16 +33,16 @@ class ObjectModal extends Component {
 
           <View style={styles.content}>
             <Text style={material.headlineWhite}>
-              Item: AR Giraffe
+              {trophy.owned ? trophy.name : '???'}
             </Text>
 
             <Text style={material.headlineWhite}>
-              Cost: 800 Dogecoin
+              Cost: {trophy.cost} Dogecoin
             </Text>
 
             <Image
                 style={styles.circle}
-                source={require('../../assets/suitcase_icon.png')}
+                source={trophy.owned? trophy.trophy:trophy.shadow}
             />
           </View>
 
