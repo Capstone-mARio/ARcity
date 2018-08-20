@@ -12,6 +12,8 @@ import {
   ViroText,
   ViroConstants,
   ViroCamera,
+  Viro3DObject,
+  ViroAmbientLight
 } from 'react-viro';
 
 //Redux Imports
@@ -31,7 +33,9 @@ const styles = StyleSheet.create({
 
 ViroMaterials.createMaterials({
   cube_color: {
-    diffuseColor: '#0021cbE6',
+    shininess: 2.0,
+    // lightingModel: 'Lambert',
+    diffuseTexture: require('./res/landing_cube/colorful_texture.png'),
   },
   cube_hit: {
     diffuseColor: '#83FF33',
@@ -45,7 +49,7 @@ ViroMaterials.createMaterials({
 var ball;
 const ballphysics = {
   type: 'Dynamic',
-  mass: 10000,
+  mass: 50,
   useGravity: true,
   restitution: 0,
   friction: 0.75,
@@ -102,7 +106,8 @@ class CubeLandingGame extends Component {
 
   render() {
     return this.state.loaded ? (
-      <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}>
+      <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -10.81, 0], drawBounds: false }}>
+        {/* <ViroAmbientLight color="#FFFFFF" /> */}
         {/*original spawn plane*/}
         <ViroCamera position={[0, 0, 1]} active={true} />
         <ViroQuad
@@ -131,6 +136,8 @@ class CubeLandingGame extends Component {
           materials="target_floor"
           onCollision={this._onFloorCollide2}
         />
+
+
         {/*reset invisible platform*/}
         <ViroQuad
           scale={[500, 500, 1.5]}
@@ -147,9 +154,7 @@ class CubeLandingGame extends Component {
           ref={obj => {
             ball = obj;
           }}
-          heightSegmentCount={5}
-          widthSegementCount={5}
-          radius={0.1}
+          radius={.1}
           position={[0, 0.25, -1]}
           rotation={[0, 0, 0]}
           physicsBody={ballphysics}
