@@ -8,7 +8,9 @@ import {
   ViroNode,
   ViroText,
   ViroSphere,
-  ViroCamera
+  Viro3DObject,
+  ViroCamera,
+  ViroAmbientLight
 } from 'react-viro';
 
 import { StyleSheet} from 'react-native';
@@ -58,6 +60,7 @@ export default class ShootingGame extends Component {
   render() {
     return (
       <ViroARScene ref={(obj) => this.scene = obj} physicsWorld={{ gravity: [0, 0, 0], drawBounds: false }} onClick={this._addLine} onCameraTransformUpdate={this._cameraChange}>
+        <ViroAmbientLight color="#FFFFFF" />
         <ViroCamera position={[0,0,0]} active={true} />
         <ViroQuad
           scale={[8, 8, 8]}
@@ -96,16 +99,18 @@ export default class ShootingGame extends Component {
   _shoot() { //////////////
     var balls = []
     for (let i = 0; i < this.state.numOfBalls; i++) {
-      var ball = <ViroSphere ref={(obj) => this.ball = obj}
+      var ball = <Viro3DObject ref={(obj) => this.ball = obj}
+        source={require('./res/object_sphere/object_sphere.vrx')}
         position={[0, 0, 3]}
         heightSegmentCount={5}
         widthSegementCount={5}
-        radius={.1}
+        scale={[.1,.1,.1]}
         key={i}
         viroTag="ball"
         visible={false}
         materials={['ball_color']}
         physicsBody={{ mass: 1, type: 'Dynamic', force: { value: this.state.force }, useGravity: false }}
+        type={"VRX"}
       />
       balls.push(ball)
     }
@@ -150,11 +155,11 @@ export default class ShootingGame extends Component {
     this.block = [];
     for (let i = 0; i < this.state.numOfBlocks; i++) {
       const blockTag = 'blocktag' + i;
-      var block = <ViroBox ref={(obj) => this.block[i] = obj}
+      var block = <Viro3DObject ref={(obj) => this.block[i] = obj}
+        source={require('./res/object_cube/object_cube.vrx')}
+        type={"VRX"}
         visible={true}
-        height={.5}
-        length={.5}
-        width={.5}
+        scale={[.5,.5,.5]}
         key={blockTag}
         position={randomPos[i]}
         materials={['block_color']}

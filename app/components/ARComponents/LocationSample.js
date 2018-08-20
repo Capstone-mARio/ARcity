@@ -79,14 +79,17 @@ class LocationSample extends Component {
     switch (id) {
       case 1:
       this.props.setNav(CUBE_LANDING_GAME)
+      this.props.arSceneNavigator.resetARSession(true,true);
       this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
         break;
       case 2:
       this.props.setNav(SHOOTING_GAME)
+      this.props.arSceneNavigator.resetARSession(true,true);
       this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
         break;
       default:
       this.props.setNav(CUBE_LANDING_GAME)
+      this.props.arSceneNavigator.resetARSession(true,true);
       this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
 

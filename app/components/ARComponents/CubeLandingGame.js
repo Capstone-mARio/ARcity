@@ -12,6 +12,8 @@ import {
   ViroText,
   ViroConstants,
   ViroCamera,
+  Viro3DObject,
+  ViroAmbientLight
 } from 'react-viro';
 
 //StyleSheet
@@ -41,7 +43,7 @@ const _resetCube = thisContext => {
     thisContext.setState({
       ballsRemaining: ballsRemaining - 1,
     });
-    ball.setNativeProps({ physicsBody: null });
+    ball.setNativeProps({ physicsBody: null, scale:[.1,.1,.1] });
     ball.setNativeProps({ position: [0, 0.25, -1] });
     ball.setNativeProps({ materials: ['cube_color'] });
     setTimeout(() => {
@@ -76,7 +78,8 @@ class CubeLandingGame extends Component {
     }, 500);
 
     return this.state.loaded ? (
-      <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: false }}>
+      <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -9.81, 0], drawBounds: true }}>
+        <ViroAmbientLight color="#FFFFFF" />
         {/*original spawn plane*/}
         <ViroCamera  position={[0, 0, 1]} active={true} />
         <ViroQuad
@@ -108,13 +111,13 @@ class CubeLandingGame extends Component {
           onCollision={this._onFloorCollide2}
         />
 
-        <ViroSphere
+        <Viro3DObject
           ref={obj => {
             ball = obj;
           }}
-          heightSegmentCount={5}
-          widthSegementCount={5}
-          radius={0.1}
+          source={require('./res/landing_cube/object_sphere.vrx')}
+          type={"VRX"}
+          scale={[.1,.1,.1]}
           position={[0, 0.25, -1]}
           rotation={[0, 0, 0]}
           physicsBody={ballphysics}
