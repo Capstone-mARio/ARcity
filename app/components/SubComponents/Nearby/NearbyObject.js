@@ -26,7 +26,7 @@ class NearbyObject extends React.Component {
     this.state = {
       currentLat: 0,
       currentLong: 0,
-      closestGame: {},
+      closestGame: {latitude: 0, longitude: 0},
     }
     this.success = this.success.bind(this);
     this.findClosest = this.findClosest.bind(this);
@@ -38,7 +38,6 @@ class NearbyObject extends React.Component {
       currentLat : crd.latitude,
       currentLong: crd.longitude,
     })
-
     this.findClosest();
 
   }
@@ -47,10 +46,9 @@ class NearbyObject extends React.Component {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
-  async componentDidMount(){
-    await this.props.fetchLocations();
-    await navigator.geolocation.watchPosition(this.success, this.error, options);
-
+  componentDidMount(){
+    this.props.fetchLocations()
+    navigator.geolocation.watchPosition(this.success, this.error, options)
   }
 
   findClosest() {
@@ -71,7 +69,7 @@ class NearbyObject extends React.Component {
     console.log("This is the shortest distance", shortestDistance);
     // find the object, set it to state
     // do this at an
-    let closestGame;
+    let closestGame = {latitude: 0, longitude: 0};
     for(let i = 0; i < locations.length; i ++) {
       if(distances[i] === shortestDistance) {
         closestGame = locations[i];
@@ -87,6 +85,7 @@ class NearbyObject extends React.Component {
   }
 
   render() {
+    console.log(this.props.locations)
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,

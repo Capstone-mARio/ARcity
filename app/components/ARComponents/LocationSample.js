@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
 });
 
 ViroMaterials.createMaterials({
-  starbucks: {
-    diffuseColor: '#0021cbE6', //blue
+  '1': {
+    diffuseTexture: require('./res/landing_cube/colorful_texture.png'), //blue
   },
-  killarney: {
-    diffuseColor: '#83FF33', //green
+  '2': {
+    diffuseTexture: require('./res/object_sphere/ball_texture.png'), //green
   },
 });
 
@@ -85,9 +85,9 @@ class LocationSample extends Component {
     }
   }
 
-  async componentDidMount() { //HOPEFULLY THE RIGHT WAY
-    await this.props.fetchLocations();
-    navigator.geolocation.watchPosition(this.success, this.error, options);
+  componentDidMount() { //HOPEFULLY THE RIGHT WAY
+    // await this.props.fetchLocations();
+    navigator.geolocation.getCurrentPosition(this.success, this.error, options);
   }
 
   render() {
@@ -205,9 +205,9 @@ class LocationSample extends Component {
             length={3}
             width={3}
             visible={Math.abs(realY) <= 30 ? true : true}
-            materials={id === 1 ? "starbucks" : "killarney"}
+            materials={locations[i].id.toString()}
             onClick={() => {
-              if (this.props.user.coins > locations[i].costgit ) {
+              if (this.props.user.coins > locations[i].cost ) {
                 this._jumpNextScene(id, locations[i].cost)
               }
             }}

@@ -42,7 +42,7 @@ export default (locationsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOCATIONS:
       const locations = action.data;
-      return { ...state, locations };
+      return { ...state, locations: locations };
 
     case ADD_LOCATION:
       return {...state, locations: [...state.locations, action.data] }
