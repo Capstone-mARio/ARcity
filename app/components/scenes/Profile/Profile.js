@@ -14,7 +14,6 @@ import AuthTextInput from '../../SubComponents/AuthTextInput';
 import { isEmpty, validate } from '../../utils/validate';
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 import InstructionModal from '../Instructions/Instructions';
-import MenuModal from '../Menu/Menu';
 import NearbyObject from '../../SubComponents/Nearby/NearbyObject';
 
 import { material } from 'react-native-typography';
