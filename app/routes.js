@@ -142,17 +142,17 @@ export default class extends React.Component {
               />
             </Scene>
             <Scene
-                key="UserTrophies"
-                title="UserTrophies"
-                component={UserTrophies}
-                initial={false}
-              />
-              <Scene
-                key="UserScores"
-                title="UserScores"
-                component={UserScores}
-                initial={false}
-              />
+              key="UserTrophies"
+              title="UserTrophies"
+              component={UserTrophies}
+              initial={false}
+            />
+            <Scene
+              key="UserScores"
+              title="UserScores"
+              component={UserScores}
+              initial={false}
+            />
           </Scene>
         </Scene>
       </Router>

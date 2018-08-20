@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Text, TouchableHighlight, View, Image } from 'react-native';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 import ResponsiveCircleButton from '../../SubComponents/ResponsiveCircleButton';
 import SubTab from '../../SubComponents/SubTab';
 import Dogecoins from './Dogecoins';
 import { Actions } from 'react-native-router-flux';
-import { instructionsVisible, signOut } from '../../../redux/reducers/authReducer';
+import {
+  instructionsVisible,
+  signOut,
+} from '../../../redux/reducers/authReducer';
 import { connect } from 'react-redux';
 
 import styles from './styles';
@@ -19,29 +22,29 @@ const DogeComponent = () => (
       height: 250,
       width: 250,
       borderRadius: 25,
-      margin: 3
+      margin: 3,
     }}
-    source={{ uri: "https://t0.rbxcdn.com/e52cb522d35f416581a8bd81b90904ca" }}
+    source={{ uri: 'https://t0.rbxcdn.com/e52cb522d35f416581a8bd81b90904ca' }}
   />
-)
+);
 
 const menuState = {
-    menu: true,
-    first: false,
-    second: false,
-    third: false,
-    fourth: false,
-    fifth: false,
-}
+  menu: true,
+  first: false,
+  second: false,
+  third: false,
+  fourth: false,
+  fifth: false,
+};
 
 const initialState = {
-    menu: false,
-    first: true,
-    second: false,
-    third: false,
-    fourth: false,
-    fifth: false,
-}
+  menu: false,
+  first: true,
+  second: false,
+  third: false,
+  fourth: false,
+  fifth: false,
+};
 
 class Instructions extends Component {
   constructor(props) {
@@ -51,12 +54,12 @@ class Instructions extends Component {
 
   componentDidMount() {
     const { initial } = this.props;
-    console.log("this is initial", initial)
-    if(!initial) {
+    console.log('this is initial', initial);
+    if (!initial) {
       this.setState({
         menu: true,
         first: false,
-      })
+      });
     }
   }
 
@@ -70,15 +73,14 @@ class Instructions extends Component {
             this.props.instructionsVisible(false, false);
           }}
           backdropOpacity={0.88}
-          >
-
-          {(this.state.menu &&
+        >
+          {this.state.menu && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Dogecoins />
 
               <ResponsiveButton
                 text="View instructions"
-                onPress={() => this.setState({ menu: false, first: true }) }
+                onPress={() => this.setState({ menu: false, first: true })}
               />
               <ResponsiveButton
                 text="High Scores"
@@ -102,12 +104,14 @@ class Instructions extends Component {
                   this.props.instructionsVisible(false, false);
                 }}
               />
-            </View>)}
+            </View>
+          )}
 
-          {(this.state.first &&
+          {this.state.first && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                Welcome to ARcity! I'm Doge, I'll be your guide on today's journey! To learn the rules of the game, much press next...
+                Welcome to ARcity! I'm Doge, I'll be your guide on today's
+                journey! To learn the rules of the game, much press next...
               </Text>
               <DogeComponent />
               <View style={styles.buttonContainer}>
@@ -120,12 +124,15 @@ class Instructions extends Component {
                   onPress={() => this.setState({ first: false, second: true })}
                 />
               </View>
-            </View>)}
+            </View>
+          )}
 
-           {(this.state.second &&
+          {this.state.second && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                This is very augmented-reality mini-game series, right here in FiDi! All you'll need is yourself and your phone. The rules are simple: find and complete all the mini-games, and you win!
+                This is very augmented-reality mini-game series, right here in
+                FiDi! All you'll need is yourself and your phone. The rules are
+                simple: find and complete all the mini-games, and you win!
               </Text>
               <DogeComponent />
               <View style={styles.buttonContainer}>
@@ -138,12 +145,15 @@ class Instructions extends Component {
                   onPress={() => this.setState({ second: false, third: true })}
                 />
               </View>
-            </View>)}
+            </View>
+          )}
 
-           {(this.state.third &&
+          {this.state.third && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                Wow, much catch: You have to find the coins! They are all around you, floating in space in FiDi. After you collect enough coins to play each game, and are able to win, you get a special item!
+                Wow, much catch: You have to find the coins! They are all around
+                you, floating in space in FiDi. After you collect enough coins
+                to play each game, and are able to win, you get a special item!
               </Text>
               <DogeComponent />
               <View style={styles.buttonContainer}>
@@ -156,12 +166,14 @@ class Instructions extends Component {
                   onPress={() => this.setState({ third: false, fourth: true })}
                 />
               </View>
-            </View>)}
+            </View>
+          )}
 
-           {(this.state.fourth &&
+          {this.state.fourth && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                These items are suuuuper rare and worth much dogecoin. You can even use excess coins to purchase items from our store!
+                These items are suuuuper rare and worth much dogecoin. You can
+                even use excess coins to purchase items from our store!
               </Text>
               <DogeComponent />
               <View style={styles.buttonContainer}>
@@ -174,13 +186,12 @@ class Instructions extends Component {
                   onPress={() => this.setState({ fourth: false, fifth: true })}
                 />
               </View>
-            </View>)}
+            </View>
+          )}
 
-           {(this.state.fifth &&
+          {this.state.fifth && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={material.headlineWhite}>
-                Hit exit and GO PLAY!!
-              </Text>
+              <Text style={material.headlineWhite}>Hit exit and GO PLAY!!</Text>
               <DogeComponent />
               <ResponsiveButton
                 text="Exit"
@@ -189,8 +200,8 @@ class Instructions extends Component {
                   this.props.instructionsVisible(false, false);
                 }}
               />
-            </View>)}
-
+            </View>
+          )}
         </Modal>
       </View>
     );
@@ -203,7 +214,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  instructionsVisible: (instructions, initial) => dispatch(instructionsVisible(instructions, initial)),
+  instructionsVisible: (instructions, initial) =>
+    dispatch(instructionsVisible(instructions, initial)),
   signOut: () => dispatch(signOut()),
 });
 
