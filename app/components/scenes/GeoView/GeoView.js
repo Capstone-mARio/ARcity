@@ -52,8 +52,8 @@ class GeoView extends React.Component {
   }
 
   async componentDidMount(){
+    await this.props.fetchLocations();
     await navigator.geolocation.watchPosition(this.success, this.error, options);
-    await this.props.fetchLocations("FiDi");
   }
 
   render() {
@@ -65,6 +65,11 @@ class GeoView extends React.Component {
     const { locations } = this.props;
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={material.display2White}>
+            Game locations
+          </Text>
+        </View>
         <List>
           {locations.map(l => {
             const distance = Number((geolib.getDistance({
@@ -93,10 +98,6 @@ class GeoView extends React.Component {
                   />
           })}
         </List>
-        <View style={styles.textContainer}>
-          <Text style={material.titleWhite}>This is my lat: {this.state.currentLat}</Text>
-          <Text style={material.titleWhite}>This is my long: {this.state.currentLong}</Text>
-        </View>
       </View>
     );
   }
@@ -107,8 +108,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchLocations: (district) => dispatch(fetchLocations(district)),
-  postLocation: (district, location) => dispatch(postLocation(district, location)),
+  fetchLocations: () => dispatch(fetchLocations()),
+  postLocation: (location) => dispatch(postLocation(location)),
 })
 
 export default connect(

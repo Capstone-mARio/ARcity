@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
 
   profileContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
   usernameContainer: {
     alignItems: 'center',
@@ -42,10 +43,9 @@ const styles = StyleSheet.create({
   },
 
   doge: {
-    alignSelf: 'center',
-    height: 150,
-    width: 150,
-    borderRadius: 75,
+    height: 280,
+    width: 250,
+    // borderRadius: 75,
     margin: 3,
   },
 
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
   },
 
   tabContainer: {
-    margin: 20,
   },
 
   contentContainer: {

@@ -1,3 +1,5 @@
+'use strict';
+
 //React Imports
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
@@ -14,9 +16,9 @@ import {
 import { connect } from 'react-redux';
 import { setThis, setNav } from '../../redux/reducers/arCityReducer';
 import { createUser } from '../../redux/reducers/authReducer';
+import { fetchLocations } from '../../redux/reducers/locationReducer';
 
 //Location And Games
-import { getXY, targets } from './LocationGetter'
 import CubeLandingGame from './CubeLandingGame'
 import ShootingGame from './ShootingGame'
 import Suitcase from './Suitcase'
@@ -58,7 +60,6 @@ class LocationSample extends Component {
   constructor() {
     super();
     this.state = {
-      // position: [],
       currLocation: {
         x: 0,
         y: 0
@@ -66,6 +67,7 @@ class LocationSample extends Component {
     }
     this.success = this.success.bind(this)
     this.error = this.error.bind(this)
+    this.getXY = this.getXY.bind(this)
     this._jumpNextScene = this._jumpNextScene.bind(this)
     this._makeObj = this._makeObj.bind(this)
     this._displayObjs = this._displayObjs.bind(this)
@@ -83,7 +85,8 @@ class LocationSample extends Component {
     }
   }
 
-  componentDidMount() { //HOPEFULLY THE RIGHT WAY
+  async componentDidMount() { //HOPEFULLY THE RIGHT WAY
+    await this.props.fetchLocations();
     navigator.geolocation.watchPosition(this.success, this.error, options);
   }
 
@@ -97,10 +100,11 @@ class LocationSample extends Component {
         </ViroARScene>
       ) : null
   }
+
   //On Successful Location Found
   success(pos) {
     var crd = pos.coords;
-    const XY = getXY(crd.latitude, crd.longitude)
+    const XY = this.getXY(crd.latitude, crd.longitude)
     this.setState({
       currLocation: { x: XY.x, y: XY.y }
     })
@@ -109,8 +113,18 @@ class LocationSample extends Component {
   error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
+  //Turns Lat & Long To XY
+  getXY(lat, lon) {
+    let lon_rad = (lon / 180.0 * Math.PI)
+    let lat_rad = (lat / 180.0 * Math.PI)
+    const sm_a = 6378137.0
+    let x = sm_a * lon_rad
+    let y = sm_a * Math.log((Math.sin(lat_rad) + 1) / Math.cos(lat_rad))
+
+    return { x, y }
+  }
   //Jump To Game Method
-  _jumpNextScene(id) {
+  _jumpNextScene(id, cost) {
     switch (id) {
       case 1:
         this.props.setNav(CUBE_LANDING_GAME)
@@ -118,7 +132,7 @@ class LocationSample extends Component {
           {
             uid: this.props.user.uid,
             username: this.props.user.username,
-            coins: this.props.user.coins - 100,
+            coins: this.props.user.coins - cost,
             games: this.props.user.games,
             objects: this.props.user.objects,
           },
@@ -133,7 +147,7 @@ class LocationSample extends Component {
           {
             uid: this.props.user.uid,
             username: this.props.user.username,
-            coins: this.props.user.coins - 500,
+            coins: this.props.user.coins - cost,
             games: this.props.user.games,
             objects: this.props.user.objects,
           },
@@ -148,7 +162,7 @@ class LocationSample extends Component {
           {
             uid: this.props.user.uid,
             username: this.props.user.username,
-            coins: this.props.user.coins - 100,
+            coins: this.props.user.coins - cost,
             games: this.props.user.games,
             objects: this.props.user.objects,
           },
@@ -161,10 +175,16 @@ class LocationSample extends Component {
   //Make A Obj At Location
   _makeObj() {
     var objs = []
-    for (let i = 0; i < targets.length; i++) {
-      const realX = targets[i].x - this.state.currLocation.x;
-      const realY = targets[i].y - this.state.currLocation.y;
-      const id = targets[i].id
+    const { locations } = this.props;
+    for (let i = 0; i < locations.length; i++) {
+      const targetXY = this.getXY(locations[i].latitude, locations[i].longitude)
+      locations[i].x = targetXY.x;
+      locations[i].y = targetXY.y;
+    }
+    for (let i = 0; i < locations.length; i++) {
+      const realX = locations[i].x - this.state.currLocation.x;
+      const realY = locations[i].y - this.state.currLocation.y;
+      const id = locations[i].id
       var obj;
       if (id === 3) {
         obj = <Suitcase pos={[realX, -10, realY]} />
@@ -186,7 +206,11 @@ class LocationSample extends Component {
             width={3}
             visible={Math.abs(realY) <= 30 ? true : true}
             materials={id === 1 ? "starbucks" : "killarney"}
-            onClick={() => this._jumpNextScene(id)}
+            onClick={() => {
+              if (this.props.user.coins > locations[i].costgit ) {
+                this._jumpNextScene(id, locations[i].cost)
+              }
+            }}
           />
         </ViroNode>
       }
@@ -206,11 +230,13 @@ class LocationSample extends Component {
 
 const mapToState = state => ({
   user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+  locations: state.locationReducer.locations,
 });
 
 const mapToDispatch = (dispatch) => ({
   createUser: (user, success, error) =>
     dispatch(createUser(user, success, error)),
+  fetchLocations: () => dispatch(fetchLocations()),
   setNav: (navScene) => { dispatch(setNav(navScene)) },
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })

@@ -1,0 +1,10 @@
+14821912 bin/ViroFBX
+14821912 ViroFBX
+8384226 app/components/assets/suitcase/Vintage_Suitcase_Colour.png
+3561099 app/components/assets/suitcase/Vintage_Suitcase_Normal_OpenGL.png
+3140820 app/components/ARComponents/res/hoa_hakananaia/textures/Texture_0_emissive.jpeg
+3140820 app/components/ARComponents/res/hoa_hakananaia/textures/Texture_0_baseColor.jpeg
+3041333 app/components/ARComponents/res/hoa_hakananaia/textures/Texture_0_metallicRoughness.png
+2388395 app/components/ARComponents/res/guadalupe_360.jpg
+2314901 app/components/assets/suitcase/Vintage_Suitcase_Roughness.png
+1510585 app/components/ARComponents/res/sphere_meshmix.obj
