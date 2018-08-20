@@ -207,7 +207,7 @@ class LocationSample extends Component {
             visible={Math.abs(realY) <= 30 ? true : true}
             materials={id === 1 ? "starbucks" : "killarney"}
             onClick={() => {
-              if (this.props.user.coins > locations[i].costgit ) {
+              if (this.props.user.coins > locations[i].cost ) {
                 this._jumpNextScene(id, locations[i].cost)
               }
             }}
