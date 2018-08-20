@@ -20,10 +20,13 @@ const styles = StyleSheet.create({
     backgroundColor: color.delta_grey,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     // flexDirection: 'column',
     // alignItems: 'center',
+  },
+
+  content: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   headerContainer: {
