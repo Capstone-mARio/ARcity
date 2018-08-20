@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-const blockCount = 5;
+const blockCount = 20;
 
 ViroMaterials.createMaterials({
   ball_color: {
@@ -135,7 +135,6 @@ class ShootingGame extends Component {
       executed = true;
       const gameScores = JSON.parse(this.props.user.games);
       const newGame = JSON.stringify([...gameScores, { game: 'Shoot It', score: this.state.score }])
-      this.text.setNativeProps({ text: 'Game Over' })
       this.props.createUser(
         {
           uid: this.props.user.uid,

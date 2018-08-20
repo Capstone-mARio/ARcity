@@ -172,19 +172,21 @@ class LocationSample extends Component {
         obj = <Coin pos={[realX, -10, realY]} />
       } else {
         obj = <ViroNode position={[realX, 1, realY]}>
+          <ViroText
+            transformBehaviors="billboard"
+            position={[0, 2, 0]}
+            scale={[2, 2, 2]}
+            text={id === 1 ? "Ball Throw" : "Shoot Cubes"}
+            style={styles.TextStyle}
+          />
           <ViroBox
-            position={[0,0,0]}
-            height={5}
-            length={5}
-            width={5}
+            position={[0, 0, 0]}
+            height={3}
+            length={3}
+            width={3}
             visible={Math.abs(realY) <= 30 ? true : true}
             materials={id === 1 ? "starbucks" : "killarney"}
             onClick={() => this._jumpNextScene(id)}
-          />
-          <ViroText
-            position={[0,.5,0]}
-            text={id === 1 ? "Ball Throw" : "Shoot Cubes"}
-            style={styles.TextStyle}
           />
         </ViroNode>
       }
