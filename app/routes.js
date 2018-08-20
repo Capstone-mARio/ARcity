@@ -26,6 +26,7 @@ import GeoView from './components/scenes/GeoView/GeoView';
 import SubTab from './components/SubComponents/SubTab';
 
 import { color, navTitleStyle } from './styles/theme';
+import UserTrophies from './components/scenes/UserTrophies/UserTrophies';
 
 const TabIcon = ({ selected, name, title }) => {
   if (title === 'Geo') {
@@ -79,7 +80,7 @@ export default class extends React.Component {
           titleStyle={material.title}
           backButtonTintColor={color.black}
         >
-        <Stack key="Auth">
+          <Stack key="Auth">
             <Scene
               key="Welcome"
               component={Welcome}

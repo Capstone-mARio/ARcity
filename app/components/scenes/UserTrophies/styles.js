@@ -14,7 +14,7 @@ const resizeMode = 'contain';
 const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: color.delta_grey,
-    flex: 1
+    flex: 1,
   },
 
   objectContainer: {
@@ -29,12 +29,11 @@ const styles = StyleSheet.create({
 
   circle: {
     alignSelf: 'center',
-    height: 80,
-    width: 80,
+    height: 100,
+    width: 100,
     // borderRadius: 75,
     margin: 10,
   },
-
 });
 
 export default styles;

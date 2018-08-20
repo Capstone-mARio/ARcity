@@ -1,5 +1,12 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Image, Linking } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Linking,
+  ScrollView,
+} from 'react-native';
 import { color } from '../../../styles/theme';
 
 import { Button, List, ListItem } from 'react-native-elements';
@@ -47,7 +54,7 @@ class UserTrophies extends React.Component {
   render() {
     return (
       <View style={styles.outerContainer}>
-        <View style={styles.objectContainer}>
+        <ScrollView contentContainerStyle={styles.objectContainer}>
           {this.state.trophies.map(trophy => {
             return (
               <TouchableOpacity
@@ -63,13 +70,12 @@ class UserTrophies extends React.Component {
               </TouchableOpacity>
             );
           })}
-
-          <ObjectModal
-            modalVisible={this.state.modalVisible}
-            toggleModal={this.toggleModal}
-            selectedObject={this.state.selectedObject}
-          />
-        </View>
+        </ScrollView>
+        <ObjectModal
+          modalVisible={this.state.modalVisible}
+          toggleModal={this.toggleModal}
+          selectedObject={this.state.selectedObject}
+        />
       </View>
     );
   }
