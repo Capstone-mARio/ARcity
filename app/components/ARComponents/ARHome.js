@@ -194,7 +194,7 @@ class ARHome extends Component {
         <ViroARSceneNavigator
           {...this.state.sharedProps}
           initialScene={{ scene: LocationSample }}
-          // initialScene={{ scene: ShootingGame }}
+          // initialScene={{ scene: CubeLandingGame }}
           worldAlignment="GravityAndHeading"
         />
         <MenuNav />
