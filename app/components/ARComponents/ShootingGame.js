@@ -50,6 +50,7 @@ export default class ShootingGame extends Component {
     this._makeBlocks = this._makeBlocks.bind(this);
   }
   componentDidMount() {
+    this.props.sceneNavigator.resetARSession(true,false)
     setTimeout(() => {
       this.setState({ isReady: true })
     }, 5000);
