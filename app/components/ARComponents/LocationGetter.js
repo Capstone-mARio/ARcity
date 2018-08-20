@@ -4,7 +4,7 @@ var targets = [
     longitude: -74.00904218848154,
     x: 0,
     y: 0,
-    id: 1,
+    id: 1
   },
 
   { //killarney rose
@@ -13,6 +13,22 @@ var targets = [
     x: 0,
     y: 0,
     id: 2
+  },
+
+  { //suitcase
+    latitude: 40.704863,
+    longitude: -74.008927,
+    x: 0,
+    y: 0,
+    id: 3
+  },
+
+  { //coin
+    latitude: 40.70467766025543,
+    longitude: -74.00904218840554,
+    x: 0,
+    y: 0,
+    id: 4
   }
 ];
 

@@ -9,25 +9,6 @@ import { connect } from 'react-redux';
 import styles from './styles';
 import { material } from 'react-native-typography';
 
-// const scores = [
-//       {
-//         game: 'Cube game',
-//         score: 12,
-//       },
-//       {
-//         game: 'Shooting game',
-//         score: 27,
-//       },
-//       {
-//         game: 'Cube game',
-//         score: 12,
-//       },
-//       {
-//         game: 'Shooting game',
-//         score: 27,
-//       },
-//     ];
-
 class GameScore extends React.Component {
   constructor() {
     super();

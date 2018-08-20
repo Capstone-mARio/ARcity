@@ -3,7 +3,7 @@ import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-import { register } from '../../../redux/reducers/authReducer';
+import { register, instructionsVisible } from '../../../redux/reducers/authReducer';
 import Form from '../../SubComponents/Form';
 
 const fields = [
@@ -62,12 +62,12 @@ class Register extends React.Component {
 
     onSubmit(data) {
         this.setState({error: error}); //clear out error messages
-        this.props.register(data, this.onSuccess, this.onError)
+        this.props.register(data, this.onSuccess, this.onError);
+        this.props.instructionsVisible(true);
     }
 
     onSuccess(user) {
-        console.log("on success??")
-        Actions.Main()
+        Actions.Main();
     }
 
     onError(error) {
@@ -95,4 +95,9 @@ class Register extends React.Component {
     }
 }
 
-export default connect(null, { register })(Register);
+const mapDispatchToProps = dispatch => ({
+  instructionsVisible: bool => dispatch(instructionsVisible(bool)),
+  register: (data, onSuccess, onErr) => dispatch(register(data, onSuccess, onErr))
+});
+
+export default connect(null, mapDispatchToProps)(Register);
