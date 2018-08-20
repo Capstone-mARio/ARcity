@@ -3,13 +3,17 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Button, List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { createUser, signOut, instructionsVisible, menuVisible } from '../../../redux/reducers/authReducer';
+import {
+  createUser,
+  signOut,
+  instructionsVisible,
+  menuVisible,
+} from '../../../redux/reducers/authReducer';
 
 import AuthTextInput from '../../SubComponents/AuthTextInput';
 import { isEmpty, validate } from '../../utils/validate';
 import ResponsiveButton from '../../SubComponents/ResponsiveButton';
 import InstructionModal from '../Instructions/Instructions';
-import ObjectCollection from '../../SubComponents/ObjectCollection/ObjectCollection';
 import NearbyObject from '../../SubComponents/Nearby/NearbyObject';
 
 import { material } from 'react-native-typography';
@@ -83,11 +87,11 @@ class Profile extends React.Component {
           </View>
           <View style={styles.profileContainer}>
             <TouchableOpacity
-              onPress={() => this.props.instructionsVisible(true) }
+              onPress={() => this.props.instructionsVisible(true, false)}
             >
               <Image
                 style={styles.doge}
-                source={require('../../assets/doge_menu.png')}
+                source={require('../../assets/doge.png')}
               />
             </TouchableOpacity>
             {this.state.edit ? (
@@ -186,15 +190,16 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user || {games:'[]', objects:'[]', coins:0},
+  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
   instructions: state.authReducer.instructions,
   menu: state.authReducer.menu,
 });
 
 const mapDispatchToProps = dispatch => ({
-  createUser: (user, success, error) => dispatch(createUser(user, success, error)),
+  createUser: (user, success, error) =>
+    dispatch(createUser(user, success, error)),
   signOut: () => dispatch(signOut()),
-  instructionsVisible: bool => dispatch(instructionsVisible(bool)),
+  instructionsVisible: (instructions, initial) => dispatch(instructionsVisible(instructions, initial)),
 });
 
 export default connect(

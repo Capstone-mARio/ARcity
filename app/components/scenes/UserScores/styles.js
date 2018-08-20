@@ -5,6 +5,7 @@ import {
   fontSize,
   fontFamily,
   windowWidth,
+  windowHeight,
   normalize,
 } from '../../../styles/theme';
 
@@ -12,33 +13,27 @@ const resizeMode = 'contain';
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: color.white,
-  },
-  container: {
     backgroundColor: color.delta_grey,
+    flex: 1,
   },
 
-  textContainer: {
+  objectContainer: {
+    backgroundColor: color.delta_grey,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    // flexDirection: 'column',
+    // alignItems: 'center',
+  },
+
+  circle: {
+    alignSelf: 'center',
+    height: 100,
+    width: 100,
+    // borderRadius: 75,
     margin: 10,
   },
-
-  header: {
-    alignItems: 'center',
-  },
-
-  listComponent: {
-    width: windowWidth - 40,
-  },
-
-  listItem: {
-    backgroundColor: color.delta_grey,
-    height: normalize(75),
-    width: windowWidth - 50,
-  },
-  containerView: {
-    width: windowWidth - 40,
-  },
-
 });
 
 export default styles;
