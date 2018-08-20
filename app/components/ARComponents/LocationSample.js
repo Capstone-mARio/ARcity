@@ -1,3 +1,5 @@
+'use strict';
+
 //React Imports
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
@@ -14,9 +16,9 @@ import {
 import { connect } from 'react-redux';
 import { setThis, setNav } from '../../redux/reducers/arCityReducer';
 import { createUser } from '../../redux/reducers/authReducer';
+import { fetchLocations } from '../../redux/reducers/locationReducer';
 
 //Location And Games
-import { getXY, targets } from './LocationGetter'
 import CubeLandingGame from './CubeLandingGame'
 import ShootingGame from './ShootingGame'
 import Suitcase from './Suitcase'
@@ -58,7 +60,6 @@ class LocationSample extends Component {
   constructor() {
     super();
     this.state = {
-      // position: [],
       currLocation: {
         x: 0,
         y: 0
@@ -66,6 +67,7 @@ class LocationSample extends Component {
     }
     this.success = this.success.bind(this)
     this.error = this.error.bind(this)
+    this.getXY = this.getXY.bind(this)
     this._jumpNextScene = this._jumpNextScene.bind(this)
     this._makeObj = this._makeObj.bind(this)
     this._displayObjs = this._displayObjs.bind(this)
@@ -97,10 +99,11 @@ class LocationSample extends Component {
         </ViroARScene>
       ) : null
   }
+
   //On Successful Location Found
   success(pos) {
     var crd = pos.coords;
-    const XY = getXY(crd.latitude, crd.longitude)
+    const XY = this.getXY(crd.latitude, crd.longitude)
     this.setState({
       currLocation: { x: XY.x, y: XY.y }
     })
@@ -108,6 +111,16 @@ class LocationSample extends Component {
   //On A Error
   error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+  //Turns Lat & Long To XY
+  getXY(lat, lon) {
+    let lon_rad = (lon / 180.0 * Math.PI)
+    let lat_rad = (lat / 180.0 * Math.PI)
+    const sm_a = 6378137.0
+    let x = sm_a * lon_rad
+    let y = sm_a * Math.log((Math.sin(lat_rad) + 1) / Math.cos(lat_rad))
+
+    return { x, y }
   }
   //Jump To Game Method
   _jumpNextScene(id) {
@@ -160,7 +173,46 @@ class LocationSample extends Component {
   }
   //Make A Obj At Location
   _makeObj() {
+    console.log(this.state.currLocation);
     var objs = []
+    var targets = [
+      { //starbucks
+        latitude: 40.70467766025543,
+        longitude: -74.00904218848154,
+        x: 0,
+        y: 0,
+        id: 1
+      },
+    
+      { //killarney rose
+        latitude: 40.7051,
+        longitude: -74.0087,
+        x: 0,
+        y: 0,
+        id: 2
+      },
+    
+      { //suitcase
+        latitude: 40.704863,
+        longitude: -74.008927,
+        x: 0,
+        y: 0,
+        id: 3
+      },
+    
+      { //coin
+        latitude: 40.70467766025543,
+        longitude: -74.00904218840554,
+        x: 0,
+        y: 0,
+        id: 4
+      }
+    ];
+    for (let i = 0; i < targets.length; i++) {
+      const targetXY = this.getXY(targets[i].latitude, targets[i].longitude)
+      targets[i].x = targetXY.x;
+      targets[i].y = targetXY.y;
+    }
     for (let i = 0; i < targets.length; i++) {
       const realX = targets[i].x - this.state.currLocation.x;
       const realY = targets[i].y - this.state.currLocation.y;
@@ -211,6 +263,7 @@ const mapToState = state => ({
 const mapToDispatch = (dispatch) => ({
   createUser: (user, success, error) =>
     dispatch(createUser(user, success, error)),
+  fetchLocations: () => dispatch(fetchLocations()),
   setNav: (navScene) => { dispatch(setNav(navScene)) },
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })

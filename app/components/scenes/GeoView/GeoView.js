@@ -53,7 +53,7 @@ class GeoView extends React.Component {
 
   async componentDidMount(){
     await navigator.geolocation.watchPosition(this.success, this.error, options);
-    await this.props.fetchLocations("FiDi");
+    await this.props.fetchLocations();
   }
 
   render() {
@@ -107,8 +107,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchLocations: (district) => dispatch(fetchLocations(district)),
-  postLocation: (district, location) => dispatch(postLocation(district, location)),
+  fetchLocations: () => dispatch(fetchLocations()),
+  postLocation: (location) => dispatch(postLocation(location)),
 })
 
 export default connect(

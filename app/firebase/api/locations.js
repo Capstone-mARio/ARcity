@@ -1,10 +1,10 @@
 import { auth, database, provider } from '../firebase';
 
 //Create the user object in realtime database
-export async function get(district, callback) {
+export async function get(callback) {
   try {
     let districtObjects = [];
-    const locRef = await database.ref().child('locations').child(district);
+    const locRef = await database.ref().child('locations');
     locRef.once("value", snapshot => {
       snapshot.forEach(child => {
         districtObjects.push(child.val());
@@ -16,9 +16,9 @@ export async function get(district, callback) {
   }
 }
 
-export async function post(district, location, callback) {
+export async function post(location, callback) {
   try {
-    const locRef = await database.ref().child('locations').child(district);
+    const locRef = await database.ref().child('locations');
     const snap = await locRef.push();
     await locRef.child(snap.key)
       .update({...location});
