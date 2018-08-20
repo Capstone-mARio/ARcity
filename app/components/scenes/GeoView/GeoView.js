@@ -52,8 +52,8 @@ class GeoView extends React.Component {
   }
 
   async componentDidMount(){
-    await navigator.geolocation.watchPosition(this.success, this.error, options);
     await this.props.fetchLocations();
+    await navigator.geolocation.watchPosition(this.success, this.error, options);
   }
 
   render() {

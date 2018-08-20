@@ -85,7 +85,8 @@ class LocationSample extends Component {
     }
   }
 
-  componentDidMount() { //HOPEFULLY THE RIGHT WAY
+  async componentDidMount() { //HOPEFULLY THE RIGHT WAY
+    await this.props.fetchLocations();
     navigator.geolocation.watchPosition(this.success, this.error, options);
   }
 
@@ -123,7 +124,7 @@ class LocationSample extends Component {
     return { x, y }
   }
   //Jump To Game Method
-  _jumpNextScene(id) {
+  _jumpNextScene(id, cost) {
     switch (id) {
       case 1:
         this.props.setNav(CUBE_LANDING_GAME)
@@ -131,7 +132,7 @@ class LocationSample extends Component {
           {
             uid: this.props.user.uid,
             username: this.props.user.username,
-            coins: this.props.user.coins - 100,
+            coins: this.props.user.coins - cost,
             games: this.props.user.games,
             objects: this.props.user.objects,
           },
@@ -146,7 +147,7 @@ class LocationSample extends Component {
           {
             uid: this.props.user.uid,
             username: this.props.user.username,
-            coins: this.props.user.coins - 500,
+            coins: this.props.user.coins - cost,
             games: this.props.user.games,
             objects: this.props.user.objects,
           },
@@ -161,7 +162,7 @@ class LocationSample extends Component {
           {
             uid: this.props.user.uid,
             username: this.props.user.username,
-            coins: this.props.user.coins - 100,
+            coins: this.props.user.coins - cost,
             games: this.props.user.games,
             objects: this.props.user.objects,
           },
@@ -173,50 +174,17 @@ class LocationSample extends Component {
   }
   //Make A Obj At Location
   _makeObj() {
-    console.log(this.state.currLocation);
     var objs = []
-    var targets = [
-      { //starbucks
-        latitude: 40.70467766025543,
-        longitude: -74.00904218848154,
-        x: 0,
-        y: 0,
-        id: 1
-      },
-    
-      { //killarney rose
-        latitude: 40.7051,
-        longitude: -74.0087,
-        x: 0,
-        y: 0,
-        id: 2
-      },
-    
-      { //suitcase
-        latitude: 40.704863,
-        longitude: -74.008927,
-        x: 0,
-        y: 0,
-        id: 3
-      },
-    
-      { //coin
-        latitude: 40.70467766025543,
-        longitude: -74.00904218840554,
-        x: 0,
-        y: 0,
-        id: 4
-      }
-    ];
-    for (let i = 0; i < targets.length; i++) {
-      const targetXY = this.getXY(targets[i].latitude, targets[i].longitude)
-      targets[i].x = targetXY.x;
-      targets[i].y = targetXY.y;
+    const { locations } = this.props;
+    for (let i = 0; i < locations.length; i++) {
+      const targetXY = this.getXY(locations[i].latitude, locations[i].longitude)
+      locations[i].x = targetXY.x;
+      locations[i].y = targetXY.y;
     }
-    for (let i = 0; i < targets.length; i++) {
-      const realX = targets[i].x - this.state.currLocation.x;
-      const realY = targets[i].y - this.state.currLocation.y;
-      const id = targets[i].id
+    for (let i = 0; i < locations.length; i++) {
+      const realX = locations[i].x - this.state.currLocation.x;
+      const realY = locations[i].y - this.state.currLocation.y;
+      const id = locations[i].id
       var obj;
       if (id === 3) {
         obj = <Suitcase pos={[realX, -10, realY]} />
@@ -238,7 +206,11 @@ class LocationSample extends Component {
             width={3}
             visible={Math.abs(realY) <= 30 ? true : true}
             materials={id === 1 ? "starbucks" : "killarney"}
-            onClick={() => this._jumpNextScene(id)}
+            onClick={() => {
+              if (this.props.user.coins > locations[i].costgit ) {
+                this._jumpNextScene(id, locations[i].cost)
+              }
+            }}
           />
         </ViroNode>
       }
@@ -258,6 +230,7 @@ class LocationSample extends Component {
 
 const mapToState = state => ({
   user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+  locations: state.locationReducer.locations,
 });
 
 const mapToDispatch = (dispatch) => ({
