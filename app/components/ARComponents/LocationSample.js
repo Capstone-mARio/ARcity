@@ -1,16 +1,19 @@
 //React Imports
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import {
   ViroARScene,
   ViroBox,
   ViroMaterials,
   ViroNode,
   ViroAmbientLight,
+  ViroText,
 } from 'react-viro';
 
 //Redux Imports
 import { connect } from 'react-redux';
 import { setThis, setNav } from '../../redux/reducers/arCityReducer';
+import { createUser } from '../../redux/reducers/authReducer';
 
 //Location And Games
 import { getXY, targets } from './LocationGetter'
@@ -30,6 +33,27 @@ var options = {
   maximumAge: 0
 }
 
+//Style
+const styles = StyleSheet.create({
+  TextStyle: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
+
+ViroMaterials.createMaterials({
+  starbucks: {
+    diffuseColor: '#0021cbE6', //blue
+  },
+  killarney: {
+    diffuseColor: '#83FF33', //green
+  },
+});
+
+
 class LocationSample extends Component {
   constructor() {
     super();
@@ -45,13 +69,25 @@ class LocationSample extends Component {
     this._jumpNextScene = this._jumpNextScene.bind(this)
     this._makeObj = this._makeObj.bind(this)
     this._displayObjs = this._displayObjs.bind(this)
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onError = this.onError.bind(this);
   }
-  componentDidMount(){ //HOPEFULLY THE RIGHT WAY
+
+  //Functions For Firebase
+  onSuccess() {
+    console.log('success');
+  }
+  onError(error) {
+    if (error.hasOwnProperty('message')) {
+      console.log('error');
+    }
+  }
+
+  componentDidMount() { //HOPEFULLY THE RIGHT WAY
     navigator.geolocation.watchPosition(this.success, this.error, options);
   }
 
   render() {
-
     this.props.setThis(this);
     return this.state.currLocation.x !== 0 ?
       (
@@ -73,53 +109,91 @@ class LocationSample extends Component {
   error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
-
   //Jump To Game Method
   _jumpNextScene(id) {
     switch (id) {
       case 1:
-      this.props.setNav(CUBE_LANDING_GAME)
-      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+        this.props.setNav(CUBE_LANDING_GAME)
+        this.props.createUser(
+          {
+            uid: this.props.user.uid,
+            username: this.props.user.username,
+            coins: this.props.user.coins - 100,
+            games: this.props.user.games,
+            objects: this.props.user.objects,
+          },
+          this.onSuccess,
+          this.onError
+        );
+        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
         break;
       case 2:
-      this.props.setNav(SHOOTING_GAME)
-      this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
+        this.props.setNav(SHOOTING_GAME)
+        this.props.createUser(
+          {
+            uid: this.props.user.uid,
+            username: this.props.user.username,
+            coins: this.props.user.coins - 500,
+            games: this.props.user.games,
+            objects: this.props.user.objects,
+          },
+          this.onSuccess,
+          this.onError
+        );
+        this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
         break;
       default:
-      this.props.setNav(CUBE_LANDING_GAME)
-      this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
+        this.props.setNav(CUBE_LANDING_GAME)
+        this.props.createUser(
+          {
+            uid: this.props.user.uid,
+            username: this.props.user.username,
+            coins: this.props.user.coins - 100,
+            games: this.props.user.games,
+            objects: this.props.user.objects,
+          },
+          this.onSuccess,
+          this.onError
+        );
+        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
     }
-
   }
-
   //Make A Obj At Location
-  _makeObj() { //////////////
+  _makeObj() {
     var objs = []
     for (let i = 0; i < targets.length; i++) {
       const realX = targets[i].x - this.state.currLocation.x;
       const realY = targets[i].y - this.state.currLocation.y;
       const id = targets[i].id
       var obj;
-      if (id === 3){
+      if (id === 3) {
         obj = <Suitcase pos={[realX, -10, realY]} />
-      } else if(id === 4){
+      } else if (id === 4) {
         obj = <Coin pos={[realX, -10, realY]} />
       } else {
-        obj = <ViroBox
-        position={[realX, 1, realY]}
-        height={5}
-        length={5}
-        width={5}
-        visible={Math.abs(realY) <= 30 ? true : true}
-        materials={id === 1 ? "starbucks" : "killarney"}
-        onClick={() => this._jumpNextScene(id)}
-        />
+        obj = <ViroNode position={[realX, 1, realY]}>
+          <ViroText
+            transformBehaviors="billboard"
+            position={[0, 2, 0]}
+            scale={[2, 2, 2]}
+            text={id === 1 ? "Ball Throw" : "Shoot Cubes"}
+            style={styles.TextStyle}
+          />
+          <ViroBox
+            position={[0, 0, 0]}
+            height={3}
+            length={3}
+            width={3}
+            visible={Math.abs(realY) <= 30 ? true : true}
+            materials={id === 1 ? "starbucks" : "killarney"}
+            onClick={() => this._jumpNextScene(id)}
+          />
+        </ViroNode>
       }
       objs.push(obj)
     }
     return objs;
   }
-
   //Display The Obj At Location
   _displayObjs() {
     return (
@@ -130,18 +204,15 @@ class LocationSample extends Component {
   }
 }
 
-ViroMaterials.createMaterials({
-  starbucks: {
-    diffuseColor: '#0021cbE6', //blue
-  },
-  killarney: {
-    diffuseColor: '#83FF33', //green
-  },
+const mapToState = state => ({
+  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
 });
 
 const mapToDispatch = (dispatch) => ({
+  createUser: (user, success, error) =>
+    dispatch(createUser(user, success, error)),
   setNav: (navScene) => { dispatch(setNav(navScene)) },
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })
 
-export default connect(null, mapToDispatch)(LocationSample);
+export default connect(mapToState, mapToDispatch)(LocationSample);
