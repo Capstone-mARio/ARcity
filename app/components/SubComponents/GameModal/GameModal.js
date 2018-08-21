@@ -16,7 +16,7 @@ class GameModal extends Component {
   }
 
   render() {
-    let game = this.props.selectedObject;
+    const game = this.props.selectedObject;
     return (
       <View style={styles.container}>
         <Modal
@@ -27,11 +27,11 @@ class GameModal extends Component {
           backdropOpacity={0.88}
         >
           <View style={styles.content}>
+            <Image style={styles.circle} source={game.image} />
+
             <Text style={material.headlineWhite}>{game.name}</Text>
 
             <Text style={material.headlineWhite}>High Score: {game.score}</Text>
-
-            <Image style={styles.circle} source={game.image} />
           </View>
         </Modal>
       </View>

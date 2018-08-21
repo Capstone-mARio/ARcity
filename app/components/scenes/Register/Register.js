@@ -4,6 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import { register, instructionsVisible } from '../../../redux/reducers/authReducer';
+import { watchLocation } from '../../../redux/reducers/locationReducer';
 import Form from '../../SubComponents/Form';
 
 const fields = [
@@ -63,6 +64,7 @@ class Register extends React.Component {
     onSubmit(data) {
         this.setState({error: error}); //clear out error messages
         this.props.register(data, this.onSuccess, this.onError);
+        this.props.watchLocation();
         this.props.instructionsVisible(true, true);
     }
 
@@ -97,7 +99,8 @@ class Register extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   instructionsVisible: (instructions, initial) => dispatch(instructionsVisible(instructions, initial)),
-  register: (data, onSuccess, onErr) => dispatch(register(data, onSuccess, onErr))
+  register: (data, onSuccess, onErr) => dispatch(register(data, onSuccess, onErr)),
+  watchLocation: () => dispatch(watchLocation()),
 });
 
 export default connect(null, mapDispatchToProps)(Register);

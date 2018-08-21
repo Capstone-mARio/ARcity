@@ -12,11 +12,11 @@ const resizeMode = 'contain';
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: color.white,
+    flex: 1,
+    backgroundColor: color.delta_grey,
   },
 
   container: {
-    flex: 1,
     backgroundColor: color.delta_grey,
   },
 
@@ -30,14 +30,15 @@ const styles = StyleSheet.create({
 
   logo: {
     alignSelf: 'center',
-    height: 62,
+    height: 55,
     width: 240,
     margin: 10,
   },
 
-  listComponent: {
-    width: windowWidth - 40,
+  list: {
+    backgroundColor: color.delta_grey,
   },
+
   subtitleView: {
     flexDirection: 'row',
     paddingLeft: 10,
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
   listItem: {
     backgroundColor: color.delta_grey,
     height: normalize(95),
+    justifyContent: 'center',
   },
   containerView: {
     width: windowWidth - 40,

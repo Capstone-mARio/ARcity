@@ -10,6 +10,7 @@ import {
   instructionsVisible,
   signOut,
 } from '../../../redux/reducers/authReducer';
+import { stopLocationWatch } from '../../../redux/reducers/locationReducer';
 import { connect } from 'react-redux';
 
 import styles from './styles';
@@ -151,8 +152,7 @@ class Instructions extends Component {
           {this.state.third && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={material.headlineWhite}>
-                Wow, much catch: You have to find the coins! They are all around
-                you, floating in space in FiDi. After you collect enough coins
+                Wow, much catch: You have to find the coins! They are all around you, floating in space in FiDi. After you collect enough coins
                 to play each game, and are able to win, you get a special item!
               </Text>
               <DogeComponent />
@@ -191,7 +191,7 @@ class Instructions extends Component {
 
           {this.state.fifth && (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={material.headlineWhite}>Hit exit and GO PLAY!!</Text>
+              <Text style={material.headlineWhite}>One last thing: to get to the main menu, just press my icon on the profile page. Hit exit and GO PLAY!!</Text>
               <DogeComponent />
               <ResponsiveButton
                 text="Exit"
@@ -211,12 +211,14 @@ class Instructions extends Component {
 const mapStateToProps = state => ({
   instructions: state.authReducer.instructions,
   initial: state.authReducer.initial,
+  id: state.locationReducer.id,
 });
 
 const mapDispatchToProps = dispatch => ({
   instructionsVisible: (instructions, initial) =>
     dispatch(instructionsVisible(instructions, initial)),
   signOut: () => dispatch(signOut()),
+  stopLocationWatch: id => dispatch(stopLocationWatch(id)),
 });
 
 export default connect(

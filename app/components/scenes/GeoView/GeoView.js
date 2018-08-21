@@ -18,42 +18,15 @@ var options = {
   maximumAge: 0
 }
 
-const fakeLocation = {
-  object: "AR Giraffe",
-  latitude: 40.71,
-  longitude: -74,
-  avatar_url:
-          'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-}
-
 const googleMapsQuery = "https://www.google.com/maps/dir/?api=1&origin=";
 
 class GeoView extends React.Component {
   constructor() {
     super();
-    this.state = {
-      currentLat: 0,
-      currentLong: 0,
-    }
-    this.success = this.success.bind(this);
   }
 
-  success(pos) {
-    var crd = pos.coords;
-    this.setState({
-      currentLat : crd.latitude,
-      currentLong: crd.longitude,
-    })
-
-  }
-
-  error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-
-  async componentDidMount(){
-    await this.props.fetchLocations();
-    await navigator.geolocation.getCurrentPosition(this.success, this.error, options);
+  componentDidMount() {
+    this.props.fetchLocations();
   }
 
   render() {
@@ -61,44 +34,47 @@ class GeoView extends React.Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
-    const { currentLat, currentLong } = this.state;
-    const { locations } = this.props;
+    const { currentLat, currentLong, locations } = this.props;
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Image
-            style={styles.logo}
-            source={require('../../assets/games.png')}
-          />
+      <View style={styles.outerContainer}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Image
+              style={styles.logo}
+              source={require('../../assets/games.png')}
+            />
+          </View>
+          <View style={styles.list}>
+            <List>
+              {locations.map(l => {
+                const distance = Number((geolib.getDistance({
+                    latitude: currentLat,
+                    longitude: currentLong
+                  }, {
+                    latitude: l.latitude,
+                    longitude: l.longitude,
+                  }, 100) * 0.000621371).toFixed(3));
+
+                const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
+
+                const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
+
+                return <ListItem
+                        containerStyle={styles.listItem}
+                        avatar={{ uri: l.avatar_url }}
+                        key={l.name}
+                        title={l.name}
+                        titleStyle={material.titleWhite}
+                        avatarStyle={{ backgroundColor: color.delta_grey }}
+                        subtitle={`Distance away: ${distanceDisplay}`}
+                        subtitleStyle={material.subheadingWhite}
+                        onPress={() => Linking.openURL(itemQuery) }
+                        hideChevron
+                      />
+              })}
+            </List>
+          </View>
         </View>
-        <List>
-          {locations.map(l => {
-            const distance = Number((geolib.getDistance({
-                latitude: currentLat,
-                longitude: currentLong
-              }, {
-                latitude: l.latitude,
-                longitude: l.longitude,
-              }, 100) * 0.000621371).toFixed(3));
-
-            const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
-
-            const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
-
-            return <ListItem
-                    containerStyle={styles.listItem}
-                    avatar={{ uri: l.avatar_url }}
-                    key={l.name}
-                    title={l.name}
-                    titleStyle={material.titleWhite}
-                    avatarStyle={{ backgroundColor: color.delta_grey }}
-                    subtitle={`Distance away: ${distanceDisplay}`}
-                    subtitleStyle={material.subheadingWhite}
-                    onPress={() => Linking.openURL(itemQuery) }
-                    hideChevron
-                  />
-          })}
-        </List>
       </View>
     );
   }
@@ -106,6 +82,8 @@ class GeoView extends React.Component {
 
 const mapStateToProps = state => ({
   locations: state.locationReducer.locations,
+  currentLat: state.locationReducer.currentLat,
+  currentLong: state.locationReducer.currentLong,
 });
 
 const mapDispatchToProps = dispatch => ({

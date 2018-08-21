@@ -1,6 +1,5 @@
 //React Imports
 import React, { Component } from 'react'
-import { Actions } from 'react-native-router-flux';
 import {
   Text,
   View,
@@ -30,7 +29,7 @@ var localStyles = StyleSheet.create({
 
 
 class MenuNav extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {};
   }
@@ -38,10 +37,12 @@ class MenuNav extends Component {
   render() {
     return this.props.navigator !== LOCATION_SAMPLE ? (
       <View style={localStyles.listView}>
-        <Text style={{ padding: 10, color: 'white' }} onPress={() => {
-          this.props.setNav(LOCATION_SAMPLE)
-          this.props.aThis.props.arSceneNavigator.pop()
-        }}>
+        <Text
+          style={{ padding: 10, color: 'white' }}
+          onPress={() => {
+            this.props.setNav(LOCATION_SAMPLE)
+            this.props.aThis.props.arSceneNavigator.pop()
+          }}>
           Back To ArCity
         </Text>
       </View>

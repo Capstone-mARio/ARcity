@@ -12,8 +12,6 @@ import {
   ViroText,
   ViroConstants,
   ViroCamera,
-  Viro3DObject,
-  ViroAmbientLight
 } from 'react-viro';
 
 //Redux Imports
@@ -34,7 +32,6 @@ const styles = StyleSheet.create({
 ViroMaterials.createMaterials({
   cube_color: {
     shininess: 2.0,
-    // lightingModel: 'Lambert',
     diffuseTexture: require('./res/landing_cube/colorful_texture.png'),
   },
   cube_hit: {
@@ -134,8 +131,6 @@ class CubeLandingGame extends Component {
           materials="target_floor"
           onCollision={this._onFloorCollide.bind(this, 200)}
         />
-
-
         {/*reset invisible platform*/}
         <ViroQuad
           scale={[500, 500, 1.5]}
@@ -198,7 +193,7 @@ class CubeLandingGame extends Component {
     if (!executed) {
       executed = true;
       const gameScores = JSON.parse(this.props.user.games);
-      const newGame = JSON.stringify([...gameScores, {game: 'Ball Tossing', score: this.state.score}])
+      const newGame = JSON.stringify([...gameScores, {name: 'Cube Game', score: this.state.score}])
       this.text.setNativeProps({text: 'Game Over'})
       this.props.createUser(
         {
@@ -213,7 +208,7 @@ class CubeLandingGame extends Component {
       );
     }
   }
-
+  //Initialize After Tracking Found
   _onInitialized(state) {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({

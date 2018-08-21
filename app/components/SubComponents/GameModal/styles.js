@@ -96,6 +96,13 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     paddingVertical: 20
+  },
+
+  circle: {
+    alignSelf: 'center',
+    height: 100,
+    width: 100,
+    // borderRadius: 75,
   }
 });
 
