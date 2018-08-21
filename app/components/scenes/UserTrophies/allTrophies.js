@@ -138,13 +138,6 @@ export const allTrophies = [
     cost: 10000,
     trophy: carTrophy,
     shadow: carShadow,
-    model: <Viro3DObject
-            source={require('../../ARComponents/res/audi/Audi_R8_2017.vrx')}
-            position={[-6,0,-2]}
-            scale={[.01, .01,.01]}
-            type={"VRX"}
-            onDrag={() => {}}
-            />
   },
   {
     name: 'Guitar',
@@ -152,6 +145,14 @@ export const allTrophies = [
     cost: 5000,
     trophy: guitarTrophy,
     shadow: guitarShadow,
+    model: <Viro3DObject
+            position={[-8, 0, -2]}
+            source={require('../../ARComponents/res/Acoustic_Guitar/Models_and_Textures/guitar.vrx')}
+            type='VRX'
+            scale={[.1,.1,.1]}
+            onDrag={() => {}}
+            // onPinch={this._onPinch}
+            />
   },
   {
     name: 'Phone',

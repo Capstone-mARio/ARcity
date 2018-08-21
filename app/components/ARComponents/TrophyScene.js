@@ -47,7 +47,7 @@ class TrophyScene extends React.Component {
 
   render(){
     return (
-      <ViroARScene drawBounds={true}>
+      <ViroARScene >
         <ViroAmbientLight color="#FFFFFF" />
         {this.state.trophyObjects}
       </ViroARScene>
