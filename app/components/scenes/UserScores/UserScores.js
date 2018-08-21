@@ -47,7 +47,6 @@ class UserScores extends React.Component {
         }
       }
     });
-    console.log(newScoreState);
     this.setState({
       scores: newScoreState,
     });
