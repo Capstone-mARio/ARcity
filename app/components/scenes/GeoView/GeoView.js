@@ -18,42 +18,15 @@ var options = {
   maximumAge: 0
 }
 
-const fakeLocation = {
-  object: "AR Giraffe",
-  latitude: 40.71,
-  longitude: -74,
-  avatar_url:
-          'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-}
-
 const googleMapsQuery = "https://www.google.com/maps/dir/?api=1&origin=";
 
 class GeoView extends React.Component {
   constructor() {
     super();
-    this.state = {
-      currentLat: 0,
-      currentLong: 0,
-    }
-    this.success = this.success.bind(this);
   }
 
-  success(pos) {
-    var crd = pos.coords;
-    this.setState({
-      currentLat : crd.latitude,
-      currentLong: crd.longitude,
-    })
-
-  }
-
-  error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-
-  async componentDidMount(){
-    await this.props.fetchLocations();
-    // await navigator.geolocation.watchPosition(this.success, this.error, options);
+  componentDidMount() {
+    this.props.fetchLocations();
   }
 
   render() {
@@ -61,8 +34,7 @@ class GeoView extends React.Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
-    const { currentLat, currentLong } = this.state;
-    const { locations } = this.props;
+    const { currentLat, currentLong, locations } = this.props;
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container}>
@@ -110,6 +82,8 @@ class GeoView extends React.Component {
 
 const mapStateToProps = state => ({
   locations: state.locationReducer.locations,
+  currentLat: state.locationReducer.currentLat,
+  currentLong: state.locationReducer.currentLong,
 });
 
 const mapDispatchToProps = dispatch => ({

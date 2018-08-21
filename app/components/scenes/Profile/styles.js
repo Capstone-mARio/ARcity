@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
 
   headerContainer: {
     alignItems: 'center',
+    shadowColor: '#202020',
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 5,
   },
 
   profileContainer: {
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
 
   doge: {
     height: 280,
-    width: 250,
+    width: 210,
     // borderRadius: 75,
     margin: 3,
     shadowColor: '#202020',
