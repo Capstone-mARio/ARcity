@@ -14,7 +14,7 @@ import {
 
 //Redux Imports
 import { connect } from 'react-redux';
-import { setThis, setNav } from '../../redux/reducers/arCityReducer';
+import { setThis } from '../../redux/reducers/arCityReducer';
 import { createUser } from '../../redux/reducers/authReducer';
 import { fetchLocations } from '../../redux/reducers/locationReducer';
 
@@ -23,6 +23,7 @@ import CubeLandingGame from './CubeLandingGame'
 import ShootingGame from './ShootingGame'
 import Suitcase from './Suitcase'
 import Coin from './Coin'
+import LocationBox from './LocationBox'
 
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
@@ -46,16 +47,6 @@ const styles = StyleSheet.create({
   },
 });
 
-ViroMaterials.createMaterials({
-  '1': {
-    diffuseTexture: require('./res/landing_cube/colorful_texture.png'), //blue
-  },
-  '2': {
-    diffuseTexture: require('./res/object_sphere/ball_texture.png'), //green
-  },
-});
-
-
 class LocationSample extends Component {
   constructor() {
     super();
@@ -68,7 +59,6 @@ class LocationSample extends Component {
     this.success = this.success.bind(this)
     this.error = this.error.bind(this)
     this.getXY = this.getXY.bind(this)
-    this._jumpNextScene = this._jumpNextScene.bind(this)
     this._makeObj = this._makeObj.bind(this)
     this._displayObjs = this._displayObjs.bind(this)
     this.onSuccess = this.onSuccess.bind(this);
@@ -123,55 +113,6 @@ class LocationSample extends Component {
 
     return { x, y }
   }
-  //Jump To Game Method
-  _jumpNextScene(id, cost) {
-    switch (id) {
-      case 1:
-        this.props.setNav(CUBE_LANDING_GAME)
-        this.props.createUser(
-          {
-            uid: this.props.user.uid,
-            username: this.props.user.username,
-            coins: this.props.user.coins - cost,
-            games: this.props.user.games,
-            objects: this.props.user.objects,
-          },
-          this.onSuccess,
-          this.onError
-        );
-        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
-        break;
-      case 2:
-        this.props.setNav(SHOOTING_GAME)
-        this.props.createUser(
-          {
-            uid: this.props.user.uid,
-            username: this.props.user.username,
-            coins: this.props.user.coins - cost,
-            games: this.props.user.games,
-            objects: this.props.user.objects,
-          },
-          this.onSuccess,
-          this.onError
-        );
-        this.props.arSceneNavigator.jump('Shooting Game', { scene: ShootingGame })
-        break;
-      default:
-        this.props.setNav(CUBE_LANDING_GAME)
-        this.props.createUser(
-          {
-            uid: this.props.user.uid,
-            username: this.props.user.username,
-            coins: this.props.user.coins - cost,
-            games: this.props.user.games,
-            objects: this.props.user.objects,
-          },
-          this.onSuccess,
-          this.onError
-        );
-        this.props.arSceneNavigator.jump('Cube Game', { scene: CubeLandingGame })
-    }
-  }
   //Make A Obj At Location
   _makeObj() {
     var objs = []
@@ -185,34 +126,14 @@ class LocationSample extends Component {
       const realX = locations[i].x - this.state.currLocation.x;
       const realY = locations[i].y - this.state.currLocation.y;
       const id = locations[i].id
+      const cost = locations[i].cost
       var obj;
       if (id === 3) {
         obj = <Suitcase pos={[realX, -10, realY]} />
       } else if (id === 4) {
         obj = <Coin pos={[realX, -10, realY]} />
       } else {
-        obj = <ViroNode position={[realX, 1, realY]}>
-          <ViroText
-            transformBehaviors="billboard"
-            position={[0, 2, 0]}
-            scale={[2, 2, 2]}
-            text={id === 1 ? "Ball Throw" : "Shoot Cubes"}
-            style={styles.TextStyle}
-          />
-          <ViroBox
-            position={[0, 0, 0]}
-            height={3}
-            length={3}
-            width={3}
-            visible={Math.abs(realY) <= 30 ? true : true}
-            materials={locations[i].id.toString()}
-            onClick={() => {
-              if (this.props.user.coins > locations[i].cost ) {
-                this._jumpNextScene(id, locations[i].cost)
-              }
-            }}
-          />
-        </ViroNode>
+        obj = <LocationBox pos={[realX, 1, realY]} id={id} cost={cost}/>
       }
       objs.push(obj)
     }
@@ -237,7 +158,6 @@ const mapToDispatch = (dispatch) => ({
   createUser: (user, success, error) =>
     dispatch(createUser(user, success, error)),
   fetchLocations: () => dispatch(fetchLocations()),
-  setNav: (navScene) => { dispatch(setNav(navScene)) },
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })
 
