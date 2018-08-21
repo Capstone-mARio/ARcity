@@ -2,32 +2,20 @@
 
 //React Imports
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
 import {
   ViroARScene,
-  ViroBox,
-  ViroMaterials,
   ViroNode,
   ViroAmbientLight,
-  ViroText,
 } from 'react-viro';
 
 //Redux Imports
 import { connect } from 'react-redux';
-import { setThis } from '../../redux/reducers/arCityReducer';
-import { createUser } from '../../redux/reducers/authReducer';
-import { fetchLocations } from '../../redux/reducers/locationReducer';
+import { setThis } from '../../redux/reducers/arCityReducer'; //Send The This Context Here To Store For Other AR Scenes
 
-//Location And Games
-import CubeLandingGame from './CubeLandingGame'
-import ShootingGame from './ShootingGame'
+//Location Box And Games
 import Suitcase from './Suitcase'
 import Coin from './Coin'
 import LocationBox from './LocationBox'
-
-//Scene Strings
-const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
-const SHOOTING_GAME = 'SHOOTING_GAME';
 
 //Tracking Options
 var options = {
@@ -36,16 +24,6 @@ var options = {
   maximumAge: 0
 }
 
-//Style
-const styles = StyleSheet.create({
-  TextStyle: {
-    fontFamily: 'Arial',
-    fontSize: 30,
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    textAlign: 'center',
-  },
-});
 
 class LocationSample extends Component {
   constructor() {
@@ -65,7 +43,7 @@ class LocationSample extends Component {
     this.onError = this.onError.bind(this);
   }
 
-  //Functions For Firebase
+  //Success And Error Functions For Firebase
   onSuccess() {
     console.log('success');
   }
@@ -76,7 +54,6 @@ class LocationSample extends Component {
   }
 
   componentDidMount() { //HOPEFULLY THE RIGHT WAY
-    // await this.props.fetchLocations();
     navigator.geolocation.getCurrentPosition(this.success, this.error, options);
   }
 
@@ -107,13 +84,13 @@ class LocationSample extends Component {
   getXY(lat, lon) {
     let lon_rad = (lon / 180.0 * Math.PI)
     let lat_rad = (lat / 180.0 * Math.PI)
-    const sm_a = 6378137.0
+    const sm_a = 6378137.0 //Radius Of The Earth
     let x = sm_a * lon_rad
     let y = sm_a * Math.log((Math.sin(lat_rad) + 1) / Math.cos(lat_rad))
 
     return { x, y }
   }
-  //Make A Obj At Location
+  //Makes A Obj At Location
   _makeObj() {
     var objs = []
     const { locations } = this.props;
@@ -150,14 +127,10 @@ class LocationSample extends Component {
 }
 
 const mapToState = state => ({
-  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
   locations: state.locationReducer.locations,
 });
 
 const mapToDispatch = (dispatch) => ({
-  createUser: (user, success, error) =>
-    dispatch(createUser(user, success, error)),
-  fetchLocations: () => dispatch(fetchLocations()),
   setThis: (aThis) => { dispatch(setThis(aThis)) },
 })
 
