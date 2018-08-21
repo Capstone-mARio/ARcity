@@ -149,7 +149,7 @@ class LocationBox extends Component {
             if (this.props.user.coins > this.props.cost) {
               this._jumpNextScene(this.props.id, this.props.cost)
             } else {
-              alert('Not enough coins!')
+              alert(`Need ${this.props.cost - this.props.user.coins} more coins!`)
             }
           }}
         />
