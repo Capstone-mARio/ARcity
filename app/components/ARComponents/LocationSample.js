@@ -65,8 +65,6 @@ class LocationSample extends Component {
         y: 0
       },
     }
-    this.success = this.success.bind(this)
-    this.error = this.error.bind(this)
     this.getXY = this.getXY.bind(this)
     this._jumpNextScene = this._jumpNextScene.bind(this)
     this._makeObj = this._makeObj.bind(this)
@@ -85,9 +83,9 @@ class LocationSample extends Component {
     }
   }
 
-  componentDidMount() { //HOPEFULLY THE RIGHT WAY
-    // await this.props.fetchLocations();
-    navigator.geolocation.getCurrentPosition(this.success, this.error, options);
+  componentDidMount() {
+    this.props.fetchLocations();
+    this.setLocation()
   }
 
   render() {
@@ -102,17 +100,17 @@ class LocationSample extends Component {
   }
 
   //On Successful Location Found
-  success(pos) {
-    var crd = pos.coords;
-    const XY = this.getXY(crd.latitude, crd.longitude)
+  setLocation() {
+    const { currentLat, currentLong } = this.props;
+    const XY = this.getXY(currentLat, currentLong)
     this.setState({
       currLocation: { x: XY.x, y: XY.y }
     })
   }
-  //On A Error
-  error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
+  // //On A Error
+  // error(err) {
+  //   console.warn(`ERROR(${err.code}): ${err.message}`);
+  // }
   //Turns Lat & Long To XY
   getXY(lat, lon) {
     let lon_rad = (lon / 180.0 * Math.PI)
@@ -231,6 +229,8 @@ class LocationSample extends Component {
 const mapToState = state => ({
   user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
   locations: state.locationReducer.locations,
+  currentLat: state.locationReducer.currentLat,
+  currentLong: state.locationReducer.currentLong,
 });
 
 const mapToDispatch = (dispatch) => ({

@@ -4,6 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import { login } from '../../../redux/reducers/authReducer';
+import { watchLocation } from '../../../redux/reducers/locationReducer';
 
 import Form from '../../SubComponents/Form';
 import { iOSUIKit, material } from 'react-native-typography';
@@ -53,7 +54,7 @@ class Login extends React.Component {
 
   onSubmit(data) {
     this.setState({ error: error }); //clear out error messages
-
+    this.props.watchLocation();
     this.props.login(data, this.onSuccess, this.onError);
   }
 
@@ -91,7 +92,12 @@ class Login extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  login: (data, onSuccess, onError) => dispatch(login(data, onSuccess, onError)),
+  watchLocation: () => dispatch(watchLocation()),
+})
+
 export default connect(
   null,
-  { login }
+  mapDispatchToProps
 )(Login);

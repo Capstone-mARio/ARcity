@@ -28,33 +28,15 @@ class NearbyObject extends React.Component {
       currentLong: 0,
       closestGame: { latitude: 0, longitude: 0 },
     }
-    this.success = this.success.bind(this);
     this.findClosest = this.findClosest.bind(this);
   }
 
-  success(pos) {
-    var crd = pos.coords;
-    this.setState({
-      currentLat : crd.latitude,
-      currentLong: crd.longitude,
-    })
-    this.findClosest();
-
-  }
-
-  error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-
-  componentDidMount(){
-    this.props.fetchLocations()
-    navigator.geolocation.watchPosition(this.success, this.error, options)
+  componentDidMount() {
+    this.props.fetchLocations();
   }
 
   findClosest() {
-    const { currentLat, currentLong } = this.state;
-    const { locations } = this.props;
-    console.log("locations in find closest", locations);
+    const { currentLat, currentLong, locations } = this.props;
     const distances = locations.map(l => {
       return Number((geolib.getDistance({
                 latitude: currentLat,
@@ -71,46 +53,46 @@ class NearbyObject extends React.Component {
         closestGame = locations[i];
       }
     }
-
-    this.setState({
-      closestGame,
-      shortestDistance
-    });
+    return { closestGame, shortestDistance };
   }
 
   render() {
-    console.log(this.props.locations)
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
-    const { currentLat, currentLong, closestGame, shortestDistance } = this.state;
+    const { closestGame, shortestDistance } = this.findClosest();
+    const { currentLat, currentLong, locations } = this.props;
     const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${closestGame.latitude},${closestGame.longitude}`;
-    console.log("locations in render", this.props.locations)
+    console.log("These are the locations", locations);
     return (
-      <View style={styles.container}>
-        <List>
-            <ListItem
-              containerStyle={styles.listItem}
-              avatar={{ uri: closestGame.avatar_url }}
-              key={closestGame.name}
-              title={`Nearby: ${closestGame.name}`}
-              titleStyle={material.titleWhite}
-              avatarStyle={{ backgroundColor: color.delta_grey }}
-              subtitle={`Distance away: ${shortestDistance} mi`}
-              subtitleStyle={material.subheadingWhite}
-              onPress={() => Linking.openURL(itemQuery) }
-              hideChevron
-            />
+        <View style={styles.container}>
+        {closestGame.latitude && (
+          <List>
+              <ListItem
+                containerStyle={styles.listItem}
+                avatar={{ uri: closestGame.avatar_url }}
+                key={closestGame.name}
+                title={`Nearby: ${closestGame.name}`}
+                titleStyle={material.titleWhite}
+                avatarStyle={{ backgroundColor: color.delta_grey }}
+                subtitle={`Distance away: ${shortestDistance} mi`}
+                subtitleStyle={material.subheadingWhite}
+                onPress={() => Linking.openURL(itemQuery) }
+                hideChevron
+              />
 
-        </List>
-      </View>
+          </List>
+        )}
+        </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
   locations: state.locationReducer.locations,
+  currentLat: state.locationReducer.currentLat,
+  currentLong: state.locationReducer.currentLong,
 });
 
 const mapDispatchToProps = dispatch => ({
