@@ -18,6 +18,20 @@ import phoneTrophy from '../../assets/trophy/phone.png';
 import phoneShadow from '../../assets/shadow/phone.png';
 import coneTrophy from '../../assets/trophy/cone.png';
 import coneShadow from '../../assets/shadow/cone.png';
+import asteroidTrophy from '../../assets/trophy/asteroid.png';
+import asteroidShadow from '../../assets/shadow/asteroid.png';
+import icecreamTrophy from '../../assets/trophy/icecream.png';
+import icecreamShadow from '../../assets/shadow/icecream.png';
+import taxiTrophy from '../../assets/trophy/taxi.png';
+import taxiShadow from '../../assets/shadow/taxi.png';
+import pretzelTrophy from '../../assets/trophy/pretzel.png';
+import pretzelShadow from '../../assets/shadow/pretzel.png';
+import hotdogTrophy from '../../assets/trophy/hotdog.png';
+import hotdogShadow from '../../assets/shadow/hotdog.png';
+import laptopTrophy from '../../assets/trophy/laptop.png';
+import laptopShadow from '../../assets/shadow/laptop.png';
+import dogTrophy from '../../assets/trophy/dog.png';
+import dogShadow from '../../assets/shadow/dog.png';
 
 export const allTrophies = [
   {
@@ -91,53 +105,53 @@ export const allTrophies = [
     shadow: coneShadow,
   },
   {
-    name: 'Unknown',
+    name: 'Asteroid',
     owned: false,
-    cost: '???',
-    trophy: trophyShadow,
-    shadow: trophyShadow,
+    cost: 1000,
+    trophy: asteroidTrophy,
+    shadow: asteroidShadow,
   },
   {
-    name: 'Unknown',
+    name: 'Ice Cream',
     owned: false,
-    cost: '???',
-    trophy: trophyShadow,
-    shadow: trophyShadow,
+    cost: 500,
+    trophy: icecreamTrophy,
+    shadow: icecreamShadow,
   },
   {
-    name: 'Unknown',
+    name: 'Taxi',
     owned: false,
-    cost: '???',
-    trophy: trophyShadow,
-    shadow: trophyShadow,
+    cost: 1000,
+    trophy: taxiTrophy,
+    shadow: taxiShadow,
   },
   {
-    name: 'Unknown',
+    name: 'Pretzel',
     owned: false,
-    cost: '???',
-    trophy: trophyShadow,
-    shadow: trophyShadow,
+    cost: 2000,
+    trophy: pretzelTrophy,
+    shadow: pretzelShadow,
   },
   {
-    name: 'Unknown',
+    name: 'Hotdog',
     owned: false,
-    cost: '???',
-    trophy: trophyShadow,
-    shadow: trophyShadow,
+    cost: 3000,
+    trophy: hotdogTrophy,
+    shadow: hotdogShadow,
   },
   {
-    name: 'Unknown',
+    name: 'Laptop',
     owned: false,
-    cost: '???',
-    trophy: trophyShadow,
-    shadow: trophyShadow,
+    cost: 1500,
+    trophy: laptopTrophy,
+    shadow: laptopShadow,
   },
   {
-    name: 'Unknown',
+    name: 'Dog',
     owned: false,
-    cost: '???',
-    trophy: trophyShadow,
-    shadow: trophyShadow,
+    cost: 300000,
+    trophy: dogTrophy,
+    shadow: dogShadow,
   },
   {
     name: 'Unknown',
