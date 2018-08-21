@@ -59,6 +59,7 @@ class ShootingGame extends Component {
       score: 0,
       blocksRemaining: blockCount,
       isReady: false,
+      gOver: false,
       cameraPos: [0, 0, 0]
     }
     this._addLine = this._addLine.bind(this);
@@ -133,9 +134,8 @@ class ShootingGame extends Component {
   }
   //GameOver Method
   _gameOver() {
-    var executed = false;
-    if (!executed) {
-      executed = true;
+    if (!this.state.gOver) {
+      this.setState({gOver: true})
       const gameScores = JSON.parse(this.props.user.games);
       const newGame = JSON.stringify([...gameScores, {name:'Shooting Game', score: this.state.score }])
       this.props.createUser(

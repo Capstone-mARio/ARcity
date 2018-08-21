@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
 
 ViroMaterials.createMaterials({
   '1': {
-    diffuseTexture: require('./res/landing_cube/colorful_texture.png'), //blue
+    diffuseTexture: require('./res/landing_cube/colorful_texture.png'), //Cube Game
   },
   '2': {
-    diffuseTexture: require('./res/object_sphere/ball_texture.png'), //green
+    diffuseTexture: require('./res/object_sphere/ball_texture.png'), //Shooting Game
   },
 });
 
