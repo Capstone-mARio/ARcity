@@ -43,10 +43,11 @@ class UserScores extends React.Component {
     games.forEach(game => {
       for (let i = 0; i < newScoreState.length; i++) {
         if (newScoreState[i].name === game.name) {
-          newScoreState[i] = Math.max(newScoreState[i].score, game.score);
+          newScoreState[i].score = Math.max(newScoreState[i].score, game.score);
         }
       }
     });
+    console.log(newScoreState);
     this.setState({
       scores: newScoreState,
     });

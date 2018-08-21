@@ -128,7 +128,7 @@ export default class extends React.Component {
                 key="Profile"
                 title="Profile"
                 icon={TabIcon}
-                component={Profile}
+                component={UserTrophies}
                 initial={true}
                 hideNavBar
               />

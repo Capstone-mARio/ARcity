@@ -28,11 +28,26 @@ class UserTrophies extends React.Component {
       selectedObject: {},
     };
     this.toggleModal = this.toggleModal.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
   }
 
   toggleModal(bool) {
     this.setState({
       modalVisible: bool,
+    });
+  }
+  onSuccess() {
+    let objects = JSON.parse(this.props.user.objects);
+    let newTrophyState = allTrophies.slice();
+    objects.forEach(trophy => {
+      for (let i = 0; i < newTrophyState.length; i++) {
+        if (newTrophyState[i].name === trophy.name) {
+          newTrophyState[i].owned = true;
+        }
+      }
+    });
+    this.setState({
+      trophies: newTrophyState,
     });
   }
 
@@ -75,6 +90,7 @@ class UserTrophies extends React.Component {
           modalVisible={this.state.modalVisible}
           toggleModal={this.toggleModal}
           selectedObject={this.state.selectedObject}
+          onSuccess={this.onSuccess}
         />
       </View>
     );
