@@ -35,6 +35,7 @@ class ObjectModal extends Component {
   render() {
     let trophy = this.props.selectedObject;
     let money = this.props.user.coins;
+    let price = trophy.cost === 1 ? money : trophy.cost;
     return (
       <View style={styles.container}>
         <Modal
@@ -49,9 +50,7 @@ class ObjectModal extends Component {
               {trophy.owned ? trophy.name : '???'}
             </Text>
 
-            <Text style={material.headlineWhite}>
-              Cost: {trophy.cost} Dogecoin
-            </Text>
+            <Text style={material.headlineWhite}>Cost: {price} Dogecoin</Text>
 
             <Image
               style={styles.circle}
@@ -62,20 +61,20 @@ class ObjectModal extends Component {
             ) : (
               <ResponsiveButton
                 text={
-                  money >= trophy.cost
+                  money >= price
                     ? 'Buy now!'
-                    : `You need ${trophy.cost - money} more coins`
+                    : `You need ${price - money} more coins`
                 }
                 onPress={() => {
-                  if (money >= trophy.cost) {
+                  if (money >= price) {
                     trophy.owned = true;
                     let prevObjects = JSON.parse(this.props.user.objects);
-                    prevObjects.push({ name: trophy.name, cost: trophy.cost });
+                    prevObjects.push({ name: trophy.name, cost: price });
                     this.props.createUser(
                       {
                         uid: this.props.user.uid,
                         username: this.props.user.username,
-                        coins: this.props.user.coins,
+                        coins: this.props.user.coins - price,
                         games: this.props.user.games,
                         objects: JSON.stringify(prevObjects),
                       },

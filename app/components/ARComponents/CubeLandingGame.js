@@ -12,8 +12,6 @@ import {
   ViroText,
   ViroConstants,
   ViroCamera,
-  Viro3DObject,
-  ViroAmbientLight
 } from 'react-viro';
 
 //Redux Imports
@@ -34,7 +32,6 @@ const styles = StyleSheet.create({
 ViroMaterials.createMaterials({
   cube_color: {
     shininess: 2.0,
-    // lightingModel: 'Lambert',
     diffuseTexture: require('./res/landing_cube/colorful_texture.png'),
   },
   cube_hit: {
@@ -107,7 +104,6 @@ class CubeLandingGame extends Component {
   render() {
     return this.state.loaded ? (
       <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -10.81, 0], drawBounds: false }}>
-        {/* <ViroAmbientLight color="#FFFFFF" /> */}
         {/*original spawn plane*/}
         <ViroCamera position={[0, 0, 1]} active={true} />
         <ViroQuad
@@ -136,8 +132,6 @@ class CubeLandingGame extends Component {
           materials="target_floor"
           onCollision={this._onFloorCollide2}
         />
-
-
         {/*reset invisible platform*/}
         <ViroQuad
           scale={[500, 500, 1.5]}
@@ -215,7 +209,7 @@ class CubeLandingGame extends Component {
       );
     }
   }
-
+  //Initialize After Tracking Found
   _onInitialized(state) {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
@@ -227,7 +221,7 @@ class CubeLandingGame extends Component {
     }
   }
 
-  //Scoring Collision
+  //Scoring Collision - Will Be Changed By Bens Edit
   _onFloorCollide1 = (collidedTag, collidedPoint) => {
     if (collidedTag === 'gameCube') {
       this.setState({
