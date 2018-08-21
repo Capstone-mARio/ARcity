@@ -89,6 +89,7 @@ export const allTrophies = [
     cost: 100000,
     trophy: coneTrophy,
     shadow: coneShadow,
+
   },
   {
     name: 'Unknown',
