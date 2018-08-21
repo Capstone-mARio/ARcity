@@ -64,41 +64,45 @@ class GeoView extends React.Component {
     const { currentLat, currentLong } = this.state;
     const { locations } = this.props;
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Image
-            style={styles.logo}
-            source={require('../../assets/games.png')}
-          />
+      <View style={styles.outerContainer}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Image
+              style={styles.logo}
+              source={require('../../assets/games.png')}
+            />
+          </View>
+          <View style={styles.list}>
+            <List>
+              {locations.map(l => {
+                const distance = Number((geolib.getDistance({
+                    latitude: currentLat,
+                    longitude: currentLong
+                  }, {
+                    latitude: l.latitude,
+                    longitude: l.longitude,
+                  }, 100) * 0.000621371).toFixed(3));
+
+                const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
+
+                const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
+
+                return <ListItem
+                        containerStyle={styles.listItem}
+                        avatar={{ uri: l.avatar_url }}
+                        key={l.name}
+                        title={l.name}
+                        titleStyle={material.titleWhite}
+                        avatarStyle={{ backgroundColor: color.delta_grey }}
+                        subtitle={`Distance away: ${distanceDisplay}`}
+                        subtitleStyle={material.subheadingWhite}
+                        onPress={() => Linking.openURL(itemQuery) }
+                        hideChevron
+                      />
+              })}
+            </List>
+          </View>
         </View>
-        <List>
-          {locations.map(l => {
-            const distance = Number((geolib.getDistance({
-                latitude: currentLat,
-                longitude: currentLong
-              }, {
-                latitude: l.latitude,
-                longitude: l.longitude,
-              }, 100) * 0.000621371).toFixed(3));
-
-            const distanceDisplay = (distance < 0.01 ? 'Look around ;)' : distance.toFixed(2) + ' miles');
-
-            const itemQuery = `${googleMapsQuery}${currentLat},${currentLong}&destination=${l.latitude},${l.longitude}`;
-
-            return <ListItem
-                    containerStyle={styles.listItem}
-                    avatar={{ uri: l.avatar_url }}
-                    key={l.name}
-                    title={l.name}
-                    titleStyle={material.titleWhite}
-                    avatarStyle={{ backgroundColor: color.delta_grey }}
-                    subtitle={`Distance away: ${distanceDisplay}`}
-                    subtitleStyle={material.subheadingWhite}
-                    onPress={() => Linking.openURL(itemQuery) }
-                    hideChevron
-                  />
-          })}
-        </List>
       </View>
     );
   }

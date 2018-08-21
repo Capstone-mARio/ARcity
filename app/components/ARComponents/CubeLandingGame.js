@@ -200,7 +200,7 @@ class CubeLandingGame extends Component {
     if (!executed) {
       executed = true;
       const gameScores = JSON.parse(this.props.user.games);
-      const newGame = JSON.stringify([...gameScores, {game: 'Ball Tossing', score: this.state.score}])
+      const newGame = JSON.stringify([...gameScores, {name: 'Cube Game', score: this.state.score}])
       this.text.setNativeProps({text: 'Game Over'})
       this.props.createUser(
         {

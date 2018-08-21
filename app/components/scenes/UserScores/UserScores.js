@@ -39,11 +39,12 @@ class UserScores extends React.Component {
 
   componentDidMount() {
     let games = JSON.parse(this.props.user.games);
+    console.log("users games", games);
     let newScoreState = allScores.slice();
     games.forEach(game => {
       for (let i = 0; i < newScoreState.length; i++) {
         if (newScoreState[i].name === game.name) {
-          newScoreState[i] = Math.max(newScoreState[i].score, game.score);
+          newScoreState[i].score = Math.max(newScoreState[i].score, game.score);
         }
       }
     });

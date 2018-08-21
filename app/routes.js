@@ -143,13 +143,15 @@ export default class extends React.Component {
             </Scene>
             <Scene
               key="UserTrophies"
-              title="UserTrophies"
+              title="Trophies"
+              titleStyle={material.headlineWhite}
               component={UserTrophies}
               initial={false}
             />
             <Scene
               key="UserScores"
-              title="UserScores"
+              title="High Scores"
+              titleStyle={material.headlineWhite}
               component={UserScores}
               initial={false}
             />
