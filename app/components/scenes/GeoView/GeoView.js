@@ -66,9 +66,10 @@ class GeoView extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={material.display2White}>
-            Game locations
-          </Text>
+          <Image
+            style={styles.logo}
+            source={require('../../assets/games.png')}
+          />
         </View>
         <List>
           {locations.map(l => {
@@ -87,8 +88,8 @@ class GeoView extends React.Component {
             return <ListItem
                     containerStyle={styles.listItem}
                     avatar={{ uri: l.avatar_url }}
-                    key={l.object}
-                    title={l.object}
+                    key={l.name}
+                    title={l.name}
                     titleStyle={material.titleWhite}
                     avatarStyle={{ backgroundColor: color.delta_grey }}
                     subtitle={`Distance away: ${distanceDisplay}`}

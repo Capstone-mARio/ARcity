@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   ViroARScene,
   ViroQuad,
@@ -12,25 +12,51 @@ import {
   ViroAmbientLight
 } from 'react-viro';
 
-class TrophyScene extends Component {
+import React from 'react'
+import { allTrophies } from '../scenes/UserTrophies/allTrophies';
+import { connect } from 'react-redux';
+
+
+
+class TrophyScene extends React.Component {
 
   constructor(){
     super();
+    this.state = {
+      trophyObjects: []
+    }
+    // this.displayObjects = this.displayObjects.bind(this);
   }
+
+  componentDidMount() {
+    let objects = JSON.parse(this.props.user.objects);
+    let newTrophyState = allTrophies.slice();
+    let trophies = []
+    objects.forEach(trophy => {
+      for (let i = 0; i < newTrophyState.length; i++) {
+        if (newTrophyState[i].name === trophy.name && newTrophyState[i].model) {
+          trophies.push(newTrophyState[i].model)
+        }
+      }
+    });
+    this.setState({
+      trophyObjects: trophies,
+    });
+  }
+
 
   render(){
-    <ViroARScene >
-      <Viro3DObject
-        position={[0,0,0]}
-        source={require('./res/traffic_cone/cone1_obj.obj')}
-        materials={'traffic_cone'}
-        type='OBJ'
-        onPinch={this._onPinch}
-      />
-    </ViroARScene>
-
+    return (
+      <ViroARScene drawBounds={true}>
+        <ViroAmbientLight color="#FFFFFF" />
+        {this.state.trophyObjects}
+      </ViroARScene>
+    )
   }
-
-
-
 }
+
+const mapStateToProps = state => ({
+  user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+});
+
+export default connect(mapStateToProps)(TrophyScene);

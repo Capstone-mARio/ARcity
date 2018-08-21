@@ -28,6 +28,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  logo: {
+    alignSelf: 'center',
+    height: 62,
+    width: 240,
+    margin: 10,
+  },
+
   listComponent: {
     width: windowWidth - 40,
   },
@@ -39,6 +46,7 @@ const styles = StyleSheet.create({
 
   listItem: {
     backgroundColor: color.delta_grey,
+    height: normalize(95),
   },
   containerView: {
     width: windowWidth - 40,

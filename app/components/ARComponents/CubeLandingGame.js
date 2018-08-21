@@ -106,7 +106,6 @@ class CubeLandingGame extends Component {
   render() {
     return this.state.loaded ? (
       <ViroARScene onTrackingUpdated={this._onInitialized} physicsWorld={{ gravity: [0, -10.81, 0], drawBounds: false }}>
-        {/* <ViroAmbientLight color="#FFFFFF" /> */}
         {/*original spawn plane*/}
         <ViroCamera position={[0, 0, 1]} active={true} />
         <ViroQuad

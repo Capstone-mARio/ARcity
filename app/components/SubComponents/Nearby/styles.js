@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   container: {
+    marginTop: 20,
     backgroundColor: color.delta_grey,
   },
 
@@ -32,8 +33,8 @@ const styles = StyleSheet.create({
 
   listItem: {
     backgroundColor: color.delta_grey,
-    height: normalize(75),
-    width: windowWidth - 50,
+    height: normalize(95),
+    width: windowWidth,
   },
   containerView: {
     width: windowWidth - 40,

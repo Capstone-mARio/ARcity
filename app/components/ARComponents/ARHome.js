@@ -30,6 +30,7 @@ import ShootingGame from './ShootingGame';
 import MenuNav from './MenuNav';
 
 import TestZone from './TestZone';
+import TrophyScene from './TrophyScene';
 
 //Scene Strings
 const CUBE_LANDING_GAME = 'CUBE_LANDING_GAME';
@@ -193,7 +194,7 @@ class ARHome extends Component {
       <View style={{ flex: 1 }}>
         <ViroARSceneNavigator
           {...this.state.sharedProps}
-          initialScene={{ scene: LocationSample }}
+          initialScene={{ scene: TrophyScene }}
           // initialScene={{ scene: CubeLandingGame }}
           worldAlignment="GravityAndHeading"
         />
