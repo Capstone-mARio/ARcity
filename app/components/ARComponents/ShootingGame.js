@@ -137,7 +137,7 @@ class ShootingGame extends Component {
     if (!executed) {
       executed = true;
       const gameScores = JSON.parse(this.props.user.games);
-      const newGame = JSON.stringify([...gameScores, { game: 'Shoot It', score: this.state.score }])
+      const newGame = JSON.stringify([...gameScores, { name: 'Shooting Game', score: this.state.score }])
       this.props.createUser(
         {
           uid: this.props.user.uid,
