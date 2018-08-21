@@ -52,7 +52,6 @@ class LocationSample extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchLocations();
     this.setLocation()
   }
 
