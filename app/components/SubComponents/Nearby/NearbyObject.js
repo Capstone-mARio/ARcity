@@ -89,14 +89,12 @@ class NearbyObject extends React.Component {
     console.log("locations in render", this.props.locations)
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-        </View>
         <List>
             <ListItem
               containerStyle={styles.listItem}
               avatar={{ uri: closestGame.avatar_url }}
               key={closestGame.name}
-              title={closestGame.name}
+              title={`Nearby: ${closestGame.name}`}
               titleStyle={material.titleWhite}
               avatarStyle={{ backgroundColor: color.delta_grey }}
               subtitle={`Distance away: ${shortestDistance} mi`}
@@ -106,9 +104,6 @@ class NearbyObject extends React.Component {
             />
 
         </List>
-        <Text style={material.headlineWhite}>
-            Nearest game:
-        </Text>
       </View>
     );
   }
