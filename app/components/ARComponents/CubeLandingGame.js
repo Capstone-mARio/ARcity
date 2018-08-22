@@ -64,7 +64,7 @@ const _resetCube = thisContext => {
       ballsRemaining: ballsRemaining - 1,
     });
     ball.setNativeProps({ physicsBody: null });
-    ball.setNativeProps({ position: [0, 0, -8] });
+    ball.setNativeProps({ position: [0, 0, -1] });
     ball.setNativeProps({ materials: ['cube_color'] });
     setTimeout(() => {
       ball.setNativeProps({ physicsBody: ballphysics });
@@ -148,7 +148,7 @@ class CubeLandingGame extends Component {
             ball = obj;
           }}
           radius={.1}
-          position={[0, 0.25, -6]}
+          position={[0, 0.25, -1]}
           rotation={[0, 0, 0]}
           physicsBody={ballphysics}
           dragType="FixedDistance"
