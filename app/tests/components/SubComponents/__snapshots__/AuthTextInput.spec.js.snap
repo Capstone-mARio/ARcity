@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders AuthTextInput correctly 1`] = `
+<View
+  style={
+    Object {
+      "margin": 3,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {},
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          Array [
+            Object {
+              "color": "#86939e",
+              "fontSize": 15,
+              "fontWeight": "bold",
+              "marginBottom": 1,
+              "marginLeft": 20,
+              "marginRight": 20,
+              "marginTop": 15,
+            },
+            undefined,
+            undefined,
+          ],
+        ]
+      }
+    >
+      Username
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "borderBottomColor": "#A5A7A9",
+        "borderBottomWidth": 1,
+        "height": 70.71428571428572,
+        "marginLeft": 20,
+        "marginRight": 20,
+        "transform": Array [
+          Object {
+            "translateX": 0,
+          },
+        ],
+        "width": 710,
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      autoFocus={false}
+      clearButtonMode="while-editing"
+      keyboardType="default"
+      onChangeText={[Function]}
+      placeholder="Username"
+      placeholderTextColor="grey"
+      secureTextEntry={false}
+      style={
+        Array [
+          Object {
+            "color": "#86939e",
+            "minHeight": 36,
+            "width": 750,
+          },
+          Object {
+            "fontSize": 17.5,
+          },
+          Object {
+            "backgroundColor": "transparent",
+            "color": "rgba(255,255,255,1)",
+            "fontFamily": "System",
+            "fontSize": 20,
+            "fontWeight": "600",
+            "letterSpacing": 0.361328,
+            "lineHeight": 28,
+          },
+        ]
+      }
+      textAlign="auto"
+      underlineColorAndroid="#fff"
+      value="Test Username"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {},
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          Array [
+            Object {
+              "color": "#ff190c",
+              "fontSize": 15,
+              "marginBottom": 1,
+              "marginLeft": 20,
+              "marginRight": 20,
+              "marginTop": 5,
+            },
+            undefined,
+            undefined,
+          ],
+        ]
+      }
+    >
+      Test Error
+    </Text>
+  </View>
+</View>
+`;

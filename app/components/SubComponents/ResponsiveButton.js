@@ -7,36 +7,40 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { color, windowWidth, normalize } from '../../styles/theme';
-import { iOSUIKit, material } from 'react-native-typography'
+import { iOSUIKit, material } from 'react-native-typography';
 import { Actions } from 'react-native-router-flux';
 
 const main = color.button_color;
-const pinkUnderlay = '#FFB6C1';  // lighter shade of pink
+const pinkUnderlay = '#FFB6C1'; // lighter shade of pink
 
 export default class ResponsiveButton extends Component {
   constructor(props) {
     super();
     this.state = { pressStatus: false };
   }
-  _onHideUnderlay(){
+  _onHideUnderlay() {
     this.setState({ pressStatus: false });
   }
-  _onShowUnderlay(){
+  _onShowUnderlay() {
     this.setState({ pressStatus: true });
   }
-  render(){
+  render() {
     return (
-        <TouchableHighlight
-          activeOpacity={0.4}
-          style={ this.state.pressStatus ? styles.buttonPress : styles.button }
-          underlayColor={pinkUnderlay}
-          onHideUnderlay={this._onHideUnderlay.bind(this)}
-          onShowUnderlay={this._onShowUnderlay.bind(this)}
-          onPress={() => this.props.onPress()}
+      <TouchableHighlight
+        activeOpacity={0.4}
+        style={this.state.pressStatus ? styles.buttonPress : styles.button}
+        underlayColor={pinkUnderlay}
+        onHideUnderlay={this._onHideUnderlay.bind(this)}
+        onShowUnderlay={this._onShowUnderlay.bind(this)}
+        onPress={() => this.props.onPress()}
+      >
+        <Text
+          style={this.state.pressStatus ? material.title : material.titleWhite}
         >
-          <Text style={ this.state.pressStatus ? material.title : material.titleWhite }>{this.props.text}</Text>
-        </TouchableHighlight>
-    )
+          {this.props.text}
+        </Text>
+      </TouchableHighlight>
+    );
   }
 }
 
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: main,
     borderRadius: 5,
     margin: 10,
-    shadowOffset:{  width: 3,  height: 3,  },
+    shadowOffset: { width: 3, height: 3 },
     shadowColor: 'black',
     shadowOpacity: 0.4,
   },
