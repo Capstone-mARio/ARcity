@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ResponsiveCircleButton correctly 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#FF69B4",
+      "borderRadius": 85,
+      "height": 86.42857142857142,
+      "justifyContent": "center",
+      "margin": 20,
+      "shadowColor": "black",
+      "shadowOffset": Object {
+        "height": 3,
+        "width": 3,
+      },
+      "shadowOpacity": 0.4,
+      "width": 100,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "backgroundColor": "transparent",
+        "color": "rgba(255,255,255,1)",
+        "fontFamily": "System",
+        "fontSize": 20,
+        "fontWeight": "600",
+        "letterSpacing": 0.361328,
+        "lineHeight": 28,
+      }
+    }
+  />
+</View>
+`;

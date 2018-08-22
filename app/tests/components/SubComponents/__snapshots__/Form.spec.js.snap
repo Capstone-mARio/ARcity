@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Form correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "rgb(84, 84, 84)",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+        "margin": 15,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "margin": 3,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderBottomColor": "#A5A7A9",
+            "borderBottomWidth": 1,
+            "height": 70.71428571428572,
+            "marginLeft": 20,
+            "marginRight": 20,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
+            "width": 710,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          autoCapitalize="none"
+          autoFocus={false}
+          clearButtonMode="while-editing"
+          keyboardType="default"
+          onChangeText={[Function]}
+          placeholder="Username"
+          placeholderTextColor="grey"
+          secureTextEntry={false}
+          style={
+            Array [
+              Object {
+                "color": "#86939e",
+                "minHeight": 36,
+                "width": 750,
+              },
+              Object {
+                "fontSize": 17.5,
+              },
+              Object {
+                "backgroundColor": "transparent",
+                "color": "rgba(255,255,255,1)",
+                "fontFamily": "System",
+                "fontSize": 20,
+                "fontWeight": "600",
+                "letterSpacing": 0.361328,
+                "lineHeight": 28,
+              },
+            ]
+          }
+          textAlign="auto"
+          underlineColorAndroid="#fff"
+          value=""
+        />
+      </View>
+    </View>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FF69B4",
+          "borderRadius": 5,
+          "height": 86.42857142857142,
+          "justifyContent": "center",
+          "margin": 10,
+          "shadowColor": "black",
+          "shadowOffset": Object {
+            "height": 3,
+            "width": 3,
+          },
+          "shadowOpacity": 0.4,
+          "width": 700,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "color": "rgba(255,255,255,1)",
+            "fontFamily": "System",
+            "fontSize": 20,
+            "fontWeight": "600",
+            "letterSpacing": 0.361328,
+            "lineHeight": 28,
+          }
+        }
+      >
+        CONTINUE
+      </Text>
+    </View>
+  </View>
+</View>
+`;

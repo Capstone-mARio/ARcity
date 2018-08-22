@@ -10,7 +10,6 @@ export const CLEAR_LOCATION_ID = 'CLEAR_LOCATION_ID';
 
 // ACTION CREATORS
 import * as api from '../../firebase/api/locations';
-import { auth } from '../../firebase/firebase';
 
 export function fetchLocations() {
   return dispatch => {
@@ -40,14 +39,14 @@ export function watchLocation() {
   return dispatch => {
     const id = navigator.geolocation.watchPosition(onSuccess, onError);
     dispatch({ type: SET_LOCATION_ID, id });
-  }
+  };
 }
 
 export function stopLocationWatch(id) {
   return dispatch => {
     const id = navigator.geolocation.clearWatch(id);
     dispatch({ type: CLEAR_LOCATION_ID });
-  }
+  };
 }
 
 export function onSuccess(pos) {
@@ -63,7 +62,6 @@ export function onError(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-
 // REDUCER
 let initialState = {
   locations: [],
@@ -75,20 +73,23 @@ let initialState = {
 export default (locationsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOCATIONS:
-      const locations = action.data;
-      return { ...state, locations: locations };
+      return { ...state, locations: action.data };
 
     case ADD_LOCATION:
-      return {...state, locations: [...state.locations, action.data] };
+      return { ...state, locations: [...state.locations, action.data] };
 
     case SET_LOCATION_ID:
-      return {...state, id: action.id };
+      return { ...state, id: action.id };
 
     case UPDATE_LOCATION:
-      return {...state, currentLat: action.currentLat, currentLong: action.currentLong };
+      return {
+        ...state,
+        currentLat: action.currentLat,
+        currentLong: action.currentLong,
+      };
 
     case CLEAR_LOCATION_ID:
-      return {...state, id: 0 };
+      return { ...state, id: 0 };
 
     default:
       return state;
