@@ -2,7 +2,7 @@
 
 import arCityReducer, {
   setNav,
-  setThis,
+  setThis
 } from '../../redux/reducers/arCityReducer';
 import configureMockStore from 'redux-mock-store';
 import { createStore } from 'redux';
@@ -16,7 +16,7 @@ const TEST_THIS = this;
 
 const initialState = {
   navigator: 'DEFAULT_LOCATION',
-  thisIs: '',
+  thisIs: ''
 };
 
 let actionCreatorTest = mockStore(initialState);
@@ -52,4 +52,44 @@ test('setNav reaches state', () => {
 test('setThis reaches state', () => {
   storeTest.dispatch(setThis(TEST_THIS));
   expect(storeTest.getState().thisIs).toEqual(TEST_THIS);
+});
+
+describe('arCityReducer', () => {
+  describe('actions', () => {
+    it('setNav returns properly formatted object', () => {
+      const navScene = 'ARHOME';
+      const expectedOutput = { type: 'SET_NAV', navScene };
+
+      expect(setNav(navScene)).toEqual(expectedOutput);
+    });
+    it('setThis returns properly formatted object', () => {
+      const thisIs = 'this';
+      const expectedOutput = { type: 'SET_THIS', thisIs };
+
+      expect(setThis(thisIs)).toEqual(expectedOutput);
+    });
+  });
+  describe('reducer', () => {
+    const initialState = {
+      navigator: 'LOCATION_SAMPLE',
+      thisIs: ''
+    };
+    it('returns initial state', () => {
+      expect(arCityReducer(undefined, {})).toEqual(initialState);
+    });
+
+    it('setNav should change the navigator', () => {
+      expect(arCityReducer(initialState, setNav('ARHOME'))).toEqual({
+        navigator: 'ARHOME',
+        thisIs: ''
+      });
+    });
+
+    it('setThis chould change thisIs', () => {
+      expect(arCityReducer(initialState, setThis('this'))).toEqual({
+        navigator: 'LOCATION_SAMPLE',
+        thisIs: 'this'
+      });
+    });
+  });
 });
