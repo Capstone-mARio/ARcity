@@ -64,7 +64,7 @@ const _resetCube = thisContext => {
       ballsRemaining: ballsRemaining - 1,
     });
     ball.setNativeProps({ physicsBody: null });
-    ball.setNativeProps({ position: [0, 0, -1] });
+    ball.setNativeProps({ position: [0, 0, -8] });
     ball.setNativeProps({ materials: ['cube_color'] });
     setTimeout(() => {
       ball.setNativeProps({ physicsBody: ballphysics });
@@ -83,8 +83,7 @@ class CubeLandingGame extends Component {
       score: 0,
       ballsRemaining: 11,
     };
-    this._onFloorCollide1 = this._onFloorCollide1.bind(this);
-    this._onFloorCollide2 = this._onFloorCollide2.bind(this);
+
     this._onInitialized = this._onInitialized.bind(this);
     this._gameOver = this._gameOver.bind(this);
     this.onSuccess = this.onSuccess.bind(this);
@@ -120,7 +119,7 @@ class CubeLandingGame extends Component {
           physicsBody={platformphysics}
           viroTag="platform1"
           materials="target_floor"
-          onCollision={this._onFloorCollide1}
+          onCollision={this._onFloorCollide.bind(this, 100)}
         />
         {/*second score platform*/}
         <ViroQuad
@@ -130,7 +129,7 @@ class CubeLandingGame extends Component {
           physicsBody={platformphysics}
           viroTag=" platform2"
           materials="target_floor"
-          onCollision={this._onFloorCollide2}
+          onCollision={this._onFloorCollide.bind(this, 200)}
         />
         {/*reset invisible platform*/}
         <ViroQuad
@@ -149,7 +148,7 @@ class CubeLandingGame extends Component {
             ball = obj;
           }}
           radius={.1}
-          position={[0, 0.25, -1]}
+          position={[0, 0.25, -6]}
           rotation={[0, 0, 0]}
           physicsBody={ballphysics}
           dragType="FixedDistance"
@@ -221,11 +220,11 @@ class CubeLandingGame extends Component {
     }
   }
 
-  //Scoring Collision - Will Be Changed By Bens Edit
-  _onFloorCollide1 = (collidedTag, collidedPoint) => {
+  //Scoring Collision
+  _onFloorCollide = (score, collidedTag, collidedPoint) => {
     if (collidedTag === 'gameCube') {
       this.setState({
-        score: this.state.score + 100,
+        score: this.state.score + score,
       });
       ball.setNativeProps({ materials: ['cube_hit'] });
       ball.setNativeProps({ physicsBody: null });
@@ -235,18 +234,7 @@ class CubeLandingGame extends Component {
       }, 1000);
     }
   };
-  _onFloorCollide2 = (collidedTag, collidedPoint) => {
-    if (collidedTag === 'gameCube') {
-      this.setState({
-        score: this.state.score + 200,
-      });
-      ball.setNativeProps({ physicsBody: null });
 
-      setTimeout(() => {
-        _resetCube(this);
-      }, 1000);
-    }
-  };
   _onFloorCollideR = (collidedTag, collidedPoint) => {
     if (collidedTag === 'gameCube') {
       ball.setNativeProps({ physicsBody: null });

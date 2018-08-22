@@ -28,6 +28,7 @@ import UserTrophies from './components/scenes/UserTrophies/UserTrophies';
 import UserScores from './components/scenes/UserScores/UserScores';
 
 import { color, navTitleStyle } from './styles/theme';
+import TrophyRender from './components/ARComponents/TrophyRender';
 
 const TabIcon = ({ selected, name, title }) => {
   if (title === 'Geo') {
@@ -155,6 +156,12 @@ export default class extends React.Component {
               component={UserScores}
               initial={false}
             />
+            <Scene
+                key="Trophies"
+                title="Trophies"
+                component={TrophyRender}
+                initial={false}
+              />
           </Scene>
         </Scene>
       </Router>

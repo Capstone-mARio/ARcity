@@ -2,7 +2,7 @@
 
 //React Imports
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import {
   ViroARScene,
   ViroQuad,
@@ -85,9 +85,11 @@ class ShootingGame extends Component {
 
   componentDidMount() {
     this.props.sceneNavigator.resetARSession(true,false)
-    setTimeout(() => {
-      this.setState({ isReady: true })
-    }, 3000);
+    Alert.alert(
+      'Get Ready',
+      'Game will start behind you',
+      [{text: 'Got It', onPress: () => setTimeout(() => {this.setState({ isReady: true })}, 1500)}]
+    )
   }
 
   render() {
@@ -115,12 +117,12 @@ class ShootingGame extends Component {
           visible={this.state.isReady}
         />
         {/*Get Ready*/}
-        <ViroText ref={(obj) => this.ready = obj}
+        {/* <ViroText ref={(obj) => this.ready = obj}
           text={'Get Ready!'}
           position={[0, 0, -3]}
           style={styles.TextStyle}
           visible={!this.state.isReady}
-        />
+        /> */}
         {/*Game Over*/}
         {this.state.blocksRemaining <= 0 ?
           [<ViroText

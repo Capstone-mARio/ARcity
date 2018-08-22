@@ -9,9 +9,9 @@
 console.disableYellowBox = true;
 
 //React Imports
-import React, { Component } from 'react';
+import React,{ Component} from 'react';
 import { ViroARSceneNavigator } from 'react-viro';
-import { View } from 'react-native';
+import { View} from 'react-native';
 
 //Secrets
 import '../../../secrets';
@@ -24,6 +24,7 @@ import LocationSample from './LocationSample';
 import MenuNav from './MenuNav';
 
 import TestZone from './TestZone'; //Test Zoning For New AR Scenes
+import TrophyScene from './TrophyScene';
 
 class ARHome extends Component {
   constructor() {
@@ -46,7 +47,7 @@ class ARHome extends Component {
         <ViroARSceneNavigator
           {...this.state.sharedProps}
           initialScene={{ scene: LocationSample }}
-          // initialScene={{ scene: TestZone }} Uncomment For Testing Zone
+          // initialScene={{ scene: CubeLandingGame }}
           worldAlignment="GravityAndHeading"
         />
         <MenuNav />

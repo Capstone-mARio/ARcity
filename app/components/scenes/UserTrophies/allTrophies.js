@@ -33,6 +33,23 @@ import laptopShadow from '../../assets/shadow/laptop.png';
 import dogTrophy from '../../assets/trophy/dog.png';
 import dogShadow from '../../assets/shadow/dog.png';
 
+
+import React from 'react'
+import {Viro3DObject, ViroMaterials, ViroSphere, ViroBox} from 'react-viro'
+
+ViroMaterials.createMaterials({
+  traffic_cone: {
+    diffuseTexture: require('../../ARComponents/res/traffic_cone/cone1.jpg')
+  },
+  ball_color: {
+    diffuseTexture: require('../../ARComponents/res/object_sphere/ball_texture.png')
+  },
+  trophy_cube: {
+    diffuseTexture: require('../../ARComponents/res/trophyCube_texture.jpg')
+  }
+});
+
+
 export const allTrophies = [
   {
     name: 'Trophy',
@@ -47,6 +64,14 @@ export const allTrophies = [
     cost: 100,
     trophy: suitcaseTrophy,
     shadow: suitcaseShadow,
+    model: <Viro3DObject
+            source={require('../../assets/suitcase/Vintage_Suitcase_LP.vrx')}
+            position={[0, 0, -1]}
+            scale={[.001, .001, .001]}
+            rotation={[-90, 0, 0]}
+            onDrag={()=>{}}
+            type="VRX"
+            />
   },
   {
     name: 'Coin',
@@ -54,6 +79,15 @@ export const allTrophies = [
     cost: 1,
     trophy: coinTrophy,
     shadow: coinShadow,
+    model: <Viro3DObject
+
+            source={require('../../assets/coin/dogecoin.vrx')}
+            position={[0, 0, -2]}
+            scale={[0.001, 0.001, 0.001]}
+            rotation={[-90, -90, 0]}
+            onDrag={()=>{}}
+            type="VRX"
+            />
   },
   {
     name: 'Fireball',
@@ -61,6 +95,14 @@ export const allTrophies = [
     cost: 500,
     trophy: fireballTrophy,
     shadow: fireballShadow,
+    model: <ViroSphere
+        position={[0, 0, -2]}
+        heightSegmentCount={5}
+        widthSegementCount={5}
+        radius={.1}
+        materials={['ball_color']}
+        onDrag={() => {}}
+        />
   },
   {
     name: 'Cube',
@@ -68,6 +110,14 @@ export const allTrophies = [
     cost: 500,
     trophy: cubeTrophy,
     shadow: cubeShadow,
+    model: <ViroBox
+            position={[0, 0, -1]}
+            height={.25}
+            width={.25}
+            length={.25}
+            materials={'trophy_cube'}
+            onDrag={()=>{}}
+          />
   },
   {
     name: 'Mug',
@@ -75,6 +125,13 @@ export const allTrophies = [
     cost: 1000,
     trophy: mugTrophy,
     shadow: mugShadow,
+    model: <Viro3DObject
+              position={[0,0,-1]}
+              scale={[.25,.25,.25]}
+              source={require('../../ARComponents/res/coffee_mug/object_coffee_mug.vrx')}
+              onDrag={()=>{}}
+              type="VRX"
+           />
   },
   {
     name: 'Car',
@@ -89,6 +146,14 @@ export const allTrophies = [
     cost: 5000,
     trophy: guitarTrophy,
     shadow: guitarShadow,
+    model: <Viro3DObject
+            position={[0, 0, -1]}
+            source={require('../../ARComponents/res/Acoustic_Guitar/Models_and_Textures/guitar.vrx')}
+            type='VRX'
+            scale={[.05,.05,.05]}
+            onDrag={() => {}}
+            // onPinch={this._onPinch}
+            />
   },
   {
     name: 'Phone',
@@ -103,6 +168,15 @@ export const allTrophies = [
     cost: 100000,
     trophy: coneTrophy,
     shadow: coneShadow,
+    model: <Viro3DObject
+      position={[0, 0, -1]}
+      source={require('../../ARComponents/res/traffic_cone/cone.obj')}
+      materials={'traffic_cone'}
+      type='OBJ'
+      scale={[.01,.01,.01]}
+      onDrag={() => {}}
+      // onPinch={this._onPinch}
+    />
   },
   {
     name: 'Asteroid',
@@ -117,6 +191,17 @@ export const allTrophies = [
     cost: 500,
     trophy: icecreamTrophy,
     shadow: icecreamShadow,
+    model: <Viro3DObject
+            source={require('../../ARComponents/res/Ice_Cream/ice_cream.obj')}
+            resources={[
+              require('../../ARComponents/res/Ice_Cream/ice_cream.mtl'),
+              require('../../ARComponents/res/Ice_Cream/ice_cream.jpg')
+            ]}
+            position={[0, 0, -1]}
+            type={"OBJ"}
+            scale={[.1,.1,.1]}
+            onDrag={()=>{}}
+            />
   },
   {
     name: 'Taxi',

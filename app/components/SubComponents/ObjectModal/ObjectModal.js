@@ -6,16 +6,17 @@ import ResponsiveCircleButton from '../../SubComponents/ResponsiveCircleButton';
 import SubTab from '../../SubComponents/SubTab';
 import GameScore from '../../SubComponents/GameScore/GameScore';
 import GameObjects from '../../SubComponents/GameObjects/GameObjects';
-import { Actions } from 'react-native-router-flux';
 import {
   createUser,
   instructionsVisible,
   signOut,
 } from '../../../redux/reducers/authReducer';
 import { connect } from 'react-redux';
-
 import styles from './styles';
 import { material } from 'react-native-typography';
+import TrophyScene from '../../ARComponents/TrophyScene';
+import { Actions } from 'react-native-router-flux';
+
 
 class ObjectModal extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class ObjectModal extends Component {
       this.setState({ error: error.message });
     }
   }
+
 
   render() {
     let trophy = this.props.selectedObject;
@@ -57,7 +59,10 @@ class ObjectModal extends Component {
               source={trophy.owned ? trophy.trophy : trophy.shadow}
             />
             {trophy.owned ? (
-              <ResponsiveButton text="View in 3D" />
+              <ResponsiveButton text="View in 3D" onPress={() => {
+                this.props.toggleModal(false);
+                Actions.Trophies()
+                } }/>
             ) : (
               <ResponsiveButton
                 text={
@@ -90,6 +95,8 @@ class ObjectModal extends Component {
       </View>
     );
   }
+
+
 }
 
 const mapStateToProps = state => ({
@@ -99,7 +106,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createUser: (user, success, error) =>
-    dispatch(createUser(user, success, error)),
+  dispatch(createUser(user, success, error)),
   instructionsVisible: bool => dispatch(instructionsVisible(bool)),
   signOut: () => dispatch(signOut()),
 });
