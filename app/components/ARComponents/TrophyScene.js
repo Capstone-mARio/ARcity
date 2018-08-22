@@ -1,13 +1,7 @@
-import { StyleSheet, View } from 'react-native';
+import { View, TouchableHighlight, Alert, Image } from 'react-native';
 import {
   ViroARScene,
-  ViroQuad,
   ViroSphere,
-  ViroMaterials,
-  ViroNode,
-  ViroText,
-  ViroConstants,
-  ViroCamera,
   Viro3DObject,
   ViroAmbientLight
 } from 'react-viro';
@@ -20,36 +14,23 @@ import { connect } from 'react-redux';
 
 class TrophyScene extends React.Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      trophyObjects: []
+      trophyModels: [],
     }
-    // this.displayObjects = this.displayObjects.bind(this);
   }
 
-  componentDidMount() {
-    let objects = JSON.parse(this.props.user.objects);
-    let newTrophyState = allTrophies.slice();
-    let trophies = []
-    objects.forEach(trophy => {
-      for (let i = 0; i < newTrophyState.length; i++) {
-        if (newTrophyState[i].name === trophy.name && newTrophyState[i].model) {
-          trophies.push(newTrophyState[i].model)
-        }
-      }
-    });
-    this.setState({
-      trophyObjects: trophies,
-    });
+  componentDidMount(){
+    this.setState({trophyModels: this.props.list})
   }
-
 
   render(){
+    console.log('this is in trophy scene', this.state.trophyModels)
     return (
       <ViroARScene >
         <ViroAmbientLight color="#FFFFFF" />
-        {this.state.trophyObjects}
+        {this.props.list}
       </ViroARScene>
     )
   }
@@ -57,6 +38,7 @@ class TrophyScene extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.authReducer.user || { games: '[]', objects: '[]', coins: 0 },
+  list: state.arCityReducer.list
 });
 
 export default connect(mapStateToProps)(TrophyScene);

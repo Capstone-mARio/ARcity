@@ -66,8 +66,8 @@ export const allTrophies = [
     shadow: suitcaseShadow,
     model: <Viro3DObject
             source={require('../../assets/suitcase/Vintage_Suitcase_LP.vrx')}
-            position={[-4, 0, -2]}
-            scale={[.01, .01, .01]}
+            position={[0, 0, -1]}
+            scale={[.001, .001, .001]}
             rotation={[-90, 0, 0]}
             onDrag={()=>{}}
             type="VRX"
@@ -80,10 +80,11 @@ export const allTrophies = [
     trophy: coinTrophy,
     shadow: coinShadow,
     model: <Viro3DObject
+
             source={require('../../assets/coin/dogecoin.vrx')}
-            position={[-2, 0, -2]}
+            position={[0, 0, -2]}
             scale={[0.001, 0.001, 0.001]}
-            rotation={[-90, 0, 0]}
+            rotation={[-90, -90, 0]}
             onDrag={()=>{}}
             type="VRX"
             />
@@ -95,7 +96,7 @@ export const allTrophies = [
     trophy: fireballTrophy,
     shadow: fireballShadow,
     model: <ViroSphere
-        position={[2, 0, -2]}
+        position={[0, 0, -2]}
         heightSegmentCount={5}
         widthSegementCount={5}
         radius={.1}
@@ -110,10 +111,10 @@ export const allTrophies = [
     trophy: cubeTrophy,
     shadow: cubeShadow,
     model: <ViroBox
-            position={[4, 0, -2]}
-            height={1}
-            width={1}
-            length={1}
+            position={[0, 0, -1]}
+            height={.25}
+            width={.25}
+            length={.25}
             materials={'trophy_cube'}
             onDrag={()=>{}}
           />
@@ -125,8 +126,8 @@ export const allTrophies = [
     trophy: mugTrophy,
     shadow: mugShadow,
     model: <Viro3DObject
-              position={[6,0,-2]}
-              scale={[1,1,1]}
+              position={[0,0,-1]}
+              scale={[.25,.25,.25]}
               source={require('../../ARComponents/res/coffee_mug/object_coffee_mug.vrx')}
               onDrag={()=>{}}
               type="VRX"
@@ -146,10 +147,10 @@ export const allTrophies = [
     trophy: guitarTrophy,
     shadow: guitarShadow,
     model: <Viro3DObject
-            position={[-8, 0, -2]}
+            position={[0, 0, -1]}
             source={require('../../ARComponents/res/Acoustic_Guitar/Models_and_Textures/guitar.vrx')}
             type='VRX'
-            scale={[.1,.1,.1]}
+            scale={[.05,.05,.05]}
             onDrag={() => {}}
             // onPinch={this._onPinch}
             />
@@ -168,7 +169,7 @@ export const allTrophies = [
     trophy: coneTrophy,
     shadow: coneShadow,
     model: <Viro3DObject
-      position={[0, 0, -2]}
+      position={[0, 0, -1]}
       source={require('../../ARComponents/res/traffic_cone/cone.obj')}
       materials={'traffic_cone'}
       type='OBJ'
@@ -190,6 +191,17 @@ export const allTrophies = [
     cost: 500,
     trophy: icecreamTrophy,
     shadow: icecreamShadow,
+    model: <Viro3DObject
+            source={require('../../ARComponents/res/Ice_Cream/ice_cream.obj')}
+            resources={[
+              require('../../ARComponents/res/Ice_Cream/ice_cream.mtl'),
+              require('../../ARComponents/res/Ice_Cream/ice_cream.jpg')
+            ]}
+            position={[0, 0, -1]}
+            type={"OBJ"}
+            scale={[.1,.1,.1]}
+            onDrag={()=>{}}
+            />
   },
   {
     name: 'Taxi',
