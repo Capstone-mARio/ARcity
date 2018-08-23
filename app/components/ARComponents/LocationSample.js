@@ -100,13 +100,13 @@ class LocationSample extends Component {
       const id = locations[i].id;
       const cost = locations[i].cost;
       var obj;
-      if (id === 3) {
-        obj = <Suitcase pos={[realX, -10, realY]} />;
-      } else if (id === 4) {
-        obj = <Coin pos={[realX, -10, realY]} />;
-      } else {
-        obj = <LocationBox pos={[realX, 1, realY]} id={id} cost={cost} />;
-      }
+      obj = <LocationBox pos={[realX, 1, realY]} id={id} cost={cost} />;
+      objs.push(obj);
+    }
+    for (let j = 0; j <= 10; j++){
+      obj = <Suitcase pos={[(Math.random() * 200) - 100, -10, ((Math.random() * 200) - 100)]} />;
+      objs.push(obj);
+      obj = <Coin pos={[(Math.random() * 200) - 100, -10, ((Math.random() * 200) - 100)]} />;
       objs.push(obj);
     }
     return objs;
